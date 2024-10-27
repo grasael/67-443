@@ -11,7 +11,7 @@ import SwiftUI
 struct rentlyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppView()
         }
     }
 }

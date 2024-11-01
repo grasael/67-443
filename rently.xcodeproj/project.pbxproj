@@ -19,6 +19,7 @@
 		7F46DB812CD31AA300181DB6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB802CD31AA300181DB6 /* ContentView.swift */; };
 		7F46DB832CD31AC300181DB6 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB822CD31AC300181DB6 /* ChatViewModel.swift */; };
 		7F46DB852CD31AE200181DB6 /* TalkJSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB842CD31AE200181DB6 /* TalkJSService.swift */; };
+		7F46DB912CD454D600181DB6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB902CD454D600181DB6 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		7F46DB802CD31AA300181DB6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7F46DB822CD31AC300181DB6 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		7F46DB842CD31AE200181DB6 /* TalkJSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkJSService.swift; sourceTree = "<group>"; };
+		7F46DB902CD454D600181DB6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 		7F46DB702CCEDB5200181DB6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7F46DB902CD454D600181DB6 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 				7F46DB7B2CCEDBD400181DB6 /* ProfileView.swift in Sources */,
 				7F46DB832CD31AC300181DB6 /* ChatViewModel.swift in Sources */,
 				7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */,
+				7F46DB912CD454D600181DB6 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

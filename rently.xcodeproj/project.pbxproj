@@ -16,6 +16,12 @@
 		7F46DB772CCEDBBD00181DB6 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB762CCEDBBD00181DB6 /* ListView.swift */; };
 		7F46DB792CCEDBC900181DB6 /* RentalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB782CCEDBC900181DB6 /* RentalsView.swift */; };
 		7F46DB7B2CCEDBD400181DB6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB7A2CCEDBD400181DB6 /* ProfileView.swift */; };
+		CA96ED1B2CD670BC00E6D750 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED1A2CD670BC00E6D750 /* SearchBarView.swift */; };
+		CA96ED1D2CD670CA00E6D750 /* ActiveRentalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED1C2CD670CA00E6D750 /* ActiveRentalsView.swift */; };
+		CA96ED1F2CD670D500E6D750 /* KeepSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED1E2CD670D500E6D750 /* KeepSearchingView.swift */; };
+		CA96ED212CD670DF00E6D750 /* SuggestedItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED202CD670DF00E6D750 /* SuggestedItemsView.swift */; };
+		CA96ED232CD670EC00E6D750 /* TrendingSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED222CD670EC00E6D750 /* TrendingSearchesView.swift */; };
+		CA96ED252CD6A05E00E6D750 /* ActiveRentalCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED242CD6A05E00E6D750 /* ActiveRentalCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +35,12 @@
 		7F46DB762CCEDBBD00181DB6 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		7F46DB782CCEDBC900181DB6 /* RentalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalsView.swift; sourceTree = "<group>"; };
 		7F46DB7A2CCEDBD400181DB6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		CA96ED1A2CD670BC00E6D750 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		CA96ED1C2CD670CA00E6D750 /* ActiveRentalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRentalsView.swift; sourceTree = "<group>"; };
+		CA96ED1E2CD670D500E6D750 /* KeepSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSearchingView.swift; sourceTree = "<group>"; };
+		CA96ED202CD670DF00E6D750 /* SuggestedItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedItemsView.swift; sourceTree = "<group>"; };
+		CA96ED222CD670EC00E6D750 /* TrendingSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingSearchesView.swift; sourceTree = "<group>"; };
+		CA96ED242CD6A05E00E6D750 /* ActiveRentalCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRentalCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,8 +94,8 @@
 		7F46DB6F2CCEDB4700181DB6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CA96ED192CD6708F00E6D750 /* HomeView */,
 				7F46DB6D2CCEDAF700181DB6 /* AppView.swift */,
-				7F46DB722CCEDBA700181DB6 /* HomeView.swift */,
 				7F46DB742CCEDBB200181DB6 /* SearchView.swift */,
 				7F46DB762CCEDBBD00181DB6 /* ListView.swift */,
 				7F46DB782CCEDBC900181DB6 /* RentalsView.swift */,
@@ -104,6 +116,20 @@
 			children = (
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CA96ED192CD6708F00E6D750 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				7F46DB722CCEDBA700181DB6 /* HomeView.swift */,
+				CA96ED1A2CD670BC00E6D750 /* SearchBarView.swift */,
+				CA96ED1C2CD670CA00E6D750 /* ActiveRentalsView.swift */,
+				CA96ED1E2CD670D500E6D750 /* KeepSearchingView.swift */,
+				CA96ED202CD670DF00E6D750 /* SuggestedItemsView.swift */,
+				CA96ED222CD670EC00E6D750 /* TrendingSearchesView.swift */,
+				CA96ED242CD6A05E00E6D750 /* ActiveRentalCardView.swift */,
+			);
+			path = HomeView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,13 +202,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA96ED1D2CD670CA00E6D750 /* ActiveRentalsView.swift in Sources */,
 				7F46DB792CCEDBC900181DB6 /* RentalsView.swift in Sources */,
 				7F46DB752CCEDBB300181DB6 /* SearchView.swift in Sources */,
 				7F46DB732CCEDBA700181DB6 /* HomeView.swift in Sources */,
+				CA96ED1F2CD670D500E6D750 /* KeepSearchingView.swift in Sources */,
 				7F46DB772CCEDBBD00181DB6 /* ListView.swift in Sources */,
+				CA96ED1B2CD670BC00E6D750 /* SearchBarView.swift in Sources */,
 				7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */,
 				7F46DB7B2CCEDBD400181DB6 /* ProfileView.swift in Sources */,
+				CA96ED232CD670EC00E6D750 /* TrendingSearchesView.swift in Sources */,
+				CA96ED252CD6A05E00E6D750 /* ActiveRentalCardView.swift in Sources */,
 				7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */,
+				CA96ED212CD670DF00E6D750 /* SuggestedItemsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

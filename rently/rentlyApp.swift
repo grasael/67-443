@@ -25,7 +25,8 @@ struct rentlyApp: App {
   var body: some Scene {
     WindowGroup {
       NavigationView {
-        AppView()
+        //AppView()
+          ContentView()
       }
     }
   }

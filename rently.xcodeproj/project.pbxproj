@@ -43,7 +43,7 @@
 		7F46DBC22CD560B000181DB6 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = 7F46DBC12CD560B000181DB6 /* FirebaseVertexAI */; };
 		7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DBC32CD5612600181DB6 /* UserViewModel.swift */; };
 		7FDC9B392CD58CD200CAE839 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FDC9B372CD58CA500CAE839 /* GoogleService-Info.plist */; };
-		7FDC9B3B2CD58EA800CAE839 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7FDC9B3A2CD58EA800CAE839 /* .gitignore */; };
+		7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,7 +60,7 @@
 		7F46DB902CD454D600181DB6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7F46DBC32CD5612600181DB6 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		7FDC9B372CD58CA500CAE839 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
-		7FDC9B3A2CD58EA800CAE839 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +124,6 @@
 				7F1FD5722CCD757500C7A788 /* Assets.xcassets */,
 				7FDC9B372CD58CA500CAE839 /* GoogleService-Info.plist */,
 				7F1FD5742CCD757500C7A788 /* Preview Content */,
-				7FDC9B3A2CD58EA800CAE839 /* .gitignore */,
 			);
 			path = rently;
 			sourceTree = "<group>";
@@ -145,6 +144,7 @@
 				7F46DB742CCEDBB200181DB6 /* SearchView.swift */,
 				7F46DB762CCEDBBD00181DB6 /* ListView.swift */,
 				7F46DB782CCEDBC900181DB6 /* RentalsView.swift */,
+				7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */,
 				7F46DB7A2CCEDBD400181DB6 /* ProfileView.swift */,
 			);
 			path = Views;
@@ -253,7 +253,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FDC9B3B2CD58EA800CAE839 /* .gitignore in Resources */,
 				7F1FD5762CCD757500C7A788 /* Preview Assets.xcassets in Resources */,
 				7F1FD5732CCD757500C7A788 /* Assets.xcassets in Resources */,
 				7FDC9B392CD58CD200CAE839 /* GoogleService-Info.plist in Resources */,
@@ -273,6 +272,7 @@
 				7F46DB732CCEDBA700181DB6 /* HomeView.swift in Sources */,
 				7F46DB772CCEDBBD00181DB6 /* ListView.swift in Sources */,
 				7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */,
+				7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */,
 				7F46DB7B2CCEDBD400181DB6 /* ProfileView.swift in Sources */,
 				7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */,
 				7F46DB912CD454D600181DB6 /* User.swift in Sources */,

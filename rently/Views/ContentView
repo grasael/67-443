@@ -1,0 +1,23 @@
+import SwiftUI
+
+struct ContentView: View {
+    @StateObject private var viewModel = UserViewModel()
+
+    var body: some View {
+        NavigationView {
+            List(viewModel.users) { user in
+                VStack(alignment: .leading) {
+                    Text(user.firstName)
+                        .font(.headline)
+                    Text(user.lastName)
+                        .font(.subheadline)
+                }
+            }
+            .navigationTitle("Users")
+            .onAppear {
+                viewModel.fetchData()  // Fetch users when the view appears
+            }
+        }
+    }
+}
+

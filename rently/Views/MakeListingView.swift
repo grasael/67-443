@@ -21,8 +21,6 @@ struct MakeListingView: View {
   @State private var price = ""
   @State private var color = ""
   @State private var tags: [String] = []
-  
-  private let tagOptions = ["vintage", "formal", "sportswear", "edgy", "business", "party", "costume", "concert", "classy", "casual", "streetwear", "y2k", "graduation"]
   @State private var nextScreen = false
   
   var body: some View {
@@ -216,24 +214,24 @@ struct MakeListingView: View {
           Text("tags (max 3):")
             .font(.system(size: 16))
           LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 10)], spacing: 10) {
-            ForEach(tagOptions, id: \.self) { tag in
+            ForEach(TagOption.allCases, id: \.self) { tag in
               Button(action: {
-                if tags.contains(tag) {
-                  tags.removeAll { $0 == tag }
+                if tags.contains(tag.rawValue) {
+                  tags.removeAll { $0 == tag.rawValue }
                 } else if tags.count < 3 {
-                  tags.append(tag)
+                  tags.append(tag.rawValue)
                 }
               }) {
-                Text(tag)
+                Text(tag.rawValue)
                   .padding(.vertical, 8)
                   .padding(.horizontal, 12)
                   .frame(minWidth: 100)
                   .lineLimit(1)
-                  .background(tags.contains(tag) ? Color("MediumGreen") : Color("LightGreen"))
+                  .background(tags.contains(tag.rawValue) ? Color("MediumGreen") : Color("LightGreen"))
                   .foregroundColor(.white)
                   .cornerRadius(20)
               }
-              .disabled(tags.count >= 3 && !tags.contains(tag))
+              .disabled(tags.count >= 3 && !tags.contains(tag.rawValue))
             }
           }
           .padding(.bottom, 10)

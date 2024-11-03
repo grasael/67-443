@@ -9,6 +9,12 @@ import SwiftUI
 
 // second page of making a listing
 struct MakeListingTwoView: View {
+  // state variables
+  @State private var unavailableDates: [Date] = []
+  @State private var maxRentalDuration: RentalDuration = .oneWeek
+  @State private var selectedLocations: [PickupLocation] = []
+
+  
   var body: some View {
     VStack(alignment: .leading, spacing: 16) {
       // page title

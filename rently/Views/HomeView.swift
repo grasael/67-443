@@ -12,7 +12,6 @@ struct HomeView: View {
         VStack {
             Text("This is the home page.")
         }
-        .padding()
     }
 }
 

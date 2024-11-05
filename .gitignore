@@ -1,0 +1,10 @@
+# Ignore the GoogleService-Info.plist file
+GoogleService-Info.plist
+
+# Other common ignores
+Pods/
+build/
+DerivedData/
+*.xcuserstate
+*.swp
+

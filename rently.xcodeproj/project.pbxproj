@@ -12,6 +12,7 @@
 		6FC40FF62CD6C50E00F79528 /* MakeListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FF52CD6C50E00F79528 /* MakeListingView.swift */; };
 		6FC40FF82CD6D57800F79528 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FC40FF72CD6D57800F79528 /* Assets.xcassets */; };
 		6FC40FFC2CD8227300F79528 /* MakeListingTwoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FFB2CD8227300F79528 /* MakeListingTwoView.swift */; };
+		6FC40FFF2CD8300000F79528 /* ElegantCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC40FFE2CD8300000F79528 /* ElegantCalendar */; };
 		7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */; };
 		7F1FD5732CCD757500C7A788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5722CCD757500C7A788 /* Assets.xcassets */; };
 		7F1FD5762CCD757500C7A788 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5752CCD757500C7A788 /* Preview Assets.xcassets */; };

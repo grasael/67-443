@@ -21,6 +21,11 @@ struct MakeListingTwoView: View {
       Text("make a listing")
         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
         .bold()
+      
+      // date picker
+      Text("select dates when you're out of town or unavailable for pickups")
+        .font(.system(size: 16))
+      
     }
   }
 }

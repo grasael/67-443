@@ -10,13 +10,15 @@ import SwiftUI
 
 // MARK: - ActiveRentalsView
 struct ActiveRentalsView: View {
+    @StateObject private var rentalViewModel = ActiveRentalsViewModel()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Text("your active rentals")
                     .font(.headline)
                 Spacer()
-                NavigationLink(destination: RentalsView()) { // Navigate to RentalsView
+                NavigationLink(destination: RentalsView()) {
                     Text("see all")
                         .foregroundColor(.blue)
                 }
@@ -24,13 +26,16 @@ struct ActiveRentalsView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
-                    ForEach(0..<5) { index in // Replace 5 with the count of active rentals in your data
-                        ActiveRentalCard()
+                    ForEach(rentalViewModel.rentals) { rental in
+                        ActiveRentalCard(rental: rental)
                     }
                 }
                 .padding(.vertical)
             }
         }
-        .padding(.horizontal)
+        .onAppear {
+            rentalViewModel.fetchActiveRentals()
+        }
     }
 }
+

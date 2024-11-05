@@ -10,37 +10,38 @@ import SwiftUI
 
 // MARK: - ActiveRentalCard
 struct ActiveRentalCard: View {
-  var body: some View {
-    HStack {
-      VStack(alignment: .leading, spacing: 4) {
-        HStack {
-          Image(systemName: "calendar")
-          Text("days until dropoff")
-            .font(.subheadline) // Reduced font size
-            .fixedSize(horizontal: false, vertical: true) // Prevents text breaking
+    var rental: Rental
+    
+    var body: some View {
+        NavigationLink(destination: RentalDetailView(rental: rental)) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Image(systemName: "calendar")
+                        Text("days until dropoff")
+                            .font(.subheadline)
+                    }
+                    Text("@ \(rental.pickupLocation), 12 pm")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }
+                Spacer()
+                Image("sampleItemImage")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 60, height: 60)
+                    .cornerRadius(8)
+                Text("view")
+                    .frame(width: 60, height: 30)
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            .padding()
+            .background(Color.gray.opacity(0.1))
+            .cornerRadius(12)
+            .frame(width: 260)
         }
-        Text("@ university center, 12 pm")
-          .font(.footnote) // Smaller font for subtitle
-          .foregroundColor(.gray)
-          .fixedSize(horizontal: false, vertical: true)
-      }
-      Spacer()
-      Image("sampleItemImage") // Replace with actual image
-        .resizable()
-        .scaledToFill()
-        .frame(width: 60, height: 60) // Adjusted image size
-        .cornerRadius(8)
-      Button("view") {
-        // Action for view
-      }
-      .frame(width: 60, height: 30)
-      .background(Color.green)
-      .foregroundColor(.white)
-      .cornerRadius(8)
     }
-    .padding()
-    .background(Color.gray.opacity(0.1))
-    .cornerRadius(12)
-    .frame(width: 260) // Increased card width slightly
-  }
 }
+

@@ -10,22 +10,35 @@ import SwiftUI
 
 // MARK: - TrendingSearchesView
 struct TrendingSearchesView: View {
+    @StateObject private var viewModel = TrendingViewModel()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("trending searches on campus")
+            Text("Trending Searches on Campus")
                 .font(.headline)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
-                    ForEach(0..<5) { index in
+                    ForEach(viewModel.trendingItems) { item in
                         VStack {
-                            Circle()
-                                .fill(Color.gray.opacity(0.2))
-                                .frame(width: 80, height: 80) // Increased size of the circles
-                            Text("formal dress")
+                            AsyncImage(url: URL(string: item.thumbnailUrl)) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 80, height: 80)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                Circle()
+                                    .fill(Color.gray.opacity(0.2))
+                                    .frame(width: 80, height: 80)
+                            }
+                            Text(item.name)
                         }
                     }
                 }
             }
+        }
+        .onAppear {
+            viewModel.fetchTrendingItems()
         }
     }
 }

@@ -12,7 +12,6 @@
 		6FC40FF62CD6C50E00F79528 /* MakeListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FF52CD6C50E00F79528 /* MakeListingView.swift */; };
 		6FC40FF82CD6D57800F79528 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FC40FF72CD6D57800F79528 /* Assets.xcassets */; };
 		6FC40FFC2CD8227300F79528 /* MakeListingTwoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FFB2CD8227300F79528 /* MakeListingTwoView.swift */; };
-		6FC40FFF2CD8300000F79528 /* ElegantCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC40FFE2CD8300000F79528 /* ElegantCalendar */; };
 		7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */; };
 		7F1FD5732CCD757500C7A788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5722CCD757500C7A788 /* Assets.xcassets */; };
 		7F1FD5762CCD757500C7A788 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5752CCD757500C7A788 /* Preview Assets.xcassets */; };
@@ -53,8 +52,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6FC40FF12CD6C21B00F79528 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Listing.swift; path = rently/Listing.swift; sourceTree = SOURCE_ROOT; };
-		6FC40FF32CD6C3E400F79528 /* ListingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListingsViewModel.swift; path = rently/ListingsViewModel.swift; sourceTree = SOURCE_ROOT; };
+		6FC40FF12CD6C21B00F79528 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Listing.swift; path = rently/Models/Listing.swift; sourceTree = SOURCE_ROOT; };
+		6FC40FF32CD6C3E400F79528 /* ListingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListingsViewModel.swift; path = rently/ViewModels/ListingsViewModel.swift; sourceTree = SOURCE_ROOT; };
 		6FC40FF52CD6C50E00F79528 /* MakeListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeListingView.swift; sourceTree = "<group>"; };
 		6FC40FF72CD6D57800F79528 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6FC40FFB2CD8227300F79528 /* MakeListingTwoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeListingTwoView.swift; sourceTree = "<group>"; };
@@ -109,6 +108,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6FC410602CDACF3800F79528 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6FC40FF12CD6C21B00F79528 /* Listing.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6FC410612CDACF3C00F79528 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				6FC40FF32CD6C3E400F79528 /* ListingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		7F1FD5622CCD757400C7A788 = {
 			isa = PBXGroup;
 			children = (
@@ -129,8 +144,8 @@
 		7F1FD56D2CCD757400C7A788 /* rently */ = {
 			isa = PBXGroup;
 			children = (
-				7F46DB712CCEDB6400181DB6 /* ViewModels */,
-				7F46DB702CCEDB5200181DB6 /* Models */,
+				6FC410612CDACF3C00F79528 /* ViewModels */,
+				6FC410602CDACF3800F79528 /* Models */,
 				7F46DB6F2CCEDB4700181DB6 /* Views */,
 				7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */,
 				7F1FD5722CCD757500C7A788 /* Assets.xcassets */,

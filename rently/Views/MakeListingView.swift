@@ -47,26 +47,6 @@ struct MakeListingView: View {
           // upload photos
           Text("upload photos (max 4):")
             .font(.system(size: 16))
-          /*HStack {
-           ForEach(0..<4, id: \.self) { index in
-           if index < photos.count {
-           Image(uiImage: photos[index])
-           .resizable()
-           .frame(width: 60, height: 60)
-           .cornerRadius(8)
-           } else {
-           Button(action: {
-           // add photo
-           }) {
-           Image(systemName: "plus")
-           .resizable()
-           .frame(width: 60, height: 60)
-           .background(Color.gray.opacity(0.1))
-           .cornerRadius(8)
-           }
-           }
-           }
-           }*/
           
           // add title
           TextField("title", text: $title)

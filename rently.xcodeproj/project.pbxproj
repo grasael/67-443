@@ -47,7 +47,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				6FC40FFF2CD8300000F79528 /* ElegantCalendar in Frameworks */,
+=======
+>>>>>>> parent of 8b0218e (Merge branch 'main' into Abby)
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,9 +142,12 @@
 			dependencies = (
 			);
 			name = rently;
+<<<<<<< HEAD
 			packageProductDependencies = (
 				6FC40FFE2CD8300000F79528 /* ElegantCalendar */,
 			);
+=======
+>>>>>>> parent of 8b0218e (Merge branch 'main' into Abby)
 			productName = rently;
 			productReference = 7F1FD56B2CCD757400C7A788 /* rently.app */;
 			productType = "com.apple.product-type.application";
@@ -170,9 +176,12 @@
 				Base,
 			);
 			mainGroup = 7F1FD5622CCD757400C7A788;
+<<<<<<< HEAD
 			packageReferences = (
 				6FC40FFD2CD8300000F79528 /* XCRemoteSwiftPackageReference "ElegantCalendar" */,
 			);
+=======
+>>>>>>> parent of 8b0218e (Merge branch 'main' into Abby)
 			productRefGroup = 7F1FD56C2CCD757400C7A788 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -416,6 +425,7 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+<<<<<<< HEAD
 
 /* Begin XCRemoteSwiftPackageReference section */
 		6FC40FFD2CD8300000F79528 /* XCRemoteSwiftPackageReference "ElegantCalendar" */ = {
@@ -435,6 +445,8 @@
 			productName = ElegantCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
+=======
+>>>>>>> parent of 8b0218e (Merge branch 'main' into Abby)
 	};
 	rootObject = 7F1FD5632CCD757400C7A788 /* Project object */;
 }

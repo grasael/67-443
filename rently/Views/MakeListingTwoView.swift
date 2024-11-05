@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ElegantCalendar
 
 // second page of making a listing
 struct MakeListingTwoView: View {

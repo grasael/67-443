@@ -56,6 +56,7 @@ struct ProfileView: View {
                 Text("Carnegie Mellon University")
                 Button(action: {
                     // Edit profile action
+                    // Will add functionality to this later
                 }) {
                     Text("edit profile")
                         .padding(.horizontal, 24)
@@ -82,6 +83,7 @@ struct ProfileView: View {
         
         // Content based on selected tab
         if selectedTab == 0 {
+            //Should add another view
             ListView()
         } else {
             LikesView()

@@ -43,6 +43,9 @@
 		7F46DBC22CD560B000181DB6 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = 7F46DBC12CD560B000181DB6 /* FirebaseVertexAI */; };
 		7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DBC32CD5612600181DB6 /* UserViewModel.swift */; };
 		7F6C83CA2CD879C800599E36 /* LikesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C83C92CD879C800599E36 /* LikesView.swift */; };
+		7F6C83CC2CD9312700599E36 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C83CB2CD9312700599E36 /* OnboardingView.swift */; };
+		7F6C83CF2CD9328200599E36 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C83CE2CD9328200599E36 /* OnboardingViewController.swift */; };
+		7FCCF7A82CDC1A4B008B22D0 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7A72CDC1A4B008B22D0 /* Listing.swift */; };
 		7FDC9B392CD58CD200CAE839 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FDC9B372CD58CA500CAE839 /* GoogleService-Info.plist */; };
 		7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +64,9 @@
 		7F46DB902CD454D600181DB6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7F46DBC32CD5612600181DB6 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		7F6C83C92CD879C800599E36 /* LikesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesView.swift; sourceTree = "<group>"; };
+		7F6C83CB2CD9312700599E36 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		7F6C83CE2CD9328200599E36 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		7FCCF7A72CDC1A4B008B22D0 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
 		7FDC9B372CD58CA500CAE839 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +125,7 @@
 		7F1FD56D2CCD757400C7A788 /* rently */ = {
 			isa = PBXGroup;
 			children = (
+				7F6C83CD2CD931F800599E36 /* ViewControllers */,
 				7F46DB712CCEDB6400181DB6 /* ViewModels */,
 				7F46DB702CCEDB5200181DB6 /* Models */,
 				7F46DB6F2CCEDB4700181DB6 /* Views */,
@@ -146,6 +153,7 @@
 				7F6C83C92CD879C800599E36 /* LikesView.swift */,
 				7F46DB742CCEDBB200181DB6 /* SearchView.swift */,
 				7F46DB762CCEDBBD00181DB6 /* ListView.swift */,
+				7F6C83CB2CD9312700599E36 /* OnboardingView.swift */,
 				7F46DB782CCEDBC900181DB6 /* RentalsView.swift */,
 				7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */,
 				7F46DB7A2CCEDBD400181DB6 /* ProfileView.swift */,
@@ -157,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				7F46DB902CD454D600181DB6 /* User.swift */,
+				7FCCF7A72CDC1A4B008B22D0 /* Listing.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -167,6 +176,14 @@
 				7F46DBC32CD5612600181DB6 /* UserViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		7F6C83CD2CD931F800599E36 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7F6C83CE2CD9328200599E36 /* OnboardingViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F6C83CF2CD9328200599E36 /* OnboardingViewController.swift in Sources */,
 				7F46DB792CCEDBC900181DB6 /* RentalsView.swift in Sources */,
 				7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */,
 				7F46DB752CCEDBB300181DB6 /* SearchView.swift in Sources */,
@@ -276,8 +294,10 @@
 				7F46DB772CCEDBBD00181DB6 /* ListView.swift in Sources */,
 				7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */,
 				7F6C83CA2CD879C800599E36 /* LikesView.swift in Sources */,
+				7FCCF7A82CDC1A4B008B22D0 /* Listing.swift in Sources */,
 				7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */,
 				7F46DB7B2CCEDBD400181DB6 /* ProfileView.swift in Sources */,
+				7F6C83CC2CD9312700599E36 /* OnboardingView.swift in Sources */,
 				7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */,
 				7F46DB912CD454D600181DB6 /* User.swift in Sources */,
 			);

@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct SearchView: View {
-    var body: some View {
+  var body: some View {
         VStack {
             Text("This is the search page.")
         }
         .padding()
+        .onAppear {
+            // Call populateListings() when the view appears
+//           populateListings()
+        }
     }
 }
 

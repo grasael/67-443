@@ -18,7 +18,7 @@ struct ActiveRentalCard: View {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Image(systemName: "calendar")
-                        Text("days until dropoff")
+                        Text(rental.rentalStatusText)
                             .font(.subheadline)
                     }
                     Text("@ \(rental.pickupLocation), 12 pm")

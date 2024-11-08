@@ -26,7 +26,8 @@ struct rentlyApp: App {
     WindowGroup {
       NavigationView {
         //AppView()
-          ContentView()
+          //ContentView()
+          OnboardingView()
       }
     }
   }

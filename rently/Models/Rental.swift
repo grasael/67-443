@@ -52,4 +52,14 @@ struct Rental: Codable, Identifiable {
     func getListing(from listings: [Listing]) -> Listing? {
         return listings.first { $0.id == self.listingID }
     }
+  
+    var rentalDurationInDays: Int {
+        let calendar = Calendar.current
+        return calendar.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+    }
+
+    func calculateTotalCost(for listing: Listing?) -> Double {
+        guard let pricePerDay = listing?.price else { return 0.0 }
+        return Double(rentalDurationInDays) * pricePerDay
+    }
 }

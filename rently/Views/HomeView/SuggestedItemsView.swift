@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SuggestedItemsView: View {
   @StateObject private var viewModel = ListingsViewModel()
-  
+
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
       HStack {
@@ -27,42 +27,43 @@ struct SuggestedItemsView: View {
       ScrollView(.horizontal, showsIndicators: false) {
         HStack(spacing: 15) {
           ForEach(viewModel.listings.prefix(5)) { listing in
-            VStack {
-              // Replace with AsyncImage to load images from URL
-              if let imageUrl = URL(string: listing.photoURLs.first ?? "sampleItemImage") {
-                AsyncImage(url: imageUrl) { phase in
-                  switch phase {
-                  case .empty:
-                    ProgressView() // Show a loading indicator while the image is loading
-                      .frame(width: 80, height: 80)
-                  case .success(let image):
-                    image
-                      .resizable()
-                      .scaledToFill()
-                      .frame(width: 80, height: 80)
-                      .clipped()
-                      .cornerRadius(8)
-                  case .failure:
-                    Image("sampleItemImage") // Fallback image in case of error
-                      .resizable()
-                      .frame(width: 80, height: 80)
-                      .cornerRadius(8)
-                  @unknown default:
-                    EmptyView()
+            NavigationLink(destination: ListingView(listing: listing)) {
+              VStack {
+                // Image carousel for the listing
+                if let imageUrl = URL(string: listing.photoURLs.first ?? "sampleItemImage") {
+                  AsyncImage(url: imageUrl) { phase in
+                    switch phase {
+                    case .empty:
+                      ProgressView()
+                        .frame(width: 80, height: 80)
+                    case .success(let image):
+                      image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 80, height: 80)
+                        .clipped()
+                        .cornerRadius(8)
+                    case .failure:
+                      Image("sampleItemImage")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .cornerRadius(8)
+                    @unknown default:
+                      EmptyView()
+                    }
                   }
                 }
+                Text(listing.title)
+                Text("$\(listing.price, specifier: "%.2f")/day")
+                Text("size \(listing.size.rawValue)")
               }
-              Text(listing.title)
-              Text("$\(listing.price, specifier: "%.2f")/day")
-              Text("size \(listing.size.rawValue)")
             }
           }
         }
       }
       .onAppear {
-        viewModel.fetchListings() // Fetch listings when the view appears
+        viewModel.fetchListings()
       }
     }
   }
-  
 }

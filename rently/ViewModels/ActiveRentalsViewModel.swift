@@ -12,6 +12,7 @@ class ActiveRentalsViewModel: ObservableObject {
     @Published var rentals = [Rental]()
     @Published var isLoading = false
     @Published var renter: User?
+    @Published var listing: Listing?
     
     private var db = Firestore.firestore()
     private let renteeID = "0" // Replace with actual hardcoded ID
@@ -49,7 +50,6 @@ class ActiveRentalsViewModel: ObservableObject {
     }
   
       
-  //TODO: refactor into a seperate ViewModel maybe
   func loadRenterDetails(rental: Rental) {
          print("Loading renter details for rental with renter ID: \(rental.renterID)")
          fetchUser(byID: rental.renterID) { [weak self] user in
@@ -91,4 +91,46 @@ class ActiveRentalsViewModel: ObservableObject {
          }
      }
 
+
+
+func loadListingDetails(rental: Rental) {
+        print("Loading listing details for rental with listing ID: \(rental.listingID)")
+        fetchListing(byID: rental.listingID) { [weak self] listing in
+            DispatchQueue.main.async {
+                self?.listing = listing
+                if let listing = listing {
+                    print("Successfully set listing: \(listing.title)")
+                } else {
+                    print("Failed to set listing - listing is nil")
+                }
+            }
+        }
+    }
+    
+    func fetchListing(byID listingID: String, completion: @escaping (Listing?) -> Void) {
+        db.collection("Listings").document(listingID).getDocument { snapshot, error in
+            if let error = error {
+                print("Error fetching listing: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                print("No snapshot received for listingID: \(listingID)")
+                completion(nil)
+                return
+            }
+            
+            print("Fetched snapshot for listingID \(listingID): \(snapshot.data() ?? [:])")
+
+            do {
+                let listing = try snapshot.data(as: Listing.self)
+                print("Successfully converted snapshot to Listing: \(listing)")
+                completion(listing)
+            } catch {
+                print("Error converting snapshot to Listing: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
+    }
 }

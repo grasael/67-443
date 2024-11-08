@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-import SDWebImageSwiftUI
+
 
 struct ListingView: View {
     var listing: Listing
@@ -15,19 +15,34 @@ struct ListingView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // Display image from URL
-                if let imageUrl = listing.photoURLs.first, let url = URL(string: imageUrl) {
-                    WebImage(url: url)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 300)
-                        .clipped()
-                } else {
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.2))
-                        .frame(height: 300)
-                        .overlay(Text("No Image").foregroundColor(.gray))
+                
+                // Image Carousel with Adjusted Size
+                TabView {
+                    ForEach(listing.photoURLs, id: \.self) { photoURL in
+                        AsyncImage(url: URL(string: photoURL)) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(maxWidth: .infinity, maxHeight: 300)
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(maxWidth: .infinity, maxHeight: 300)
+                                    .clipped()
+                            case .failure:
+                                Image("sampleItemImage")
+                                    .resizable()
+                                    .frame(maxWidth: .infinity, maxHeight: 300)
+                                    .clipped()
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+                    }
                 }
+                .frame(height: 300) // Set fixed height for the carousel
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic)) // Carousel style
                 
                 // Title and Price
                 Text(listing.title)
@@ -96,28 +111,32 @@ struct ListingView: View {
             .padding()
         }
         .navigationBarTitle("Listing Details", displayMode: .inline)
+        .navigationBarBackButtonHidden(false) // Ensure back button is visible
     }
 }
 
-#Preview {
-  let sampleListing = Listing(
-      id: "1",
-      title: "Princess Polly Romper",
-      creationTime: Date(),
-      description: "Gorgeous Princess Polly romper, perfect for a picnic or a casual day out. Worn a few times and rented twice, still in very good condition. Please cold wash and air dry.",
-      category: .dresses,
-      userID: "user123",
-      size: .small,
-      price: 5.0,
-      color: .black,
-      condition: .veryGood,
-      photoURLs: ["https://example.com/sample-image.jpg"], // Replace with a valid image URL for preview
-      tags: [.casual],
-      brand: "Princess Polly",
-      maxRentalDuration: .oneWeek,
-      pickupLocations: [.uc, .fifthClyde],
-      available: true
-  )
-    ListingView(listing: sampleListing)
-}
+struct ListingView_Previews: PreviewProvider {
+    static var previews: some View {
+        let sampleListing = Listing(
+            id: "1",
+            title: "Princess Polly Romper",
+            creationTime: Date(),
+            description: "Gorgeous Princess Polly romper, perfect for a picnic or a casual day out. Worn a few times and rented twice, still in very good condition. Please cold wash and air dry.",
+            category: .dresses,
+            userID: "user123",
+            size: .small,
+            price: 5.0,
+            color: .black,
+            condition: .veryGood,
+            photoURLs: ["https://example.com/sample-image.jpg", "https://example.com/sample-image2.jpg"],
+            tags: [.casual, .vintage],
+            brand: "Princess Polly",
+            maxRentalDuration: .oneWeek,
+            pickupLocations: [.uc, .fifthClyde],
+            available: true
+        )
 
+        ListingView(listing: sampleListing)
+            .previewDevice("iPhone 14")
+    }
+}

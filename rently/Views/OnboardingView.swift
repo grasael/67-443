@@ -108,6 +108,10 @@ struct OnboardingView: View {
                         styleChoices: [],
                         events: []
                     )
+                    // Initialize UserViewModel and add user to Firestore
+                    let userViewModel = UserViewModel(user: newUser)
+                    userViewModel.addUser() // Call addUser to save the user in Firestore
+                    
                     print("DEBUG GRACE: we are completing onboarding.")
                     onboardingComplete(newUser)
                 }

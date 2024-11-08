@@ -40,6 +40,7 @@ class UserRepository: ObservableObject {
     do {
       let newUser = user
       _ = try store.collection(path).addDocument(from: newUser)
+        print("User added to Firestore")
     } catch {
       fatalError("Unable to add user: \(error.localizedDescription).")
     }

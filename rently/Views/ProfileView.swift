@@ -86,7 +86,7 @@ struct ProfileView: View {
                     
                     // Content based on selected tab
                     if selectedTab == 0 {
-                        ListView()
+                        ListingsProfileView()
                     } else {
                         LikesView()
                     }
@@ -99,4 +99,3 @@ struct ProfileView: View {
         }
     }
 }
-

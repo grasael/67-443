@@ -7,6 +7,9 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    var onSignUpComplete: (User) -> Void // Closure to send user data back to ContentView
+    @State private var showSignUp = false
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -19,9 +22,13 @@ struct WelcomeView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: OnboardingView(onboardingComplete: { user in
-                    print("Onboarding complete with user: \(user)")
-                })) {
+                // "Get Started" button to navigate to OnboardingView
+                NavigationLink(
+                    destination: OnboardingView(onboardingComplete: { user in
+                        // Call onSignUpComplete with the new User after onboarding
+                        onSignUpComplete(user)
+                    })
+                ) {
                     Text("get started")
                         .font(.system(size: 18, weight: .semibold))
                         .padding()
@@ -35,6 +42,7 @@ struct WelcomeView: View {
                         .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
                 }
                 
+                // "I already have an account" link to navigate to SignInView
                 NavigationLink(destination: SignInView()) {
                     Text("I already have an account")
                         .font(.system(size: 14))
@@ -55,6 +63,8 @@ struct WelcomeView: View {
 
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
-        WelcomeView()
+        WelcomeView { user in
+            print("User signed up: \(user)")
+        }
     }
 }

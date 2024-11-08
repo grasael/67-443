@@ -55,6 +55,7 @@
 		CA127FB82CD9CCE2006330DC /* TrendingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FB72CD9CCE2006330DC /* TrendingItem.swift */; };
 		CA127FBA2CD9CCFF006330DC /* TrendingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FB92CD9CCFF006330DC /* TrendingViewModel.swift */; };
 		CA127FBF2CDACA81006330DC /* PopulateListings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FBE2CDACA81006330DC /* PopulateListings.swift */; };
+		CA8C1D0F2CDD783C00D75B93 /* ListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8C1D0E2CDD783C00D75B93 /* ListingView.swift */; };
 		CA96ED1B2CD670BC00E6D750 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED1A2CD670BC00E6D750 /* SearchBarView.swift */; };
 		CA96ED1D2CD670CA00E6D750 /* ActiveRentalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED1C2CD670CA00E6D750 /* ActiveRentalsView.swift */; };
 		CA96ED1F2CD670D500E6D750 /* KeepSearchingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED1E2CD670D500E6D750 /* KeepSearchingView.swift */; };
@@ -91,6 +92,7 @@
 		CA127FB72CD9CCE2006330DC /* TrendingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingItem.swift; sourceTree = "<group>"; };
 		CA127FB92CD9CCFF006330DC /* TrendingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingViewModel.swift; sourceTree = "<group>"; };
 		CA127FBE2CDACA81006330DC /* PopulateListings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopulateListings.swift; sourceTree = "<group>"; };
+		CA8C1D0E2CDD783C00D75B93 /* ListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingView.swift; sourceTree = "<group>"; };
 		CA96ED1A2CD670BC00E6D750 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		CA96ED1C2CD670CA00E6D750 /* ActiveRentalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRentalsView.swift; sourceTree = "<group>"; };
 		CA96ED1E2CD670D500E6D750 /* KeepSearchingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSearchingView.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				7F46DB782CCEDBC900181DB6 /* RentalsView.swift */,
 				7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */,
 				7F46DB7A2CCEDBD400181DB6 /* ProfileView.swift */,
+				CA8C1D0E2CDD783C00D75B93 /* ListingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				CA127FB82CD9CCE2006330DC /* TrendingItem.swift in Sources */,
 				CA96ED1F2CD670D500E6D750 /* KeepSearchingView.swift in Sources */,
 				7F46DB772CCEDBBD00181DB6 /* ListView.swift in Sources */,
+				CA8C1D0F2CDD783C00D75B93 /* ListingView.swift in Sources */,
 				CA96ED1B2CD670BC00E6D750 /* SearchBarView.swift in Sources */,
 				7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */,
 				7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */,

@@ -5,50 +5,47 @@
 //  Created by Sara Riyad on 11/2/24.
 //
 
-import Foundation
-import Combine
+import SwiftUI
+import FirebaseFirestore
 
 class SearchViewModel: ObservableObject {
-    @Published var searchText: String = ""
-    @Published var filteredListings: [Listing] = []
-    @Published var filteredUsers: [User] = []
+    @Published var listings = [Listing]()
+    private let db = Firestore.firestore()
 
-    private var allListings: [Listing] = [] // Fetch all listings here
-    private var allUsers: [User] = [] // Fetch all users here
-
-    init() {
-        loadListings()
-        loadUsers()
-    }
-
-    func loadListings() {
-        // Load your listings (mock data or from a service)
-    }
-
-    func loadUsers() {
-        // Load your users (mock data or from a service)
-    }
-
-    func performSearch() {
-        filteredListings = allListings.filter {
-            $0.title.lowercased().contains(searchText.lowercased()) ||
-            $0.category.rawValue.lowercased().contains(searchText.lowercased()) ||
-            $0.size.rawValue.lowercased().contains(searchText.lowercased()) ||
-            $0.color.rawValue.lowercased().contains(searchText.lowercased()) ||
-            $0.brand.lowercased().contains(searchText.lowercased()) ||
-            $0.tags.map { $0.rawValue.lowercased() }.contains(searchText.lowercased())
+    func fetchListings() {
+        db.collection("listings").getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching listings: \(error)")
+                return
+            }
+            
+            self.listings = snapshot?.documents.map { document in
+                let data = document.data()
+                
+                guard let idString = document.documentID as String?,
+                      let uuid = UUID(uuidString: idString) else {
+                    return Listing(id: UUID(), title: "Untitled", creationTime: Date(), description: "", category: .womensTops, size: .medium, price: 0.0, color: .blue, condition: "", photoURLs: [], tags: [], brand: "", maxRentalDuration: .oneMonth, pickupLocation: .uc, available: false, rating: 0.0)
+                }
+                
+                return Listing(
+                    id: uuid,
+                    title: data["title"] as? String ?? "Untitled",
+                    creationTime: Date(), // Replace with actual timestamp if needed
+                    description: data["description"] as? String ?? "",
+                    category: Category(rawValue: data["category"] as? String ?? "") ?? .womensTops,
+                    size: ItemSize(rawValue: data["size"] as? String ?? "medium") ?? .medium,
+                    price: data["price"] as? Double ?? 0.0,
+                    color: ItemColor(rawValue: data["color"] as? String ?? "blue") ?? .blue,
+                    condition: data["condition"] as? String ?? "",
+                    photoURLs: data["photoURLs"] as? [String] ?? [],
+                    tags: [], // Use actual tags if available
+                    brand: data["brand"] as? String ?? "",
+                    maxRentalDuration: RentalDuration(rawValue: data["maxRentalDuration"] as? String ?? "oneMonth") ?? .oneMonth,
+                    pickupLocation: PickupLocation(rawValue: data["pickupLocation"] as? String ?? "uc") ?? .uc,
+                    available: data["available"] as? Bool ?? false,
+                    rating: data["rating"] as? Float ?? 0.0
+                )
+            } ?? []
         }
-        
-        filteredUsers = allUsers.filter {
-            $0.firstName.lowercased().contains(searchText.lowercased()) ||
-            $0.lastName.lowercased().contains(searchText.lowercased()) ||
-            $0.username.lowercased().contains(searchText.lowercased())
-        }
-    }
-
-    func clearSearch() {
-        searchText = ""
-        filteredListings = []
-        filteredUsers = []
     }
 }

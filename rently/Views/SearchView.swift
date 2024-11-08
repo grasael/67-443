@@ -8,122 +8,37 @@
 import SwiftUI
 
 struct SearchView: View {
-    @ObservedObject var viewModel = SearchViewModel()
+    @StateObject private var viewModel = SearchViewModel()
 
     var body: some View {
         NavigationView {
-            VStack {
-                HStack {
-                    TextField("Search for anything...", text: $viewModel.searchText, onCommit: {
-                        viewModel.performSearch()
-                    })
-                    .padding(8)
-                    .background(Color(.systemGray5))
-                    .cornerRadius(8)
-                    
-                    if !viewModel.searchText.isEmpty {
-                        Button(action: {
-                            viewModel.clearSearch()
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.gray)
-                        }
-                    }
-                }
-                .padding()
-
-                // Display categories if searchText is empty
-                if viewModel.searchText.isEmpty {
-                    VStack(alignment: .leading) {
-                        Text("Shop by category")
-                            .font(.headline)
-                            .padding(.horizontal)
-
-                        // Categories grid (replace with actual icons/images)
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 16) {
-                                CategoryIconView(iconName: "tshirt", label: "tops")
-                                CategoryIconView(iconName: "pants", label: "bottoms")
-                                CategoryIconView(iconName: "coat", label: "outerwear")
-                                CategoryIconView(iconName: "dress", label: "dresses")
-                            }
-                            .padding(.horizontal)
+            List(viewModel.listings) { listing in
+                NavigationLink(destination: ListingDetailView(listingID: listing.id)) {
+                    HStack {
+                        AsyncImage(url: URL(string: listing.photoURLs.first ?? "")) { image in
+                            image.resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        } placeholder: {
+                            Color.gray
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
 
-                        SeasonalThemesView()
-                    }
-                } else {
-                    // Display search results if searchText is not empty
-                    List {
-                        if !viewModel.filteredListings.isEmpty {
-                            Section(header: Text("Listings")) {
-                                ForEach(viewModel.filteredListings) { listing in
-                                    ListingRow(listing: listing)
-                                }
-                            }
-                        }
-                        
-                        if !viewModel.filteredUsers.isEmpty {
-                            Section(header: Text("Profiles")) {
-                                ForEach(viewModel.filteredUsers) { user in
-                                    UserProfileRow(user: user)
-                                }
-                            }
+                        VStack(alignment: .leading) {
+                            Text(listing.title)
+                                .font(.headline)
+                            Text("$\(String(format: "%.2f", listing.price))/day")
+                                .font(.subheadline)
                         }
                     }
                 }
             }
-            .navigationTitle("rently")
-        }
-    }
-}
-
-// Category icon view for "Shop by category" section
-struct CategoryIconView: View {
-    var iconName: String
-    var label: String
-
-    var body: some View {
-        VStack {
-            Image(systemName: iconName)
-                .resizable()
-                .frame(width: 40, height: 40)
-                .padding()
-            Text(label)
-                .font(.caption)
-        }
-    }
-}
-
-// Seasonal themes view
-struct SeasonalThemesView: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            // Each theme item can be replaced with relevant images
-            SeasonalThemeView(imageName: "interviewSeason", title: "interview season")
-            SeasonalThemeView(imageName: "winterBreak", title: "winter break")
-            SeasonalThemeView(imageName: "halloween", title: "halloween")
-        }
-        .padding(.horizontal)
-    }
-}
-
-struct SeasonalThemeView: View {
-    var imageName: String
-    var title: String
-
-    var body: some View {
-        ZStack(alignment: .bottomLeading) {
-            Image(imageName)
-                .resizable()
-                .scaledToFill()
-                .frame(height: 120)
-                .clipped()
-            Text(title)
-                .foregroundColor(.white)
-                .padding(8)
-                .background(Color.black.opacity(0.7))
-                .cornerRadius(4)
+            .navigationTitle("Search Listings")
+            .onAppear {
+                viewModel.fetchListings()
+            }
         }
     }
 }

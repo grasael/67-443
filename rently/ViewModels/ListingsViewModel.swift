@@ -1,22 +1,21 @@
-//
-//  ListingsViewModel.swift
-//  rently
-//
-//  Created by Abby Chen on 11/2/24.
-//
-
 import Foundation
-import SwiftUI
+import Combine
 
 class ListingsViewModel: ObservableObject {
-  @Published var listings: [Listing] = []
-  
-  // add listing
-  func addListing() {
+    @Published var listings: [Listing] = []
+    private var repository = ListingRepository()
+    private var cancellables: Set<AnyCancellable> = []
+
+    init() {
+        repository.$listings
+            .assign(to: \.listings, on: self)
+            .store(in: &cancellables)
+    }
+
+    func fetchListings() {
+        repository.fetchListings()
+    }
     
-  }
-  
-  // edit listing
-  
-  // delete listing
+    //CRUD will go here later
 }
+

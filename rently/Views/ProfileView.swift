@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ProfileView: View {
+    let user: User
     @State private var selectedTab = 0 // 0 for Listings, 1 for Likes
+
 
     var body: some View {
         VStack {
@@ -26,15 +28,15 @@ struct ProfileView: View {
                     .foregroundColor(.gray)
                 
                 HStack() {
-                    Text("amelia bose")
+                    Text("\(user.firstName) \(user.lastName)")
                         .font(.title2)
                         .fontWeight(.bold)
                     
                     HStack(spacing: 2) {
-                        Text("5")
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.yellow)
-                    }
+                       Text("\(user.rating, specifier: "%.1f")")
+                       Image(systemName: "star.fill")
+                           .foregroundColor(.yellow)
+                   }
                 }
                 Spacer()
 
@@ -53,7 +55,7 @@ struct ProfileView: View {
             
             HStack {
                 Image(systemName: "graduationcap.fill")
-                Text("Carnegie Mellon University")
+                Text("user.university")
                 Button(action: {
                     // Edit profile action
                     // Will add functionality to this later
@@ -92,8 +94,4 @@ struct ProfileView: View {
         Spacer()
 
     }
-}
-
-#Preview {
-    ProfileView()
 }

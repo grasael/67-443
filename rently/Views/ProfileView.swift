@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     let user: User
+    @StateObject private var listingsViewModel = ListingsViewModel() // Create an instance of ListingsViewModel
     @State private var selectedTab = 0 // 0 for Listings, 1 for Likes
 
     var body: some View {
@@ -78,15 +79,15 @@ struct ProfileView: View {
                     Divider()
                     
                     Picker("", selection: $selectedTab) {
-                        Text("Listings").tag(0)
+                        Text("Listings (\(listingsViewModel.listingsCount))").tag(0)
                         Text("Likes").tag(1)
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding(.horizontal)
                     
-                    // Content based on selected tab
                     if selectedTab == 0 {
                         ListingsProfileView()
+                            .environmentObject(listingsViewModel)
                     } else {
                         LikesView()
                     }
@@ -96,6 +97,10 @@ struct ProfileView: View {
                 .padding()
             }
             .navigationTitle("Profile")
+            .onAppear {
+                listingsViewModel.fetchListings()
+            }
         }
     }
 }
+

@@ -8,6 +8,7 @@ DerivedData/
 *.xcuserstate
 *.swp
 .swiftpm/
-xcuserdata/
-
+*.xcuserdata/
+*.xcshareddata/
+*.xcuserdatad/
 

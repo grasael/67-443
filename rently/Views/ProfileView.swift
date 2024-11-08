@@ -55,7 +55,7 @@ struct ProfileView: View {
             
             HStack {
                 Image(systemName: "graduationcap.fill")
-                Text("user.university")
+                Text("\(user.university)")
                 Button(action: {
                     // Edit profile action
                     // Will add functionality to this later

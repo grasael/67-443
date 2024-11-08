@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AppView: View {
+    let user: User
     var body: some View {
         TabView {
          HomeView()
@@ -30,7 +31,7 @@ struct AppView: View {
          Image(systemName: "hanger")
          Text("rentals")
          }
-         ProfileView()
+        ProfileView(user: user)
          .tabItem {
          Image(systemName: "person")
          Text("profile")
@@ -40,5 +41,18 @@ struct AppView: View {
 }
 
 #Preview {
-    AppView()
+    AppView(user: User(
+        firstName: "Example",
+        lastName: "User",
+        username: "exampleuser",
+        pronouns: "they/them",
+        email: "example@domain.com",
+        password: "password",
+        university: "Example University",
+        rating: 5.0,
+        listings: [],
+        likedItems: [],
+        styleChoices: [],
+        events: []
+    ))
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct ListView: View {
     var body: some View {
         VStack {
+            // This is for making a listing.
             Text("This is the list page.")
         }
         .padding()

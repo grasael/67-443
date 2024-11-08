@@ -16,6 +16,10 @@ class ListingsViewModel: ObservableObject {
         repository.fetchListings()
     }
     
+    var listingsCount: Int {
+        return listings.count
+    }
+    
     //CRUD will go here later
 }
 

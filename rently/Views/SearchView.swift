@@ -13,7 +13,6 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack {
-                // Search bar at the top
                 HStack {
                     TextField("Search for anything...", text: $viewModel.searchText, onCommit: {
                         viewModel.performSearch()
@@ -47,12 +46,10 @@ struct SearchView: View {
                                 CategoryIconView(iconName: "pants", label: "bottoms")
                                 CategoryIconView(iconName: "coat", label: "outerwear")
                                 CategoryIconView(iconName: "dress", label: "dresses")
-                                // Add more categories as needed
                             }
                             .padding(.horizontal)
                         }
 
-                        // Seasonal themes
                         SeasonalThemesView()
                     }
                 } else {

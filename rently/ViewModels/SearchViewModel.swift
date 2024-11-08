@@ -2,7 +2,7 @@
 //  SearchViewModel.swift
 //  rently
 //
-//  Created by Sara Riyad on 11/7/24.
+//  Created by Sara Riyad on 11/2/24.
 //
 
 import Foundation

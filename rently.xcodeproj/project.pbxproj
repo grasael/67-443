@@ -52,6 +52,8 @@
 		7FCCF7DB2CDDB423008B22D0 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7DA2CDDB423008B22D0 /* Review.swift */; };
 		7FCCF7DD2CDDB8F5008B22D0 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7DC2CDDB8F5008B22D0 /* ReviewViewModel.swift */; };
 		7FCCF7DF2CDDB94B008B22D0 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7DE2CDDB94B008B22D0 /* ReviewRepository.swift */; };
+		7FCCF7E32CDDCE11008B22D0 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7E22CDDCE11008B22D0 /* WelcomeView.swift */; };
+		7FCCF7E52CDDCE7B008B22D0 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7E42CDDCE7B008B22D0 /* SignInView.swift */; };
 		7FDC9B392CD58CD200CAE839 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FDC9B372CD58CA500CAE839 /* GoogleService-Info.plist */; };
 		7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -79,6 +81,8 @@
 		7FCCF7DA2CDDB423008B22D0 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		7FCCF7DC2CDDB8F5008B22D0 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		7FCCF7DE2CDDB94B008B22D0 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
+		7FCCF7E22CDDCE11008B22D0 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		7FCCF7E42CDDCE7B008B22D0 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		7FDC9B372CD58CA500CAE839 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,6 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				7F46DB6D2CCEDAF700181DB6 /* AppView.swift */,
+				7FCCF7E22CDDCE11008B22D0 /* WelcomeView.swift */,
+				7FCCF7E42CDDCE7B008B22D0 /* SignInView.swift */,
 				7F46DB722CCEDBA700181DB6 /* HomeView.swift */,
 				7FCCF7D82CDDAE60008B22D0 /* ReviewsView.swift */,
 				7F6C83C92CD879C800599E36 /* LikesView.swift */,
@@ -325,12 +331,14 @@
 				7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */,
 				7FCCF7D92CDDAE60008B22D0 /* ReviewsView.swift in Sources */,
 				7FCCF7DB2CDDB423008B22D0 /* Review.swift in Sources */,
+				7FCCF7E32CDDCE11008B22D0 /* WelcomeView.swift in Sources */,
 				7F46DB7B2CCEDBD400181DB6 /* ProfileView.swift in Sources */,
 				7FCCF7AD2CDC8FF7008B22D0 /* OnboardingController.swift in Sources */,
 				7F6C83CC2CD9312700599E36 /* OnboardingView.swift in Sources */,
 				7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */,
 				7FCCF7D52CDD9114008B22D0 /* UserRepository.swift in Sources */,
 				7F46DB912CD454D600181DB6 /* User.swift in Sources */,
+				7FCCF7E52CDDCE7B008B22D0 /* SignInView.swift in Sources */,
 				7FCCF7DF2CDDB94B008B22D0 /* ReviewRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

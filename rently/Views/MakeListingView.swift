@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct MakeListingView: View {
   @Environment(\.presentationMode) var presentationMode
@@ -14,14 +15,19 @@ struct MakeListingView: View {
   // state variables for form inputs
   @State private var title = ""
   @State private var description = ""
-  @State private var category = ""
+  @State private var category: Category = .womensTops
   @State private var brand = ""
   @State private var condition = ""
-  @State private var size = ""
+  @State private var size: ItemSize = .xxsmall
   @State private var price = ""
-  @State private var color = ""
-  @State private var tags: [String] = []
+  @State private var color: ItemColor = .red
+  @State private var tags: [TagOption] = []
   @State private var nextScreen = false
+  
+  // photo selection
+  @State private var selectedImages: [PhotosPickerItem] = []
+  // loaded images
+  @State private var uploadedImages: [UIImage] = []
   
   var body: some View {
     NavigationView {
@@ -47,6 +53,37 @@ struct MakeListingView: View {
           // upload photos
           Text("upload photos (max 4):")
             .font(.system(size: 16))
+          
+          // placeholders for up to 4 photos
+          LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 4), spacing: 10) {
+            ForEach(0..<4, id: \.self) { index in
+              if index < uploadedImages.count {
+                Image(uiImage: uploadedImages[index])
+                  .resizable()
+                  .scaledToFill()
+                  .frame(width: 80, height: 80)
+                  .clipShape(RoundedRectangle(cornerRadius: 10))
+                  .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                      .stroke(Color.black, lineWidth: 1)
+                  )
+              } else {
+                PhotosPicker(selection: $selectedImages, maxSelectionCount: 1, matching: .images) {
+                  ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                      .stroke(Color.black, lineWidth: 1)
+                      .frame(width: 80, height: 80)
+                                                  
+                    Image(systemName: "plus")
+                      .foregroundColor(.gray)
+                  }
+                }
+                .onChange(of: selectedImages) { newItems in
+                  loadSelectedPhotos(from: newItems)
+                }
+              }
+            }
+          }
           
           // add title
           TextField("title", text: $title)
@@ -87,9 +124,8 @@ struct MakeListingView: View {
           HStack {
             // category
             Picker("category", selection: $category) {
-              Text("category").tag("")
-              Text("women's tops").tag("women's tops")
-              Text("women's bottoms").tag("women's bottoms")
+              ForEach(Category.allCases, id: \.self) { category in Text(category.rawValue).tag(category)
+              }
             }
             .pickerStyle(MenuPickerStyle())
             .padding(.vertical, 4)
@@ -103,18 +139,9 @@ struct MakeListingView: View {
             
             // color
             Picker("color", selection: $color) {
-              Text("color").tag("")
-              Text("black").tag("black")
-              Text("red").tag("red")
-              Text("orange").tag("orange")
-              Text("yellow").tag("yellow")
-              Text("green").tag("green")
-              Text("blue").tag("blue")
-              Text("purple").tag("purple")
-              Text("pink").tag("pink")
-              Text("brown").tag("brown")
-              Text("cream").tag("cream")
-              Text("white").tag("white")
+              ForEach(ItemColor.allCases, id: \.self) {
+                color in Text(color.rawValue).tag(color)
+              }
             }
             .pickerStyle(MenuPickerStyle())
             .padding(.vertical, 4)
@@ -157,13 +184,8 @@ struct MakeListingView: View {
           HStack {
             // size
             Picker("size", selection: $size) {
-              Text("size").tag("")
-              Text("XS").tag("XS")
-              Text("S").tag("S")
-              Text("M").tag("M")
-              Text("L").tag("L")
-              Text("XL").tag("XL")
-              Text("XXL").tag("XXL")
+              ForEach(ItemSize.allCases, id: \.self) { size in Text(size.rawValue).tag(size)
+              }
             }
             .pickerStyle(MenuPickerStyle())
             .padding(.vertical, 4)
@@ -192,27 +214,27 @@ struct MakeListingView: View {
           
           // tags
           Text("tags (max 3):")
-            .font(.system(size: 16))
+              .font(.system(size: 16))
           LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 10)], spacing: 10) {
-            ForEach(TagOption.allCases, id: \.self) { tag in
-              Button(action: {
-                if tags.contains(tag.rawValue) {
-                  tags.removeAll { $0 == tag.rawValue }
-                } else if tags.count < 3 {
-                  tags.append(tag.rawValue)
-                }
-              }) {
-                Text(tag.rawValue)
-                  .padding(.vertical, 8)
-                  .padding(.horizontal, 12)
-                  .frame(minWidth: 100)
-                  .lineLimit(1)
-                  .background(tags.contains(tag.rawValue) ? Color("MediumGreen") : Color("LightGreen"))
-                  .foregroundColor(.white)
-                  .cornerRadius(20)
+              ForEach(TagOption.allCases, id: \.self) { tag in
+                  Button(action: {
+                      if tags.contains(tag) {
+                          tags.removeAll { $0 == tag }
+                      } else if tags.count < 3 {
+                          tags.append(tag)
+                      }
+                  }) {
+                      Text(tag.rawValue)
+                          .padding(.vertical, 8)
+                          .padding(.horizontal, 12)
+                          .frame(minWidth: 100)
+                          .lineLimit(1)
+                          .background(tags.contains(tag) ? Color("MediumGreen") : Color("LightGreen"))
+                          .foregroundColor(.white)
+                          .cornerRadius(20)
+                  }
+                  .disabled(tags.count >= 3 && !tags.contains(tag))
               }
-              .disabled(tags.count >= 3 && !tags.contains(tag.rawValue))
-            }
           }
           .padding(.bottom, 10)
           
@@ -246,6 +268,21 @@ struct MakeListingView: View {
           .padding(.top)
         }
         .padding()
+      }
+    }
+  }
+  
+  // helper function to load photos
+  func loadSelectedPhotos(from items: [PhotosPickerItem]) {
+    Task {
+      // clear previous images
+      uploadedImages.removeAll()
+      for item in items {
+        if let data = try? await item.loadTransferable(type: Data.self),
+           let image = UIImage(data: data) {
+          // add loaded image
+          uploadedImages.append(image)
+        }
       }
     }
   }

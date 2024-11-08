@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import PhotosUI
 
-enum ItemSize: String {
+enum ItemSize: String, CaseIterable {
   case xxsmall = "XXS"
   case xsmall = "XS"
   case small = "S"
@@ -34,21 +35,21 @@ enum ItemColor: String, CaseIterable {
 
 enum Category: String, CaseIterable {
   // womenswear categories
-  case womensTops = "Women's Tops"
-  case womensBottoms = "Women's Bottoms"
-  case dresses = "Dresses"
-  case womensOuterwear = "Women's Outerwear"
-  case womensActivewear = "Women's Activewear"
+  case womensTops = "women's tops"
+  case womensBottoms = "women's bottoms"
+  case dresses = "dresses"
+  case womensOuterwear = "women's outerwear"
+  case womensActivewear = "women's activewear"
       
   // menswear categories
-  case mensTops = "Men's Tops"
-  case mensBottoms = "Men's Bottoms"
-  case mensOuterwear = "Men's Outerwear"
-  case mensActivewear = "Men's Activewear"
-  case mensFormalwear = "Men's Formalwear"
+  case mensTops = "men's tops"
+  case mensBottoms = "men's bottoms"
+  case mensOuterwear = "men's outerwear"
+  case mensActivewear = "men's activewear"
+  case mensFormalwear = "men's formalwear"
 }
 
-enum RentalDuration: String {
+enum RentalDuration: String, CaseIterable {
   case oneWeek = "1 week"
   case twoWeeks = "2 weeks"
   case oneMonth = "1 month"
@@ -74,12 +75,12 @@ enum TagOption: String, CaseIterable {
 }
 
 enum PickupLocation: String, CaseIterable {
-  case uc = "Jared L. Cohon University Center"
-  case fifthClyde = "Fifth and Clyde"
-  case tepper = "Tepper School of Business"
-  case gates = "Gates School of Computer Science"
-  case forbesBeeler = "Forbes Beeler Apartments"
-  case mellonInstitute = "Mellon Institute"
+  case uc = "jared l. cohon university center"
+  case fifthClyde = "fifth and clyde"
+  case tepper = "tepper school of business"
+  case gates = "gates school of computer science"
+  case forbesBeeler = "forbes beeler apartments"
+  case mellonInstitute = "mellon institute"
 }
 
 struct Listing: Identifiable {
@@ -94,6 +95,7 @@ struct Listing: Identifiable {
   var condition: String
   var photoURLs: [String]
   var tags: [TagOption]
+  var images: [UIImage]
   var brand: String
   var maxRentalDuration: RentalDuration
   var pickupLocation: PickupLocation

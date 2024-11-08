@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isOnboardingComplete = false
-    @State private var user: User? // Store the newly created user after onboarding
+    @State private var user: User?
 
     var body: some View {
         if isOnboardingComplete, let currentUser = user {

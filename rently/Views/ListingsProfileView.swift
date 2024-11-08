@@ -8,23 +8,8 @@
 import SwiftUI
 
 struct ListingsProfileView: View {
-    // Mock data for now
-    let listings = [
-        MockListing(
-            title: "Princess Polly romper",
-            pricePerDay: 15.0,
-            imageUrl: "romper", // Make sure you have an image named "romper" in assets
-            tags: ["formal", "party"]
-        ),
-        MockListing(
-            title: "Aritzia dress pants",
-            pricePerDay: 20.0,
-            imageUrl: "dress_pants", // Make sure you have an image named "dress_pants" in assets
-            tags: ["business", "classy"]
-        )
-    ]
+    @StateObject private var viewModel = ListingsViewModel()
 
-    // Grid layout with two columns
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -33,15 +18,24 @@ struct ListingsProfileView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(listings) { listing in
+                ForEach(viewModel.listings) { listing in
                     VStack(alignment: .leading, spacing: 8) {
-                        // Image
-                        Image(listing.imageUrl)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 150, height: 200)
-                            .clipped()
-                            .cornerRadius(10)
+                        // Display the first image in the photoURLs array, if available
+                        if let imageUrl = listing.photoURLs.first {
+                            AsyncImage(url: URL(string: imageUrl)) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 150, height: 200)
+                                    .clipped()
+                                    .cornerRadius(10)
+                            } placeholder: {
+                                Rectangle()
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(width: 150, height: 200)
+                                    .cornerRadius(10)
+                            }
+                        }
 
                         // Title
                         Text(listing.title)
@@ -49,14 +43,14 @@ struct ListingsProfileView: View {
                             .lineLimit(1)
 
                         // Price per day
-                        Text("$\(listing.pricePerDay, specifier: "%.2f")/day")
+                        Text("$\(listing.price, specifier: "%.2f")/day")
                             .font(.subheadline)
                             .foregroundColor(.gray)
 
                         // Tags
                         HStack {
                             ForEach(listing.tags, id: \.self) { tag in
-                                Text(tag)
+                                Text(tag.rawValue)
                                     .font(.caption)
                                     .padding(4)
                                     .background(Color.gray.opacity(0.2))
@@ -72,6 +66,10 @@ struct ListingsProfileView: View {
             }
             .padding(.horizontal)
         }
+        .onAppear {
+            viewModel.fetchListings()
+        }
+        .navigationTitle("Your Listings")
     }
 }
 

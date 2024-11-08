@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6FC40FF22CD6C21B00F79528 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FF12CD6C21B00F79528 /* Listing.swift */; };
 		6FC40FF42CD6C3E400F79528 /* ListingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FF32CD6C3E400F79528 /* ListingsViewModel.swift */; };
 		6FC40FF62CD6C50E00F79528 /* MakeListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FF52CD6C50E00F79528 /* MakeListingView.swift */; };
 		6FC40FF82CD6D57800F79528 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FC40FF72CD6D57800F79528 /* Assets.xcassets */; };
 		6FC40FFC2CD8227300F79528 /* MakeListingTwoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FFB2CD8227300F79528 /* MakeListingTwoView.swift */; };
 		7F1F59F02CDE6358003EC6DA /* ListingsProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1F59EF2CDE6358003EC6DA /* ListingsProfileView.swift */; };
 		7F1F59F22CDE6680003EC6DA /* MockListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1F59F12CDE6680003EC6DA /* MockListing.swift */; };
+		7F1F59F82CDE7529003EC6DA /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1F59F72CDE7529003EC6DA /* Listing.swift */; };
+		7F1F59FA2CDE763F003EC6DA /* ListingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1F59F92CDE763F003EC6DA /* ListingRepository.swift */; };
 		7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */; };
 		7F1FD5732CCD757500C7A788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5722CCD757500C7A788 /* Assets.xcassets */; };
 		7F1FD5762CCD757500C7A788 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5752CCD757500C7A788 /* Preview Assets.xcassets */; };
@@ -51,7 +52,6 @@
 		7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DBC32CD5612600181DB6 /* UserViewModel.swift */; };
 		7F6C83CA2CD879C800599E36 /* LikesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C83C92CD879C800599E36 /* LikesView.swift */; };
 		7F6C83CC2CD9312700599E36 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C83CB2CD9312700599E36 /* OnboardingView.swift */; };
-		7FCCF7A82CDC1A4B008B22D0 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7A72CDC1A4B008B22D0 /* Listing.swift */; };
 		7FCCF7AD2CDC8FF7008B22D0 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7AC2CDC8FF7008B22D0 /* OnboardingController.swift */; };
 		7FCCF7AF2CDC9136008B22D0 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7AE2CDC9136008B22D0 /* FirebaseService.swift */; };
 		7FCCF7D52CDD9114008B22D0 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FCCF7D42CDD9114008B22D0 /* UserRepository.swift */; };
@@ -66,13 +66,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6FC40FF12CD6C21B00F79528 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Listing.swift; path = rently/Models/Listing.swift; sourceTree = SOURCE_ROOT; };
 		6FC40FF32CD6C3E400F79528 /* ListingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListingsViewModel.swift; path = rently/ViewModels/ListingsViewModel.swift; sourceTree = SOURCE_ROOT; };
 		6FC40FF52CD6C50E00F79528 /* MakeListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeListingView.swift; sourceTree = "<group>"; };
 		6FC40FF72CD6D57800F79528 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6FC40FFB2CD8227300F79528 /* MakeListingTwoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeListingTwoView.swift; sourceTree = "<group>"; };
 		7F1F59EF2CDE6358003EC6DA /* ListingsProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsProfileView.swift; sourceTree = "<group>"; };
 		7F1F59F12CDE6680003EC6DA /* MockListing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockListing.swift; sourceTree = "<group>"; };
+		7F1F59F72CDE7529003EC6DA /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
+		7F1F59F92CDE763F003EC6DA /* ListingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingRepository.swift; sourceTree = "<group>"; };
 		7F1FD56B2CCD757400C7A788 /* rently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rently.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rentlyApp.swift; sourceTree = "<group>"; };
 		7F1FD5722CCD757500C7A788 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,7 +88,6 @@
 		7F46DBC32CD5612600181DB6 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		7F6C83C92CD879C800599E36 /* LikesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesView.swift; sourceTree = "<group>"; };
 		7F6C83CB2CD9312700599E36 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		7FCCF7A72CDC1A4B008B22D0 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
 		7FCCF7AC2CDC8FF7008B22D0 /* OnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		7FCCF7AE2CDC9136008B22D0 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		7FCCF7D42CDD9114008B22D0 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
@@ -136,22 +136,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6FC410602CDACF3800F79528 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				6FC40FF12CD6C21B00F79528 /* Listing.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		6FC410612CDACF3C00F79528 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				6FC40FF32CD6C3E400F79528 /* ListingsViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		7F1FD5622CCD757400C7A788 = {
 			isa = PBXGroup;
 			children = (
@@ -176,8 +160,6 @@
 				7FCCF7AB2CDC8FE6008B22D0 /* Controllers */,
 				7F46DB712CCEDB6400181DB6 /* ViewModels */,
 				7F46DB702CCEDB5200181DB6 /* Models */,
-				6FC410612CDACF3C00F79528 /* ViewModels */,
-				6FC410602CDACF3800F79528 /* Models */,
 				7F46DB6F2CCEDB4700181DB6 /* Views */,
 				7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */,
 				7F1FD5722CCD757500C7A788 /* Assets.xcassets */,
@@ -222,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				7F46DB902CD454D600181DB6 /* User.swift */,
-				7FCCF7A72CDC1A4B008B22D0 /* Listing.swift */,
+				7F1F59F72CDE7529003EC6DA /* Listing.swift */,
 				7F1F59F12CDE6680003EC6DA /* MockListing.swift */,
 				7FCCF7DA2CDDB423008B22D0 /* Review.swift */,
 			);
@@ -233,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				7F46DBC32CD5612600181DB6 /* UserViewModel.swift */,
+				6FC40FF32CD6C3E400F79528 /* ListingsViewModel.swift */,
 				7FCCF7DC2CDDB8F5008B22D0 /* ReviewViewModel.swift */,
 			);
 			path = ViewModels;
@@ -251,6 +234,7 @@
 			children = (
 				7FCCF7D42CDD9114008B22D0 /* UserRepository.swift */,
 				7FCCF7DE2CDDB94B008B22D0 /* ReviewRepository.swift */,
+				7F1F59F92CDE763F003EC6DA /* ListingRepository.swift */,
 			);
 			path = DataRepositories;
 			sourceTree = "<group>";
@@ -362,21 +346,21 @@
 				7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */,
 				7F1F59F02CDE6358003EC6DA /* ListingsProfileView.swift in Sources */,
 				7F46DB752CCEDBB300181DB6 /* SearchView.swift in Sources */,
-				6FC40FF22CD6C21B00F79528 /* Listing.swift in Sources */,
 				6FC40FF42CD6C3E400F79528 /* ListingsViewModel.swift in Sources */,
 				7F1F59F22CDE6680003EC6DA /* MockListing.swift in Sources */,
 				7F46DB732CCEDBA700181DB6 /* HomeView.swift in Sources */,
 				7F46DB772CCEDBBD00181DB6 /* ListView.swift in Sources */,
 				6FC40FFC2CD8227300F79528 /* MakeListingTwoView.swift in Sources */,
 				7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */,
+				7F1F59FA2CDE763F003EC6DA /* ListingRepository.swift in Sources */,
 				7F6C83CA2CD879C800599E36 /* LikesView.swift in Sources */,
-				7FCCF7A82CDC1A4B008B22D0 /* Listing.swift in Sources */,
 				6FC40FF62CD6C50E00F79528 /* MakeListingView.swift in Sources */,
 				7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */,
 				7FCCF7D92CDDAE60008B22D0 /* ReviewsView.swift in Sources */,
 				7FCCF7DB2CDDB423008B22D0 /* Review.swift in Sources */,
 				7FCCF7E32CDDCE11008B22D0 /* WelcomeView.swift in Sources */,
 				7F46DB7B2CCEDBD400181DB6 /* ProfileView.swift in Sources */,
+				7F1F59F82CDE7529003EC6DA /* Listing.swift in Sources */,
 				7FCCF7AD2CDC8FF7008B22D0 /* OnboardingController.swift in Sources */,
 				7F6C83CC2CD9312700599E36 /* OnboardingView.swift in Sources */,
 				7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */,

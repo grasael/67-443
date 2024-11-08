@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 enum ItemSize: String {
   case xxsmall = "XXS"

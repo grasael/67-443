@@ -14,6 +14,9 @@ struct MakeListingTwoView: View {
   @State private var displayedMonth: Date = Date()
   @State private var maxRentalDuration: RentalDuration = .oneWeek
   @State private var selectedLocations: [PickupLocation] = []
+  @State private var nextScreen = false
+  
+  let user: User
 
   
   var body: some View {
@@ -100,9 +103,10 @@ struct MakeListingTwoView: View {
           .frame(height: 1)
         
         // upload listing
-        Button(action: {
-          // upload action
-        }) {
+        NavigationLink(
+          destination: ProfileView(user: user),
+          isActive: $nextScreen
+        ) {
           Text("upload")
             .font(.system(size: 22))
             .foregroundColor(.white)
@@ -129,5 +133,19 @@ struct MakeListingTwoView: View {
 }
 
 #Preview {
-    MakeListingTwoView()
+  MakeListingTwoView(user: User(
+    id: "123",
+            firstName: "Abby",
+            lastName: "Chen",
+            username: "abbychen",
+            pronouns: "she/her",
+            email: "abby@example.com",
+            password: "password123",
+            university: "CMU",
+            rating: 4.8,
+            listings: ["list1", "list2"], // Example Listing IDs
+            likedItems: ["item1", "item2"], // Example Liked Item IDs
+            styleChoices: ["vintage", "formal"],
+            events: ["event1", "event2"]
+        ))
 }

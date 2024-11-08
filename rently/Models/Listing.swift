@@ -50,21 +50,6 @@ enum Category: String, CaseIterable {
 }
 
 enum RentalDuration: String, CaseIterable {
-  case womensTops = "Women's Tops"
-  case womensBottoms = "Women's Bottoms"
-  case dresses = "Dresses"
-  case womensOuterwear = "Women's Outerwear"
-  case womensActivewear = "Women's Activewear"
-      
-  // menswear categories
-  case mensTops = "Men's Tops"
-  case mensBottoms = "Men's Bottoms"
-  case mensOuterwear = "Men's Outerwear"
-  case mensActivewear = "Men's Activewear"
-  case mensFormalwear = "Men's Formalwear"
-}
-
-enum RentalDuration: String {
   case oneWeek = "1 week"
   case twoWeeks = "2 weeks"
   case oneMonth = "1 month"

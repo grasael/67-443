@@ -29,6 +29,8 @@ struct MakeListingView: View {
   // loaded images
   @State private var uploadedImages: [UIImage] = []
   
+  let user: User
+  
   var body: some View {
     NavigationView {
       ScrollView {
@@ -245,7 +247,7 @@ struct MakeListingView: View {
           
           // next button
           NavigationLink(
-            destination: MakeListingTwoView(),
+            destination: MakeListingTwoView(user: user),
             isActive: $nextScreen
           ) {
             Text("next")
@@ -289,5 +291,19 @@ struct MakeListingView: View {
 }
 
 #Preview {
-    MakeListingView()
+    MakeListingView(user: User(
+      id: "123",
+              firstName: "Abby",
+              lastName: "Chen",
+              username: "abbychen",
+              pronouns: "she/her",
+              email: "abby@example.com",
+              password: "password123",
+              university: "CMU",
+              rating: 4.8,
+              listings: ["list1", "list2"], // Example Listing IDs
+              likedItems: ["item1", "item2"], // Example Liked Item IDs
+              styleChoices: ["vintage", "formal"],
+              events: ["event1", "event2"]
+          ))
 }

@@ -22,9 +22,9 @@ struct SearchView: View {
                     .foregroundColor(Color.blue.opacity(0.7))
                     .bold()
                 Spacer()
-                Image(systemName: "slider.horizontal.3")
+                /*Image(systemName: "slider.horizontal.3")
                     .font(.title2)
-                    .foregroundColor(.black)
+                    .foregroundColor(.black)*/
             }
             .padding(.horizontal)
 

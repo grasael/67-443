@@ -17,6 +17,7 @@
 		52DE9F862CDDDB1800681CA4 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE9F842CDDDB1800681CA4 /* UserRepository.swift */; };
 		52DE9F882CDDDB7A00681CA4 /* ListingDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE9F872CDDDB7A00681CA4 /* ListingDetailViewModel.swift */; };
 		52DE9F8A2CDDDC6600681CA4 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE9F892CDDDC6600681CA4 /* Review.swift */; };
+		52DE9F8C2CDE020300681CA4 /* ListingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE9F8B2CDE020300681CA4 /* ListingRepository.swift */; };
 		6FC40FF22CD6C21B00F79528 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FF12CD6C21B00F79528 /* Listing.swift */; };
 		6FC40FF42CD6C3E400F79528 /* ListingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FF32CD6C3E400F79528 /* ListingsViewModel.swift */; };
 		6FC40FF62CD6C50E00F79528 /* MakeListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC40FF52CD6C50E00F79528 /* MakeListingView.swift */; };
@@ -69,6 +70,7 @@
 		52DE9F842CDDDB1800681CA4 /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		52DE9F872CDDDB7A00681CA4 /* ListingDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailViewModel.swift; sourceTree = "<group>"; };
 		52DE9F892CDDDC6600681CA4 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		52DE9F8B2CDE020300681CA4 /* ListingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingRepository.swift; sourceTree = "<group>"; };
 		6FC40FF12CD6C21B00F79528 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Listing.swift; path = rently/Models/Listing.swift; sourceTree = SOURCE_ROOT; };
 		6FC40FF32CD6C3E400F79528 /* ListingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListingsViewModel.swift; path = rently/ViewModels/ListingsViewModel.swift; sourceTree = SOURCE_ROOT; };
 		6FC40FF52CD6C50E00F79528 /* MakeListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeListingView.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			children = (
 				52DE9F832CDDDB1800681CA4 /* ReviewRepository.swift */,
 				52DE9F842CDDDB1800681CA4 /* UserRepository.swift */,
+				52DE9F8B2CDE020300681CA4 /* ListingRepository.swift */,
 			);
 			path = DataRepositories;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */,
 				5264AE1A2CDDA0D00047B2DA /* ListingRow.swift in Sources */,
 				52DE9F862CDDDB1800681CA4 /* UserRepository.swift in Sources */,
+				52DE9F8C2CDE020300681CA4 /* ListingRepository.swift in Sources */,
 				7F46DB7B2CCEDBD400181DB6 /* ProfileView.swift in Sources */,
 				7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */,
 				52DE9F852CDDDB1800681CA4 /* ReviewRepository.swift in Sources */,

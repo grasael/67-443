@@ -11,87 +11,86 @@ struct ProfileView: View {
     let user: User
     @State private var selectedTab = 0 // 0 for Listings, 1 for Likes
 
-
     var body: some View {
-        VStack {
-            HStack{
-                Spacer()
-                Image(systemName: "gearshape.fill")
-                    .font(.title2)
-                    .foregroundColor(.gray)
-            }
-
-            HStack {
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .foregroundColor(.gray)
-                
-                HStack() {
-                    Text("\(user.firstName) \(user.lastName)")
+        ScrollView { // Use ScrollView to allow vertical scrolling if content overflows
+            VStack {
+                HStack {
+                    Spacer()
+                    Image(systemName: "gearshape.fill")
                         .font(.title2)
-                        .fontWeight(.bold)
+                        .foregroundColor(.gray)
+                }
+                .padding([.top, .trailing])
+
+                HStack {
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(.gray)
                     
-                    HStack(spacing: 2) {
-                       Text("\(user.rating, specifier: "%.1f")")
-                       Image(systemName: "star.fill")
-                           .foregroundColor(.yellow)
-                   }
+                    VStack(alignment: .leading) {
+                        Text("\(user.firstName) \(user.lastName)")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        
+                        HStack(spacing: 2) {
+                            Text("\(user.rating, specifier: "%.1f")")
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                        }
+                    }
+                    Spacer()
                 }
+                .padding(.horizontal)
+                
+                HStack(spacing: 16) {
+                    Text("90 followers")
+                    Text("70 following")
+                    Text("10 rented")
+                }
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .padding(.top, 8)
+                
+                HStack {
+                    Image(systemName: "graduationcap.fill")
+                    Text(user.university)
+                    Button(action: {
+                        // Edit profile action
+                        // Will add functionality to this later
+                    }) {
+                        Text("edit profile")
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 8)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(20)
+                            .foregroundColor(.primary)
+                    }
+                }
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .padding(.top, 8)
+                
+                Divider()
+                
+                Picker("", selection: $selectedTab) {
+                    Text("Listings").tag(0)
+                    Text("Likes").tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                
+                // Content based on selected tab
+                if selectedTab == 0 {
+                    // Replace with actual listings content or another view
+                    ListView()
+                } else {
+                    LikesView()
+                }
+
                 Spacer()
-
             }
-            .padding(.horizontal)
-            
-            HStack() {
-                //This will be clickable in V2
-                Text("90 followers")
-                //This will be clikcable in V2
-                Text("70 following")
-                Text("10 rented")
-            }
-            .font(.subheadline)
-            .foregroundColor(.secondary)
-            
-            HStack {
-                Image(systemName: "graduationcap.fill")
-                Text("\(user.university)")
-                Button(action: {
-                    // Edit profile action
-                    // Will add functionality to this later
-                }) {
-                    Text("edit profile")
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 8)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(20)
-                        .foregroundColor(.primary)
-                }
-            }
-            .font(.subheadline)
-            .foregroundColor(.secondary)
-            
-
-        }.padding(.top)
-        
-        Divider()
-        
-        Picker("", selection: $selectedTab) {
-            Text("Listings").tag(0)
-            Text("Likes").tag(1)
+            .padding()
         }
-        .pickerStyle(SegmentedPickerStyle())
-        .padding(.horizontal)
-        
-        // Content based on selected tab
-        if selectedTab == 0 {
-            //Should add another view
-            ListView()
-        } else {
-            LikesView()
-        }
-
-        Spacer()
-
     }
 }

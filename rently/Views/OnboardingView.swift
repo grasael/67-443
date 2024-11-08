@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    var onboardingComplete: (User) -> Void
+    
     @State private var name = ""
     @State private var lastName = ""
     @State private var username = ""
@@ -18,7 +20,7 @@ struct OnboardingView: View {
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @State private var showSuccessAlert = false
-    @State private var navigateToProfile = false // Controls navigation to ProfileView
+    @State private var navigateToProfile = false
 
     var body: some View {
         NavigationView {
@@ -88,9 +90,9 @@ struct OnboardingView: View {
                 Spacer()
                 
                 // Navigation link to ProfileView
-                NavigationLink(destination: ProfileView(user: User(firstName: name, lastName: lastName, username: username, pronouns: pronouns, email: email, password: password, university: university, rating: 0, listings: [], likedItems: [], styleChoices: [], events: [])), isActive: $navigateToProfile) {
-                    EmptyView()
-                }
+//                NavigationLink(destination: ProfileView(user: User(firstName: name, lastName: lastName, username: username, pronouns: pronouns, email: email, password: password, university: university, rating: 0, listings: [], likedItems: [], styleChoices: [], events: [])), isActive: $navigateToProfile) {
+//                    EmptyView()
+//                }
             }
             .padding()
             .alert(isPresented: $showSuccessAlert) {
@@ -98,7 +100,25 @@ struct OnboardingView: View {
                     title: Text("Success"),
                     message: Text("You have successfully signed up!"),
                     dismissButton: .default(Text("Continue")) {
-                        navigateToProfile = true // Trigger navigation to ProfileView
+                        // Create the new user object and pass it to ContentView
+                                            let newUser = User(
+                                                firstName: name,
+                                                lastName: lastName,
+                                                username: username,
+                                                pronouns: pronouns,
+                                                email: email,
+                                                password: password,
+                                                university: university,
+                                                rating: 0,
+                                                listings: [],
+                                                likedItems: [],
+                                                styleChoices: [],
+                                                events: []
+                                            )
+                                            onboardingComplete(newUser)
+                        // Create a UserViewModel instance to handle adding the user
+                        let userViewModel = UserViewModel(user: newUser)
+                        userViewModel.addUser()
                     }
                 )
             }
@@ -113,25 +133,21 @@ struct OnboardingView: View {
         }
 
         // Create a User instance with the collected data
-        let newUser = User(
-            firstName: name,
-            lastName: lastName,
-            username: username,
-            pronouns: pronouns,
-            email: email,
-            password: password,
-            university: university,
-            rating: 0,
-            listings: [],
-            likedItems: [],
-            styleChoices: [],
-            events: []
-        )
-        
-        // Create a UserViewModel instance to handle adding the user
-        let userViewModel = UserViewModel(user: newUser)
-        userViewModel.addUser()
-        
+//        let newUser = User(
+//            firstName: name,
+//            lastName: lastName,
+//            username: username,
+//            pronouns: pronouns,
+//            email: email,
+//            password: password,
+//            university: university,
+//            rating: 0,
+//            listings: [],
+//            likedItems: [],
+//            styleChoices: [],
+//            events: []
+//        )
+
         // Show success alert
         showSuccessAlert = true
     }

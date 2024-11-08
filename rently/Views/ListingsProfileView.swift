@@ -69,7 +69,7 @@ struct ListingsProfileView: View {
         .onAppear {
             viewModel.fetchListings()
         }
-        .navigationTitle("Your Listings")
+        .navigationTitle("Profile")
     }
 }
 

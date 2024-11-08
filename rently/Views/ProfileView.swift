@@ -12,7 +12,7 @@ struct ProfileView: View {
     @State private var selectedTab = 0 // 0 for Listings, 1 for Likes
 
     var body: some View {
-        NavigationView { // Embed the whole view in a NavigationView
+        NavigationView {
             ScrollView {
                 VStack {
                     HStack {
@@ -42,7 +42,7 @@ struct ProfileView: View {
                                         .foregroundColor(.yellow)
                                 }
                             }
-                            .foregroundColor(.primary) // Make text and icon inherit default color
+                            .foregroundColor(.primary)
                         }
                         Spacer()
                     }
@@ -95,7 +95,7 @@ struct ProfileView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Profile") // Set navigation title for the ProfileView
+            .navigationTitle("Profile")
         }
     }
 }

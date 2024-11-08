@@ -21,6 +21,7 @@ struct ContentView: View {
                 self.user = newUser
                 self.isOnboardingComplete = true
             })
+//            WelcomeView()
         }
     }
 }

@@ -14,7 +14,7 @@ class SearchViewModel: ObservableObject {
     private let db = Firestore.firestore()
     
   func fetchListings() {
-      db.collection("listings").getDocuments { snapshot, error in
+      db.collection("Listings").getDocuments { snapshot, error in
           if let error = error {
               print("Error fetching listings: \(error)")
               return
@@ -48,7 +48,7 @@ class SearchViewModel: ObservableObject {
   
   }
   func fetchUsers() {
-      db.collection("users").getDocuments { snapshot, error in
+      db.collection("Users").getDocuments { snapshot, error in
           if let error = error {
               print("Error fetching users: \(error)")
               return

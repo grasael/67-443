@@ -18,7 +18,7 @@ struct ListingDetailView: View {
                         Image(systemName: "person.circle")
                             .resizable()
                             .frame(width: 40, height: 40)
-                        Text("loveeekiwi") // Replace with actual user data if available
+                        Text("TestingUser")
                             .font(.headline)
                         Spacer()
                         Image(systemName: "star.fill")

@@ -35,7 +35,6 @@ struct ProfileView: View {
                                 .font(.title2)
                                 .fontWeight(.bold)
                             
-                            // Make rating clickable using NavigationLink
                             NavigationLink(destination: ReviewsView()) {
                                 HStack(spacing: 2) {
                                     Text("\(user.rating, specifier: "%.1f")")
@@ -50,9 +49,9 @@ struct ProfileView: View {
                     .padding(.horizontal)
                     
                     HStack(spacing: 16) {
-                        Text("90 followers")
-                        Text("70 following")
-                        Text("10 rented")
+                        Text("0 followers")
+                        Text("0 following")
+                        Text("0 rented")
                     }
                     .font(.subheadline)
                     .foregroundColor(.secondary)
@@ -65,12 +64,20 @@ struct ProfileView: View {
                             // Edit profile action
                         }) {
                             Text("edit profile")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(.white)
                                 .padding(.horizontal, 24)
                                 .padding(.vertical, 8)
-                                .background(Color.gray.opacity(0.2))
-                                .cornerRadius(20)
-                                .foregroundColor(.primary)
                         }
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.blue.opacity(0.7), Color.green.opacity(0.7)]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .cornerRadius(20)
+                        .shadow(radius: 2) // Optional shadow for subtle depth effect
                     }
                     .font(.subheadline)
                     .foregroundColor(.secondary)
@@ -103,4 +110,3 @@ struct ProfileView: View {
         }
     }
 }
-

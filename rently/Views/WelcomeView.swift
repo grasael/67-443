@@ -8,7 +8,6 @@ import SwiftUI
 
 struct WelcomeView: View {
     var onSignUpComplete: (User) -> Void // Closure to send user data back to ContentView
-    @State private var showSignUp = false
     
     var body: some View {
         NavigationView {
@@ -26,6 +25,7 @@ struct WelcomeView: View {
                 NavigationLink(
                     destination: OnboardingView(onboardingComplete: { user in
                         // Call onSignUpComplete with the new User after onboarding
+                        print("DEBUG GRACE: we are completing sign up.")
                         onSignUpComplete(user)
                     })
                 ) {
@@ -57,14 +57,6 @@ struct WelcomeView: View {
                 LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.8), Color.green.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
             )
             .edgesIgnoringSafeArea(.all)
-        }
-    }
-}
-
-struct WelcomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        WelcomeView { user in
-            print("User signed up: \(user)")
         }
     }
 }

@@ -8,6 +8,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isOnboardingComplete = false
+    @State private var isSignUpComplete = false
     @State private var user: User? // Store the newly created user after onboarding
 
     var body: some View {
@@ -21,7 +22,11 @@ struct ContentView: View {
                 self.user = newUser
                 self.isOnboardingComplete = true
             })
-//            WelcomeView()
+//            WelcomeView(onSignUpComplete: { newUser in
+//                // Set the user data and mark onboarding as complete
+//                self.user = newUser
+//                self.isOnboardingComplete = true
+//            })
         }
     }
 }

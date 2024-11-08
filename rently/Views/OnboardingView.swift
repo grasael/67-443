@@ -108,6 +108,7 @@ struct OnboardingView: View {
                         styleChoices: [],
                         events: []
                     )
+                    print("DEBUG GRACE: we are completing onboarding.")
                     onboardingComplete(newUser)
                 }
             )

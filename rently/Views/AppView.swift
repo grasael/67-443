@@ -30,7 +30,7 @@ struct AppView: View {
          Image(systemName: "hanger")
          Text("rentals")
          }
-         ProfileView()
+         //ProfileView()
          .tabItem {
          Image(systemName: "person")
          Text("profile")

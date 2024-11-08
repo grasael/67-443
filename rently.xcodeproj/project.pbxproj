@@ -42,7 +42,6 @@
 		7F46DBC22CD560B000181DB6 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = 7F46DBC12CD560B000181DB6 /* FirebaseVertexAI */; };
 		7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DBC32CD5612600181DB6 /* UserViewModel.swift */; };
 		7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */; };
-		CA127FA32CD91150006330DC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA127FA22CD91150006330DC /* GoogleService-Info.plist */; };
 		CA127FA62CD94DCF006330DC /* RentalDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA52CD94DCF006330DC /* RentalDetailView.swift */; };
 		CA127FA82CD958F2006330DC /* Rental.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA72CD958F2006330DC /* Rental.swift */; };
 		CA127FAA2CD95954006330DC /* ActiveRentalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA92CD95954006330DC /* ActiveRentalsViewModel.swift */; };
@@ -86,7 +85,6 @@
 		7F46DB902CD454D600181DB6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7F46DBC32CD5612600181DB6 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		CA127FA22CD91150006330DC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "ViewModels/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CA127FA52CD94DCF006330DC /* RentalDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalDetailView.swift; sourceTree = "<group>"; };
 		CA127FA72CD958F2006330DC /* Rental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rental.swift; sourceTree = "<group>"; };
 		CA127FA92CD95954006330DC /* ActiveRentalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRentalsViewModel.swift; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 		7F1FD56D2CCD757400C7A788 /* rently */ = {
 			isa = PBXGroup;
 			children = (
-				CA127FA22CD91150006330DC /* GoogleService-Info.plist */,
 				7F46DB712CCEDB6400181DB6 /* ViewModels */,
 				7F46DB702CCEDB5200181DB6 /* Models */,
 				7F46DB6F2CCEDB4700181DB6 /* Views */,
@@ -367,7 +364,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F1FD5762CCD757500C7A788 /* Preview Assets.xcassets in Resources */,
-				CA127FA32CD91150006330DC /* GoogleService-Info.plist in Resources */,
 				7F1FD5732CCD757500C7A788 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -4,6 +4,7 @@
 //
 //  Created by Grace Liao on 11/8/24.
 //
+// These are just all the ones inside of Firebase for testing purposes only... need to filter for a specific user later
 
 import SwiftUI
 
@@ -20,7 +21,6 @@ struct ListingsProfileView: View {
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(viewModel.listings) { listing in
                     VStack(alignment: .leading, spacing: 8) {
-                        // Display the first image in the photoURLs array, if available
                         if let imageUrl = listing.photoURLs.first {
                             AsyncImage(url: URL(string: imageUrl)) { image in
                                 image

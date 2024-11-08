@@ -45,6 +45,39 @@ class SearchViewModel: ObservableObject {
               )
           } ?? []
       }
+  
+  }
+  func fetchUsers() {
+      db.collection("users").getDocuments { snapshot, error in
+          if let error = error {
+              print("Error fetching users: \(error)")
+              return
+          }
+          
+          self.users = snapshot?.documents.compactMap { document in
+              try? document.data(as: User.self)
+          } ?? []
+      }
+  }
+  
+  func performSearch(query: String) {
+      let lowercasedQuery = query.lowercased()
+      
+      fetchListings()  // Re-fetch to get the initial data
+      fetchUsers()
+      
+      self.listings = listings.filter { listing in
+          listing.title.lowercased().contains(lowercasedQuery) ||
+          listing.category.rawValue.lowercased().contains(lowercasedQuery) ||
+          listing.description.lowercased().contains(lowercasedQuery)
+      }
+
+      self.users = users.filter { user in
+          user.username.lowercased().contains(lowercasedQuery) ||
+          user.firstName.lowercased().contains(lowercasedQuery) ||
+          user.lastName.lowercased().contains(lowercasedQuery) ||
+          (user.firstName.lowercased() + user.lastName.lowercased()).contains(lowercasedQuery)
+      }
   }
 
   

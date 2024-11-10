@@ -69,6 +69,6 @@ struct ListingsProfileView: View {
                 viewModel.fetchListings()
             }
         }
-        .navigationTitle("Listings")
+        .navigationTitle("Profile")
     }
 }

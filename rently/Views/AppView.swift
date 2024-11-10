@@ -21,7 +21,7 @@ struct AppView: View {
          Image(systemName: "magnifyingglass")
          Text("search")
          }
-         MakeListingView()
+        MakeListingView()
          .tabItem {
          Image(systemName: "plus")
          Text("list")

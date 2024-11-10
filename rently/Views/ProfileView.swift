@@ -61,7 +61,6 @@ struct ProfileView: View {
                         Image(systemName: "graduationcap.fill")
                         Text(user.university)
                         Button(action: {
-                            // Edit profile action
                         }) {
                             Text("edit profile")
                                 .font(.system(size: 16, weight: .medium))
@@ -77,7 +76,7 @@ struct ProfileView: View {
                             )
                         )
                         .cornerRadius(20)
-                        .shadow(radius: 2) // Optional shadow for subtle depth effect
+                        .shadow(radius: 2)
                     }
                     .font(.subheadline)
                     .foregroundColor(.secondary)

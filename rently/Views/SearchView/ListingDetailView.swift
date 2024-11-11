@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ListingDetailView: View {
-    let listingID: UUID
+    let listingID: String
     @StateObject private var viewModel = ListingDetailViewModel()
 
     var body: some View {

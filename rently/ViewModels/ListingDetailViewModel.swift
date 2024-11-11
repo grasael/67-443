@@ -15,8 +15,8 @@ class ListingDetailViewModel: ObservableObject {
     private let db = Firestore.firestore()
     
   
-  func fetchListing(by id: UUID) {
-      let docRef = db.collection("listings").document(id.uuidString)
+  func fetchListing(by id: String) {
+      let docRef = db.collection("Listings").document(id)
       
       docRef.getDocument { (document, error) in
           if let document = document, document.exists {

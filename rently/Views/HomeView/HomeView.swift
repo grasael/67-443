@@ -16,7 +16,7 @@ struct HomeView: View {
         VStack(spacing: 30) {
           SearchBarView()
           ActiveRentalsView()
-          KeepSearchingView()
+//          KeepSearchingView() to be uncommented later
           SuggestedItemsView()
           TrendingSearchesView()
           

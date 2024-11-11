@@ -33,7 +33,7 @@ struct SearchBarView: View {
                 }
               
             }
-          Text("hi, amelia!")
+          Text("hi, Grace!")
               .font(.largeTitle)
               .foregroundColor(.green)
         }

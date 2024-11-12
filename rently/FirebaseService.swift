@@ -72,7 +72,7 @@ class FirebaseService {
         try db.collection("Users").document(user.id!).setData(from: user)
     }
 
-  // Upload images to Firebase Storage and get URLs
+  // upload images to Firebase Storage and get URLs
   func uploadImages(_ images: [UIImage], completion: @escaping ([String]) -> Void) {
       let storage = Storage.storage().reference()
       var uploadedURLs: [String] = []
@@ -106,7 +106,7 @@ class FirebaseService {
       }
   }
 
-  // Save Listing to Firestore
+  // save Listing to Firestore
   func saveListing(_ listing: Listing, completion: @escaping (Result<Void, Error>) -> Void) {
       let db = Firestore.firestore()
       do {
@@ -125,7 +125,7 @@ class FirebaseService {
       }
   }
 
-  // Save ListingDraft after images are uploaded
+  // save ListingDraft after images are uploaded
   func saveListingFromDraft(_ draft: ListingDraft, completion: @escaping (Result<Void, Error>) -> Void) {
       let listing = Listing(
         id: UUID().uuidString,
@@ -148,7 +148,7 @@ class FirebaseService {
       saveListing(listing, completion: completion)
   }
   
-  // Fetch all listings from Firestore
+  // fetch all listings from Firestore
       func fetchListings(completion: @escaping (Result<[Listing], Error>) -> Void) {
           let db = Firestore.firestore()
           db.collection("Listings").getDocuments { snapshot, error in
@@ -164,7 +164,7 @@ class FirebaseService {
           }
       }
       
-      // Delete a listing from Firestore
+  // delete a listing from Firestore
   func deleteListing(_ id: String, completion: @escaping (Result<Void, Error>) -> Void) {
       let db = Firestore.firestore()
       db.collection("Listings").document(id).delete { error in
@@ -175,7 +175,6 @@ class FirebaseService {
           }
       }
   }
-
 }
 
 

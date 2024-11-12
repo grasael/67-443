@@ -34,8 +34,8 @@ struct MakeListingView: View {
   @State private var draft = ListingDraft()
   
   // photo selection
-  @State private var selectedImages: [PhotosPickerItem] = []
-  @State private var uploadedImages: [UIImage] = []
+  @State private var selectedImages: [PhotosPickerItem?] = Array(repeating: nil, count: 4)
+  @State private var uploadedImages: [UIImage?] = Array(repeating: nil, count: 4)
   
   let user: User
   
@@ -66,34 +66,44 @@ struct MakeListingView: View {
           
           // placeholders for up to 4 photos
           LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 4), spacing: 10) {
-            ForEach(0..<4, id: \.self) { index in
-              if index < uploadedImages.count {
-                Image(uiImage: uploadedImages[index])
-                  .resizable()
-                  .scaledToFill()
-                  .frame(width: 80, height: 80)
-                  .clipShape(RoundedRectangle(cornerRadius: 10))
-                  .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                      .stroke(Color.black, lineWidth: 1)
-                  )
-              } else {
-                PhotosPicker(selection: $selectedImages, maxSelectionCount: 1, matching: .images) {
-                  ZStack {
-                    RoundedRectangle(cornerRadius: 10)
-                      .stroke(Color.black, lineWidth: 1)
-                      .frame(width: 80, height: 80)
-                                                  
-                    Image(systemName: "plus")
-                      .foregroundColor(.gray)
+              ForEach(0..<4, id: \.self) { index in
+                  if index < uploadedImages.count, let image = uploadedImages[index] {
+                      // Show the uploaded image
+                      Image(uiImage: image)
+                          .resizable()
+                          .scaledToFill()
+                          .frame(width: 80, height: 80)
+                          .clipShape(RoundedRectangle(cornerRadius: 10))
+                          .overlay(
+                              RoundedRectangle(cornerRadius: 10)
+                                  .stroke(Color.black, lineWidth: 1)
+                          )
+                          .onTapGesture {
+                              showPhotoPicker(for: index)
+                          }
+                  } else {
+                      // Show a PhotosPicker for this slot
+                      PhotosPicker(selection: Binding(
+                          get: { selectedImages[index] },
+                          set: { selectedImages[index] = $0 }
+                      ), matching: .images) {
+                          ZStack {
+                              RoundedRectangle(cornerRadius: 10)
+                                  .stroke(Color.black, lineWidth: 1)
+                                  .frame(width: 80, height: 80)
+                              Image(systemName: "plus")
+                                  .foregroundColor(.gray)
+                          }
+                      }
+                      .onChange(of: selectedImages[index]) { newItem in
+                          loadSelectedPhoto(for: index, from: newItem)
+                      }
                   }
-                }
-                .onChange(of: selectedImages) { newItems in
-                  loadSelectedPhotos(from: newItems)
-                }
               }
-            }
           }
+
+
+
           
           // add title
           TextField("title", text: $draft.title)
@@ -294,35 +304,60 @@ struct MakeListingView: View {
           .frame(maxWidth: .infinity)
           .padding(.top)
         }
-        .padding()
+        .padding(.top, -20)
+        .padding(.horizontal, 20)
       }
     }
   }
   
-  private func loadSelectedPhotos(from items: [PhotosPickerItem]) {
-    Task {
-      // clear previous images
-      uploadedImages.removeAll()
-              
-      for item in items {
-        if let data = try? await item.loadTransferable(type: Data.self),
-           let image = UIImage(data: data) {
-          // add loaded image to uploadedImages
-          uploadedImages.append(image)
-        }
+  func showPhotoPicker(for index: Int) {
+      PhotosPicker(selection: Binding(
+          get: { selectedImages[index] },
+          set: { selectedImages[index] = $0 }
+      ), matching: .images) {
+          ZStack {
+              RoundedRectangle(cornerRadius: 10)
+                  .stroke(Color.black, lineWidth: 1)
+                  .frame(width: 80, height: 80)
+              Image(systemName: "plus")
+                  .foregroundColor(.gray)
+          }
       }
-    }
+      .onChange(of: selectedImages[index]) { newItem in
+          loadSelectedPhoto(for: index, from: newItem)
+      }
   }
-      
+  
+  func loadSelectedPhoto(for index: Int, from item: PhotosPickerItem?) {
+      guard let item = item else { return }
+      Task {
+          if let data = try? await item.loadTransferable(type: Data.self),
+             let image = UIImage(data: data) {
+              if uploadedImages.count > index {
+                  uploadedImages[index] = image
+              } else {
+                  while uploadedImages.count <= index {
+                      uploadedImages.append(nil)
+                  }
+                  uploadedImages[index] = image
+              }
+          }
+      }
+  }
+
   func uploadImagesAndContinue() {
-    FirebaseService.shared.uploadImages(uploadedImages) { urls in
-      // set photo URLs in draft
-      draft.photoURLs = urls
-            
-      // debugging
-      print("Draft updated with photo URLs:", draft)
-    }
+      // filter out nil values from uploadedImages to get an array of non-optional UIImages
+      let nonNilImages = uploadedImages.compactMap { $0 }
+      
+      FirebaseService.shared.uploadImages(nonNilImages) { urls in
+        // set photo URLs in draft
+        draft.photoURLs = urls
+          
+          // Debugging
+          print("Draft updated with photo URLs:", draft)
+      }
   }
+
 }
 
 /*#Preview {

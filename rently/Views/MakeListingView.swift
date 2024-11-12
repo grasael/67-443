@@ -68,7 +68,7 @@ struct MakeListingView: View {
           LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 4), spacing: 10) {
               ForEach(0..<4, id: \.self) { index in
                   if index < uploadedImages.count, let image = uploadedImages[index] {
-                      // Show the uploaded image
+                      // show the uploaded image
                       Image(uiImage: image)
                           .resizable()
                           .scaledToFill()
@@ -82,7 +82,7 @@ struct MakeListingView: View {
                               showPhotoPicker(for: index)
                           }
                   } else {
-                      // Show a PhotosPicker for this slot
+                      // show a PhotosPicker for this slot
                       PhotosPicker(selection: Binding(
                           get: { selectedImages[index] },
                           set: { selectedImages[index] = $0 }
@@ -101,10 +101,7 @@ struct MakeListingView: View {
                   }
               }
           }
-
-
-
-          
+        
           // add title
           TextField("title", text: $draft.title)
             .padding()
@@ -165,7 +162,14 @@ struct MakeListingView: View {
             )
             
             // color
-            Picker("color", selection: $draft.color) {
+            Picker("color", selection: Binding(
+              get: {
+                  ItemColor(rawValue: draft.color) ?? .red
+              },
+              set: {
+                  draft.color = $0.rawValue
+              }
+          )) {
               ForEach(ItemColor.allCases, id: \.self) {
                 color in Text(color.rawValue).tag(color)
               }
@@ -281,7 +285,7 @@ struct MakeListingView: View {
           
           
           // next button
-          NavigationLink(destination: MakeListingTwoView(user: user, draft: draft)) {
+          NavigationLink(destination: MakeListingTwoView(user: user, draft: $draft)) {
               Text("next")
                   .font(.system(size: 22))
                   .foregroundColor(.white)
@@ -298,7 +302,16 @@ struct MakeListingView: View {
                   .shadow(radius: 5)
           }
           .simultaneousGesture(TapGesture().onEnded {
-              uploadImagesAndContinue()
+              uploadImagesAndContinue {
+                FirebaseService.shared.saveListingFromDraft(draft) { result in
+                        switch result {
+                        case .success:
+                            print("Draft saved successfully: \(draft)")
+                        case .failure(let error):
+                            print("Failed to save draft: \(error.localizedDescription)")
+                        }
+                    }
+              }
           })
           .frame(maxWidth: 200)
           .frame(maxWidth: .infinity)
@@ -345,16 +358,20 @@ struct MakeListingView: View {
       }
   }
 
-  func uploadImagesAndContinue() {
-      // filter out nil values from uploadedImages to get an array of non-optional UIImages
+  func uploadImagesAndContinue(completion: @escaping () -> Void) {
       let nonNilImages = uploadedImages.compactMap { $0 }
       
+      if nonNilImages.isEmpty {
+          print("No images to upload")
+          draft.photoURLs = []
+          completion()
+          return
+      }
+      
       FirebaseService.shared.uploadImages(nonNilImages) { urls in
-        // set photo URLs in draft
-        draft.photoURLs = urls
-          
-          // Debugging
-          print("Draft updated with photo URLs:", draft)
+          draft.photoURLs = urls
+          print("Uploaded URLs: \(urls)")
+          completion() // proceed after URLs are set
       }
   }
 

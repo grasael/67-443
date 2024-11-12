@@ -19,7 +19,7 @@ struct MakeListingTwoView: View {
   @State private var saveError: String? = nil
   
   let user: User
-  @State var draft: ListingDraft
+  @Binding var draft: ListingDraft
   
   var body: some View {
     ScrollView {

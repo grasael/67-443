@@ -85,7 +85,7 @@ class FirebaseService {
 
           imageRef.putData(imageData, metadata: nil) { _, error in
               if let error = error {
-                  print("Upload failed: \(error)")
+                  print("Upload failed: \(error.localizedDescription)")
                   dispatchGroup.leave()
                   return
               }
@@ -94,7 +94,7 @@ class FirebaseService {
                   if let url = url {
                       uploadedURLs.append(url.absoluteString)
                   } else if let error = error {
-                      print("Failed to get download URL: \(error)")
+                      print("Failed to get download URL: \(error.localizedDescription)")
                   }
                   dispatchGroup.leave()
               }
@@ -102,9 +102,11 @@ class FirebaseService {
       }
 
       dispatchGroup.notify(queue: .main) {
+          print("All uploads completed. URLs: \(uploadedURLs)") // Debugging print
           completion(uploadedURLs)
       }
   }
+
 
   // save Listing to Firestore
   func saveListing(_ listing: Listing, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -145,6 +147,8 @@ class FirebaseService {
           available: draft.available,
           rating: draft.rating
       )
+      print("Saving listing with URLs:", listing.photoURLs)
+        
       saveListing(listing, completion: completion)
   }
   

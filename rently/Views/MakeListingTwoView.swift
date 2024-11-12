@@ -15,9 +15,11 @@ struct MakeListingTwoView: View {
   @State private var maxRentalDuration: RentalDuration = .oneWeek
   @State private var selectedLocations: [PickupLocation] = []
   @State private var nextScreen = false
+  @State private var isSaving = false
+  @State private var saveError: String? = nil
   
   let user: User
-
+  @State var draft: ListingDraft
   
   var body: some View {
     ScrollView {
@@ -102,12 +104,11 @@ struct MakeListingTwoView: View {
           .fill(Color.gray.opacity(0.4))
           .frame(height: 1)
         
-        // upload listing
-        NavigationLink(
-          destination: ProfileView(user: user),
-          isActive: $nextScreen
-        ) {
-          Text("upload")
+        Button(action: {
+          print("Draft before saving:", draft)
+          saveListingAndRedirect()
+        }) {
+          Text(isSaving ? "saving..." : "upload")
             .font(.system(size: 22))
             .foregroundColor(.white)
             .padding(.vertical, 8)
@@ -122,19 +123,70 @@ struct MakeListingTwoView: View {
             .cornerRadius(25)
             .shadow(radius: 5)
         }
+        .disabled(isSaving)
         .frame(maxWidth: 200)
         .frame(maxWidth: .infinity)
         .padding(.top)
+                        
+        if let errorMessage = saveError {
+          Text(errorMessage)
+            .foregroundColor(.red)
+            .padding(.top)
+        }
       }
       .padding()
     }
-    Spacer()
+    .navigationDestination(isPresented: $nextScreen) {
+                ProfileView(user: user) // Redirect to ProfileView
+    }
+    .alert(isPresented: .constant(saveError != nil)) {
+      Alert(
+        title: Text("Error"),
+        message: Text(saveError ?? "Unknown error occurred"),
+        dismissButton: .default(Text("OK"), action: { saveError = nil })
+      )
+    }
   }
-}
+  
+  private func saveListingAndRedirect() {
+      isSaving = true
+      saveError = nil
 
-#Preview {
-  MakeListingTwoView(user: User(
-    id: "123",
+      let listing = Listing(
+        id: UUID().uuidString,
+        title: draft.title,
+        creationTime: draft.creationTime,
+        description: draft.description,
+        category: draft.category,
+        size: draft.size,
+        price: draft.price,
+        color: draft.color,
+        condition: draft.condition,
+        photoURLs: draft.photoURLs,
+        tags: draft.tags,
+        brand: draft.brand,
+        maxRentalDuration: draft.maxRentalDuration,
+        pickupLocation: draft.pickupLocation,
+        available: draft.available,
+        rating: draft.rating
+    )
+
+      FirebaseService.shared.saveListing(listing) { result in
+          isSaving = false
+          switch result {
+          case .success:
+              nextScreen = true
+          case .failure(let error):
+              saveError = error.localizedDescription
+          }
+      }
+  }
+  }
+
+/*#Preview {
+    MakeListingTwoView(
+        user: User(
+            id: "123",
             firstName: "Abby",
             lastName: "Chen",
             username: "abbychen",
@@ -143,9 +195,11 @@ struct MakeListingTwoView: View {
             password: "password123",
             university: "CMU",
             rating: 4.8,
-            listings: ["list1", "list2"], // Example Listing IDs
-            likedItems: ["item1", "item2"], // Example Liked Item IDs
+            listings: ["list1", "list2"],
+            likedItems: ["item1", "item2"],
             styleChoices: ["vintage", "formal"],
             events: ["event1", "event2"]
-        ))
-}
+        ),
+        draft: ListingDraft()
+    )
+}*/

@@ -8,25 +8,33 @@
 import SwiftUI
 import PhotosUI
 
+struct ListingDraft: Codable {
+    var title: String = ""
+    var description: String = ""
+    var category: String = Category.womensTops.rawValue
+    var brand: String = ""
+    var condition: String = ""
+    var photoURLs: [String] = []
+    var size: String = ItemSize.xxsmall.rawValue
+    var price: Double = 0.0
+    var color: String = ItemColor.red.rawValue
+    var tags: [String] = []
+    var maxRentalDuration: String = RentalDuration.oneWeek.rawValue
+    var pickupLocation: String = PickupLocation.uc.rawValue
+    var available: Bool = true
+    var rating: Float = 0.0
+    var creationTime: Date = Date()
+}
+
+
 struct MakeListingView: View {
   @Environment(\.presentationMode) var presentationMode
   @EnvironmentObject var viewModel: ListingsViewModel
   
-  // state variables for form inputs
-  @State private var title = ""
-  @State private var description = ""
-  @State private var category: Category = .womensTops
-  @State private var brand = ""
-  @State private var condition = ""
-  @State private var size: ItemSize = .xxsmall
-  @State private var price = ""
-  @State private var color: ItemColor = .red
-  @State private var tags: [TagOption] = []
-  @State private var nextScreen = false
+  @State private var draft = ListingDraft()
   
   // photo selection
   @State private var selectedImages: [PhotosPickerItem] = []
-  // loaded images
   @State private var uploadedImages: [UIImage] = []
   
   let user: User
@@ -88,7 +96,7 @@ struct MakeListingView: View {
           }
           
           // add title
-          TextField("title", text: $title)
+          TextField("title", text: $draft.title)
             .padding()
             .background(Color.white)
             .cornerRadius(8)
@@ -103,7 +111,7 @@ struct MakeListingView: View {
               Color.white
                 .cornerRadius(8)
               
-              TextEditor(text: $description)
+              TextEditor(text: $draft.description)
                 .frame(height: 100)
                 .padding(4)
                 .background(Color.clear)
@@ -114,7 +122,7 @@ struct MakeListingView: View {
                 )
             }
             
-            if description.isEmpty {
+            if draft.description.isEmpty {
               Text("description: max 200 words")
                 .foregroundColor(Color.gray.opacity(0.5))
                 .padding(.horizontal, 12)
@@ -125,7 +133,14 @@ struct MakeListingView: View {
           // category and color
           HStack {
             // category
-            Picker("category", selection: $category) {
+            Picker("category", selection: Binding(
+              get: {
+                  Category(rawValue: draft.category) ?? .womensTops
+              },
+              set: {
+                  draft.category = $0.rawValue
+              }
+          )) {
               ForEach(Category.allCases, id: \.self) { category in Text(category.rawValue).tag(category)
               }
             }
@@ -140,7 +155,7 @@ struct MakeListingView: View {
             )
             
             // color
-            Picker("color", selection: $color) {
+            Picker("color", selection: $draft.color) {
               ForEach(ItemColor.allCases, id: \.self) {
                 color in Text(color.rawValue).tag(color)
               }
@@ -157,7 +172,7 @@ struct MakeListingView: View {
           }
           
           // brand
-          TextField("brand", text: $brand)
+          TextField("brand", text: $draft.brand)
             .padding()
             .background(Color.white)
             .cornerRadius(8)
@@ -171,11 +186,11 @@ struct MakeListingView: View {
             .font(.system(size: 16))
           HStack {
             ForEach(["brand new", "very good", "good", "fair"], id: \.self) { conditionOption in Button(action: {
-              condition = conditionOption
+              draft.condition = conditionOption
             }) {
               Text(conditionOption)
                 .padding(9)
-                .background(condition == conditionOption ? Color.gray.opacity(0.9) : Color.gray.opacity(0.4))
+                .background(draft.condition == conditionOption ? Color.gray.opacity(0.9) : Color.gray.opacity(0.4))
                 .cornerRadius(20)
                 .foregroundColor(.white)
             }
@@ -185,7 +200,14 @@ struct MakeListingView: View {
           // size and price
           HStack {
             // size
-            Picker("size", selection: $size) {
+            Picker("size", selection: Binding(
+              get: {
+                  ItemSize(rawValue: draft.size) ?? .xxsmall
+              },
+              set: {
+                  draft.size = $0.rawValue
+              }
+          )) {
               ForEach(ItemSize.allCases, id: \.self) { size in Text(size.rawValue).tag(size)
               }
             }
@@ -200,7 +222,10 @@ struct MakeListingView: View {
             )
             
             // price
-            TextField("price", text: $price)
+            TextField("price", text: Binding(
+              get: { String(draft.price) },
+              set: { draft.price = Double($0) ?? 0 }
+            ))
               .padding(.vertical, 10)
               .padding(.horizontal, 8)
               .background(Color.white)
@@ -220,10 +245,10 @@ struct MakeListingView: View {
           LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 10)], spacing: 10) {
               ForEach(TagOption.allCases, id: \.self) { tag in
                   Button(action: {
-                      if tags.contains(tag) {
-                          tags.removeAll { $0 == tag }
-                      } else if tags.count < 3 {
-                          tags.append(tag)
+                    if draft.tags.contains(tag.rawValue) {
+                      draft.tags.removeAll { $0 == tag.rawValue }
+                    } else if draft.tags.count < 3 {
+                      draft.tags.append(tag.rawValue)
                       }
                   }) {
                       Text(tag.rawValue)
@@ -231,11 +256,11 @@ struct MakeListingView: View {
                           .padding(.horizontal, 12)
                           .frame(minWidth: 100)
                           .lineLimit(1)
-                          .background(tags.contains(tag) ? Color("MediumGreen") : Color("LightGreen"))
+                          .background(draft.tags.contains(tag.rawValue) ? Color("MediumGreen") : Color("LightGreen"))
                           .foregroundColor(.white)
                           .cornerRadius(20)
                   }
-                  .disabled(tags.count >= 3 && !tags.contains(tag))
+                  .disabled(draft.tags.count >= 3 && !draft.tags.contains(tag.rawValue))
               }
           }
           .padding(.bottom, 10)
@@ -246,25 +271,25 @@ struct MakeListingView: View {
           
           
           // next button
-          NavigationLink(
-            destination: MakeListingTwoView(user: user),
-            isActive: $nextScreen
-          ) {
-            Text("next")
-              .font(.system(size: 22))
-              .foregroundColor(.white)
-              .padding(.vertical, 8)
-              .padding(.horizontal, 40)
-              .background(
-                LinearGradient(
-                  gradient: Gradient(colors: [Color("MediumBlue"), Color("PaleGreen")]),
-                  startPoint: .leading,
-                  endPoint: .trailing
-                )
-              )
-              .cornerRadius(25)
-              .shadow(radius: 5)
+          NavigationLink(destination: MakeListingTwoView(user: user, draft: draft)) {
+              Text("next")
+                  .font(.system(size: 22))
+                  .foregroundColor(.white)
+                  .padding(.vertical, 8)
+                  .padding(.horizontal, 40)
+                  .background(
+                      LinearGradient(
+                          gradient: Gradient(colors: [Color("MediumBlue"), Color("PaleGreen")]),
+                          startPoint: .leading,
+                          endPoint: .trailing
+                      )
+                  )
+                  .cornerRadius(25)
+                  .shadow(radius: 5)
           }
+          .simultaneousGesture(TapGesture().onEnded {
+              uploadImagesAndContinue()
+          })
           .frame(maxWidth: 200)
           .frame(maxWidth: .infinity)
           .padding(.top)
@@ -274,23 +299,33 @@ struct MakeListingView: View {
     }
   }
   
-  // helper function to load photos
-  func loadSelectedPhotos(from items: [PhotosPickerItem]) {
+  private func loadSelectedPhotos(from items: [PhotosPickerItem]) {
     Task {
       // clear previous images
       uploadedImages.removeAll()
+              
       for item in items {
         if let data = try? await item.loadTransferable(type: Data.self),
            let image = UIImage(data: data) {
-          // add loaded image
+          // add loaded image to uploadedImages
           uploadedImages.append(image)
         }
       }
     }
   }
+      
+  func uploadImagesAndContinue() {
+    FirebaseService.shared.uploadImages(uploadedImages) { urls in
+      // set photo URLs in draft
+      draft.photoURLs = urls
+            
+      // debugging
+      print("Draft updated with photo URLs:", draft)
+    }
+  }
 }
 
-#Preview {
+/*#Preview {
     MakeListingView(user: User(
       id: "123",
               firstName: "Abby",
@@ -306,4 +341,4 @@ struct MakeListingView: View {
               styleChoices: ["vintage", "formal"],
               events: ["event1", "event2"]
           ))
-}
+}*/

@@ -14,5 +14,7 @@ DerivedData/
 *.xcworkspace/
 GoogleInfo.plist
 
-
+*.xcuserstate
+*.xcworkspace
+xcuserdata/
 

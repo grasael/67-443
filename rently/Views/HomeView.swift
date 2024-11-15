@@ -12,10 +12,6 @@ struct HomeView: View {
         VStack {
             Text("This is the home page.")
         }
-<<<<<<< HEAD
-        .padding()
-=======
->>>>>>> fb9311cb1893bb33de0c13449a4d769f510984db
     }
 }
 

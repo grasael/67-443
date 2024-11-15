@@ -2,39 +2,40 @@
 //  ListingRepository.swift
 //  rently
 //
-//  Created by Sara Riyad on 11/8/24.
+//  Created by Grace Liao and Sara Riyad on 11/8/24.
 //
 
-import Foundation
-import Combine
 import FirebaseFirestore
+import Combine
+import Foundation
 
 class ListingRepository: ObservableObject {
-    private let path: String = "Listings"
-    private let store = Firestore.firestore()
-    
+    private let path: String = "Listings" // Firestore collection path
+    private let store = Firestore.firestore() // Firestore reference
+
     @Published var listings: [Listing] = []
     private var cancellables: Set<AnyCancellable> = []
 
     init() {
-        self.get()
+        fetchListings()
     }
 
-    func get() {
+    // Fetch listings from Firestore
+    func fetchListings() {
         store.collection(path)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
-                    print("Error getting listings: \(error.localizedDescription)")
+                    print("Error fetching listings: \(error.localizedDescription)")
                     return
                 }
 
                 self.listings = querySnapshot?.documents.compactMap { document in
-                    return self.decodeListing(from: document)
+                    try? document.data(as: Listing.self)
                 } ?? []
             }
     }
 
-    // MARK: CRUD methods
+    // MARK: CRUD Methods
     func create(_ listing: Listing) {
         do {
             let data = try encodeListing(listing)
@@ -127,3 +128,4 @@ class ListingRepository: ObservableObject {
         )
     }
 }
+

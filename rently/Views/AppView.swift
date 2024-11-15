@@ -8,66 +8,56 @@
 import SwiftUI
 
 struct AppView: View {
+    let user: User
     var body: some View {
         TabView {
-<<<<<<< HEAD
-          HomeView()
-          .tabItem {
-            Image(systemName: "house")
-            Text("home")
-          }
-          SearchView()
-          .tabItem {
-            Image(systemName: "magnifyingglass")
-            Text("search")
+            HomeView()
+                .tabItem {
+                    Image(systemName: "house")
+                    Text("home")
+                }
+            
+            SearchView()
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                    Text("search")
+                }
+            
+            MakeListingView()
+                .tabItem {
+                    Image(systemName: "plus")
+                    Text("list")
+                }
+            
+            RentalsView()
+                .tabItem {
+                    Image(systemName: "hanger")
+                    Text("rentals")
+                }
+            
+            ProfileView(user: user)
+                .tabItem {
+                    Image(systemName: "person")
+                    Text("profile")
+                }
         }
-          ListView()
-          .tabItem {
-            Image(systemName: "plus")
-            Text("list")
-        }
-          RentalsView()
-            .tabItem {
-              Image(systemName: "hanger")
-              Text("rentals")
-        }
-          ProfileView()
-            .tabItem {
-              Image(systemName: "person")
-              Text("profile")
-            }
-        }
-=======
-         HomeView()
-         .tabItem {
-         Image(systemName: "house")
-         Text("home")
-         }
-         SearchView()
-         .tabItem {
-         Image(systemName: "magnifyingglass")
-         Text("search")
-         }
-         MakeListingView()
-         .tabItem {
-         Image(systemName: "plus")
-         Text("list")
-         }
-         RentalsView()
-         .tabItem {
-         Image(systemName: "hanger")
-         Text("rentals")
-         }
-         ProfileView()
-         .tabItem {
-         Image(systemName: "person")
-         Text("profile")
-         }
-         }
->>>>>>> fb9311cb1893bb33de0c13449a4d769f510984db
     }
 }
 
 #Preview {
-    AppView()
+    AppView(user: User(
+        firstName: "Example",
+        lastName: "User",
+        username: "exampleuser",
+        pronouns: "they/them",
+        email: "example@domain.com",
+        password: "password",
+        university: "Example University",
+        rating: 5.0,
+        listings: [],
+        likedItems: [],
+        styleChoices: [],
+        events: []
+    ))
 }
+

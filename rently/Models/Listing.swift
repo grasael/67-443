@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import FirebaseFirestore
+import PhotosUI
 
-enum ItemSize: String {
+enum ItemSize: String, CaseIterable, Codable {
   case xxsmall = "XXS"
   case xsmall = "XS"
   case small = "S"
@@ -18,7 +18,7 @@ enum ItemSize: String {
   case xxlarge = "XXL"
 }
 
-enum ItemColor: String, CaseIterable {
+enum ItemColor: String, CaseIterable, Codable {
   case red = "red"
   case orange = "orange"
   case yellow = "yellow"
@@ -33,23 +33,23 @@ enum ItemColor: String, CaseIterable {
   case tan = "tan"
 }
 
-enum Category: String, CaseIterable {
+enum Category: String, CaseIterable, Codable {
   // womenswear categories
-  case womensTops = "Women's Tops"
-  case womensBottoms = "Women's Bottoms"
-  case dresses = "Dresses"
-  case womensOuterwear = "Women's Outerwear"
-  case womensActivewear = "Women's Activewear"
+  case womensTops = "women's tops"
+  case womensBottoms = "women's bottoms"
+  case dresses = "dresses"
+  case womensOuterwear = "women's outerwear"
+  case womensActivewear = "women's activewear"
       
   // menswear categories
-  case mensTops = "Men's Tops"
-  case mensBottoms = "Men's Bottoms"
-  case mensOuterwear = "Men's Outerwear"
-  case mensActivewear = "Men's Activewear"
-  case mensFormalwear = "Men's Formalwear"
+  case mensTops = "men's tops"
+  case mensBottoms = "men's bottoms"
+  case mensOuterwear = "men's outerwear"
+  case mensActivewear = "men's activewear"
+  case mensFormalwear = "men's formalwear"
 }
 
-enum RentalDuration: String {
+enum RentalDuration: String, CaseIterable, Codable {
   case oneWeek = "1 week"
   case twoWeeks = "2 weeks"
   case oneMonth = "1 month"
@@ -58,7 +58,7 @@ enum RentalDuration: String {
   case fourMonths = "4 months"
 }
 
-enum TagOption: String, CaseIterable {
+enum TagOption: String, CaseIterable, Codable {
   case vintage = "vintage"
   case formal = "formal"
   case sportswear = "sportswear"
@@ -74,30 +74,30 @@ enum TagOption: String, CaseIterable {
   case graduation = "graduation"
 }
 
-enum PickupLocation: String, CaseIterable {
-  case uc = "Jared L. Cohon University Center"
-  case fifthClyde = "Fifth and Clyde"
-  case tepper = "Tepper School of Business"
-  case gates = "Gates School of Computer Science"
-  case forbesBeeler = "Forbes Beeler Apartments"
-  case mellonInstitute = "Mellon Institute"
+enum PickupLocation: String, CaseIterable, Codable {
+  case uc = "jared l. cohon university center"
+  case fifthClyde = "fifth and clyde"
+  case tepper = "tepper school of business"
+  case gates = "gates school of computer science"
+  case forbesBeeler = "forbes beeler apartments"
+  case mellonInstitute = "mellon institute"
 }
 
-struct Listing: Identifiable {
-  var id = UUID()
-  var title: String
-  var creationTime: Date
-  var description: String
-  var category: Category
-  var size: ItemSize
-  var price: Double
-  var color: ItemColor
-  var condition: String
-  var photoURLs: [String]
-  var tags: [TagOption]
-  var brand: String
-  var maxRentalDuration: RentalDuration
-  var pickupLocation: PickupLocation
-  var available: Bool
-  var rating: Float
+struct Listing: Identifiable, Codable {
+    var id: String
+    var title: String
+    var creationTime: Date
+    var description: String
+    var category: String
+    var size: String
+    var price: Double
+    var color: String
+    var condition: String
+    var photoURLs: [String]
+    var tags: [String]
+    var brand: String
+    var maxRentalDuration: String
+    var pickupLocation: String
+    var available: Bool
+    var rating: Float
 }

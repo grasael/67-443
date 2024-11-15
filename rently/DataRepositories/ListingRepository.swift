@@ -12,7 +12,7 @@ import Foundation
 class ListingRepository: ObservableObject {
     private let path: String = "Listings" // Firestore collection path
     private let store = Firestore.firestore() // Firestore reference
-    
+
     @Published var listings: [Listing] = []
     private var cancellables: Set<AnyCancellable> = []
 
@@ -30,7 +30,7 @@ class ListingRepository: ObservableObject {
                 }
 
                 self.listings = querySnapshot?.documents.compactMap { document in
-                    self.decodeListing(from: document)
+                    try? document.data(as: Listing.self)
                 } ?? []
             }
     }

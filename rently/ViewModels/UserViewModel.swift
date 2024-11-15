@@ -13,7 +13,7 @@ class UserViewModel: ObservableObject, Identifiable {
     @Published var user: User
     private var cancellables: Set<AnyCancellable> = []
     var id = ""
-    
+
     init(user: User) {
         self.user = user
         $user
@@ -21,16 +21,17 @@ class UserViewModel: ObservableObject, Identifiable {
             .assign(to: \.id, on: self)
             .store(in: &cancellables)
     }
-    
+
     func addUser() {
         userRepository.create(user)
     }
-    
+
     func updateUser() {
         userRepository.update(user)
     }
-    
+
     func deleteUser() {
         userRepository.delete(user)
     }
 }
+

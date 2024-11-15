@@ -13,7 +13,6 @@ struct ProfileView: View {
     @State private var selectedTab = 0 // 0 for Listings, 1 for Likes
 
     var body: some View {
-<<<<<<< HEAD
         NavigationView {
             ScrollView {
                 VStack {
@@ -62,6 +61,7 @@ struct ProfileView: View {
                         Image(systemName: "graduationcap.fill")
                         Text(user.university)
                         Button(action: {
+                            // Edit profile action
                         }) {
                             Text("edit profile")
                                 .font(.system(size: 16, weight: .medium))
@@ -77,7 +77,7 @@ struct ProfileView: View {
                             )
                         )
                         .cornerRadius(20)
-                        .shadow(radius: 2)
+                        .shadow(radius: 2) // Optional shadow for subtle depth effect
                     }
                     .font(.subheadline)
                     .foregroundColor(.secondary)
@@ -108,54 +108,5 @@ struct ProfileView: View {
                 listingsViewModel.fetchListings()
             }
         }
-=======
-<<<<<<< HEAD
-        VStack {
-            Text("This is the profile page.")
-        }
-        .padding()
-=======
-        HStack {
-            Image(systemName: "person.circle.fill")
-                .resizable()
-                .frame(width: 80, height: 80)
-                .foregroundColor(.gray)
-            
-            VStack(alignment: .leading) {
-                Text("amelia bose")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                
-                HStack(spacing: 2) {
-                    Text("5")
-                    Image(systemName: "star.fill")
-                        .foregroundColor(.yellow)
-                }
-            }
-            Spacer()
-            Image(systemName: "gearshape.fill")
-                .font(.title2)
-                .foregroundColor(.gray)
-        }
-        .padding(.horizontal)
-        
-        HStack() {
-            Text("90 followers")
-            Text("70 following")
-            Text("10 rented")
-        }
-        .font(.subheadline)
-        .foregroundColor(.secondary)
-        
-        HStack {
-            Image(systemName: "graduationcap.fill")
-            Text("Carnegie Mellon University")
-        }
-        .font(.subheadline)
-        .foregroundColor(.secondary)
-        
-        
->>>>>>> fb9311cb1893bb33de0c13449a4d769f510984db
->>>>>>> main
     }
 }

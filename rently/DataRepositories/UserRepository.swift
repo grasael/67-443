@@ -20,6 +20,7 @@ class UserRepository: ObservableObject {
         self.get()
     }
 
+    // Fetch users from Firestore
     func get() {
         store.collection(path)
             .addSnapshotListener { querySnapshot, error in
@@ -34,12 +35,12 @@ class UserRepository: ObservableObject {
             }
     }
 
-    // MARK: CRUD methods
+    // MARK: CRUD Methods
     func create(_ user: User) {
         do {
             let newUser = user
             _ = try store.collection(path).addDocument(from: newUser)
-            print("User added to Firestore") // Preserved logging from HEAD branch
+            print("User added to Firestore") // Preserved print statement
         } catch {
             fatalError("Unable to add user: \(error.localizedDescription).")
         }

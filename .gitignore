@@ -13,12 +13,11 @@ DerivedData/
 *.xcuserdatad/
 *.xcworkspace/
 GoogleInfo.plist
-
 *.xcuserstate
 *.xcworkspace
 xcuserdata/
-
 .DS_Store
 /.DS_Store
 /Views/.DS_Store
 
+rently.xcodeproj/project.pbxproj.bak

@@ -2,38 +2,25 @@
 //  ListingRepository.swift
 //  rently
 //
-<<<<<<< HEAD
-//  Created by Grace Liao on 11/8/24.
+//  Created by Grace Liao and Sara Riyad on 11/8/24.
 //
 
 import FirebaseFirestore
 import Combine
+import Foundation
 
 class ListingRepository: ObservableObject {
     private let path: String = "Listings" // Firestore collection path
     private let store = Firestore.firestore() // Firestore reference
-
-=======
-//  Created by Sara Riyad on 11/8/24.
-//
-
-import Foundation
-import Combine
-import FirebaseFirestore
-
-class ListingRepository: ObservableObject {
-    private let path: String = "Listings"
-    private let store = Firestore.firestore()
     
->>>>>>> main
     @Published var listings: [Listing] = []
     private var cancellables: Set<AnyCancellable> = []
 
     init() {
-<<<<<<< HEAD
         fetchListings()
     }
 
+    // Fetch listings from Firestore
     func fetchListings() {
         store.collection(path)
             .addSnapshotListener { querySnapshot, error in
@@ -41,32 +28,14 @@ class ListingRepository: ObservableObject {
                     print("Error fetching listings: \(error.localizedDescription)")
                     return
                 }
-                
-                self.listings = querySnapshot?.documents.compactMap { document in
-                    try? document.data(as: Listing.self)
-=======
-        self.get()
-    }
-
-    func get() {
-        store.collection(path)
-            .addSnapshotListener { querySnapshot, error in
-                if let error = error {
-                    print("Error getting listings: \(error.localizedDescription)")
-                    return
-                }
 
                 self.listings = querySnapshot?.documents.compactMap { document in
-                    return self.decodeListing(from: document)
->>>>>>> main
+                    self.decodeListing(from: document)
                 } ?? []
             }
     }
 
-<<<<<<< HEAD
-    // Other CRUD methods (create, update, delete) go here
-=======
-    // MARK: CRUD methods
+    // MARK: CRUD Methods
     func create(_ listing: Listing) {
         do {
             let data = try encodeListing(listing)
@@ -158,5 +127,5 @@ class ListingRepository: ObservableObject {
             rating: rating
         )
     }
->>>>>>> main
 }
+

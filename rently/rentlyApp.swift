@@ -9,16 +9,16 @@ import SwiftUI
 @_implementationOnly import FirebaseCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-
-    return true
-  }
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
 }
 
 @main
 struct rentlyApp: App {
+    // Register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     var body: some Scene {
@@ -40,7 +40,9 @@ struct rentlyApp: App {
                     events: ["event1", "event2"]
                 ))
                 .environmentObject(ListingsViewModel()) // Pass your environment object
+                ContentView() // Use ContentView as the main view
             }
         }
     }
 }
+

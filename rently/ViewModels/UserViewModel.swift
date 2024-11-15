@@ -34,3 +34,4 @@ class UserViewModel: ObservableObject, Identifiable {
         userRepository.delete(user)
     }
 }
+

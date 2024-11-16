@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class ListingsViewModel: ObservableObject {
+class ListingViewModel: ObservableObject {
   @Published var listings: [Listing] = []
   init() {
           fetchListings()

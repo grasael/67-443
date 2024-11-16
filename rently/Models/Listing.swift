@@ -110,13 +110,3 @@ struct Listing: Identifiable, Codable {
   var available: Bool
   //adding a reviews variable here for the subcollection doesnt work so we will need to read it separately
 }
-  // Review Model (Subcollection)
-  struct Review: Identifiable, Codable {
-    @DocumentID var id: String?
-    var time: Date
-    var rentalID: String
-    var text: String
-    var rating: Int
-    var hasDamages: Bool
-    var condition: String
-}

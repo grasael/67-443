@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct ListingsProfileView: View {
+    @StateObject private var viewModel = ListingsViewModel() // Using the provided ViewModel
+    
     var body: some View {
-        VStack {
-            Text("This is the list page.")
+        NavigationView {
+            List(viewModel.listings) { listing in
+                Text(listing.title) // Display only the title
+            }
+            .onAppear {
+                viewModel.fetchListings() // Fetch listings when the view appears
+            }
+            .navigationTitle("Listings")
         }
-        .padding()
     }
 }
-

@@ -6,16 +6,19 @@
 //
 
 import Foundation
-import PhotosUI
 
+import Foundation
+import FirebaseFirestore
+
+// Enums
 enum ItemSize: String, CaseIterable, Codable {
-  case xxsmall = "XXS"
-  case xsmall = "XS"
-  case small = "S"
-  case medium = "M"
-  case large = "L"
-  case xlarge = "XL"
-  case xxlarge = "XXL"
+    case xxsmall = "XXS"
+    case xsmall = "XS"
+    case small = "S"
+    case medium = "M"
+    case large = "L"
+    case xlarge = "XL"
+    case xxlarge = "XXL"
 }
 
 enum ItemColor: String, CaseIterable, Codable {
@@ -34,31 +37,35 @@ enum ItemColor: String, CaseIterable, Codable {
 }
 
 enum Category: String, CaseIterable, Codable {
-  // womenswear categories
-  case womensTops = "women's tops"
-  case womensBottoms = "women's bottoms"
-  case dresses = "dresses"
-  case womensOuterwear = "women's outerwear"
-  case womensActivewear = "women's activewear"
-      
-  // menswear categories
-  case mensTops = "men's tops"
-  case mensBottoms = "men's bottoms"
-  case mensOuterwear = "men's outerwear"
-  case mensActivewear = "men's activewear"
-  case mensFormalwear = "men's formalwear"
+    case womensTops = "Women's Tops"
+    case womensBottoms = "Women's Bottoms"
+    case dresses = "Dresses"
+    case womensOuterwear = "Women's Outerwear"
+    case womensActivewear = "Women's Activewear"
+    case mensTops = "Men's Tops"
+    case mensBottoms = "Men's Bottoms"
+    case mensOuterwear = "Men's Outerwear"
+    case mensActivewear = "Men's Activewear"
+    case mensFormalwear = "Men's Formalwear"
+}
+
+enum Condition: String, CaseIterable, Codable {
+    case brandNew = "brand new"
+    case veryGood = "very good"
+    case good = "good"
+    case fair = "fair"
 }
 
 enum RentalDuration: String, CaseIterable, Codable {
-  case oneWeek = "1 week"
-  case twoWeeks = "2 weeks"
-  case oneMonth = "1 month"
-  case twoMonths = "2 months"
-  case threeMonths = "3 months"
-  case fourMonths = "4 months"
+    case oneWeek = "1 week"
+    case twoWeeks = "2 weeks"
+    case oneMonth = "1 month"
+    case twoMonths = "2 months"
+    case threeMonths = "3 months"
+    case fourMonths = "4 months"
 }
 
-enum TagOption: String, CaseIterable, Codable {
+enum TagOption: String, CaseIterable, Codable{
   case vintage = "vintage"
   case formal = "formal"
   case sportswear = "sportswear"
@@ -74,30 +81,32 @@ enum TagOption: String, CaseIterable, Codable {
   case graduation = "graduation"
 }
 
-enum PickupLocation: String, CaseIterable, Codable {
-  case uc = "jared l. cohon university center"
-  case fifthClyde = "fifth and clyde"
-  case tepper = "tepper school of business"
-  case gates = "gates school of computer science"
-  case forbesBeeler = "forbes beeler apartments"
-  case mellonInstitute = "mellon institute"
+enum PickupLocation: String, CaseIterable, Codable{
+    case uc = "Jared L. Cohon University Center"
+    case fifthClyde = "Fifth and Clyde"
+    case tepper = "Tepper School of Business"
+    case gates = "Gates School of Computer Science"
+    case forbesBeeler = "Forbes Beeler Apartments"
+    case mellonInstitute = "Mellon Institute"
 }
 
+// Listing Model
 struct Listing: Identifiable, Codable {
-    var id: String
-    var title: String
-    var creationTime: Date
-    var description: String
-    var category: String
-    var size: String
-    var price: Double
-    var color: String
-    var condition: String
-    var photoURLs: [String]
-    var tags: [String]
-    var brand: String
-    var maxRentalDuration: String
-    var pickupLocation: String
-    var available: Bool
-    var rating: Float
+  @DocumentID var id: String?
+  var title: String
+  var creationTime: Date
+  var description: String
+  var category: Category
+  var userID: String
+  var size: ItemSize
+  var price: Double
+  var color: ItemColor
+  var condition: Condition
+  var photoURLs: [String]
+  var tags: [TagOption]
+  var brand: String
+  var maxRentalDuration: RentalDuration
+  var pickupLocations: [PickupLocation]
+  var available: Bool
+  //adding a reviews variable here for the subcollection doesnt work so we will need to read it separately
 }

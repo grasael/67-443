@@ -9,7 +9,6 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
-
 extension Auth {
     func createUserAsync(withEmail email: String, password: String) async throws -> AuthDataResult {
         return try await withCheckedThrowingContinuation { continuation in
@@ -32,15 +31,14 @@ class FirebaseService {
     private init() {}
 
     func registerUser(firstName: String, email: String, password: String) async throws -> User {
-    print("Attempting to create user in Firebase Authentication with:")
-    print("First Name: \(firstName)")
-    print("Email: \(email)")
-    print("Password: \(password)")
-        let authResult = try await Auth.auth().createUserAsync(withEmail: email, password: password)
+        print("Attempting to create user in Firebase Authentication with:")
+        print("First Name: \(firstName)")
+        print("Email: \(email)")
+        print("Password: \(password)")
         
+        let authResult = try await Auth.auth().createUserAsync(withEmail: email, password: password)
         let uid = authResult.user.uid
-        print("Firebase Authentication succeeded. User UID: \(uid)")
-
+        
         let user = User(
             id: uid,
             firstName: firstName,
@@ -58,12 +56,7 @@ class FirebaseService {
         )
 
         print("Saving user to Firestore with the following data:")
-        print("User ID: \(user.id ?? "No ID")")
-        print("First Name: \(user.firstName)")
-        print("Email: \(user.email)")
         try await saveUserToFirestore(user)
-        
-        print("User successfully saved to Firestore.")
         return user
     }
 
@@ -72,47 +65,49 @@ class FirebaseService {
         try db.collection("Users").document(user.id!).setData(from: user)
     }
 
-  // upload images to Firebase Storage and get URLs
-  func uploadImages(_ images: [UIImage], completion: @escaping ([String]) -> Void) {
-      let storage = Storage.storage().reference()
-      var uploadedURLs: [String] = []
-      let dispatchGroup = DispatchGroup()
+    // Upload images to Firebase Storage and get URLs
+    func uploadImages(_ images: [UIImage], completion: @escaping ([String]) -> Void) {
+        let storage = Storage.storage().reference()
+        var uploadedURLs: [String] = []
+        let dispatchGroup = DispatchGroup()
 
-      for image in images {
-          guard let imageData = image.jpegData(compressionQuality: 0.8) else { continue }
-          let imageRef = storage.child("images/\(UUID().uuidString).jpg")
-          dispatchGroup.enter()
+        for image in images {
+            guard let imageData = image.jpegData(compressionQuality: 0.8) else { continue }
+            let imageRef = storage.child("images/\(UUID().uuidString).jpg")
+            dispatchGroup.enter()
 
-          imageRef.putData(imageData, metadata: nil) { _, error in
-              if let error = error {
-                  print("Upload failed: \(error.localizedDescription)")
-                  dispatchGroup.leave()
-                  return
-              }
+            imageRef.putData(imageData, metadata: nil) { _, error in
+                if let error = error {
+                    print("Upload failed: \(error.localizedDescription)")
+                    dispatchGroup.leave()
+                    return
+                }
 
-              imageRef.downloadURL { url, error in
-                  if let url = url {
-                      uploadedURLs.append(url.absoluteString)
-                  } else if let error = error {
-                      print("Failed to get download URL: \(error.localizedDescription)")
-                  }
-                  dispatchGroup.leave()
-              }
-          }
-      }
+                imageRef.downloadURL { url, error in
+                    if let url = url {
+                        uploadedURLs.append(url.absoluteString)
+                    } else if let error = error {
+                        print("Failed to get download URL: \(error.localizedDescription)")
+                    }
+                    dispatchGroup.leave()
+                }
+            }
+        }
 
-      dispatchGroup.notify(queue: .main) {
-          print("All uploads completed. URLs: \(uploadedURLs)") // Debugging print
-          completion(uploadedURLs)
-      }
-  }
+        dispatchGroup.notify(queue: .main) {
+            print("All uploads completed. URLs: \(uploadedURLs)")
+            completion(uploadedURLs)
+        }
+    }
 
-
-  // save Listing to Firestore
+    // Save Listing to Firestore
   func saveListing(_ listing: Listing, completion: @escaping (Result<Void, Error>) -> Void) {
       let db = Firestore.firestore()
       do {
-          try db.collection("Listings").document(listing.id).setData(from: listing) { error in
+          let data = try Firestore.Encoder().encode(listing)
+          print("Serialized data for Firestore: \(data)")  // Ensure photoURLs exist in serialized data
+
+          db.collection("Listings").document(listing.id ?? UUID().uuidString).setData(data) { error in
               if let error = error {
                   print("Firestore save error:", error)
                   completion(.failure(error))
@@ -127,59 +122,54 @@ class FirebaseService {
       }
   }
 
-  // save ListingDraft after images are uploaded
-  func saveListingFromDraft(_ draft: ListingDraft, completion: @escaping (Result<Void, Error>) -> Void) {
+
+    // Save ListingDraft after images are uploaded
+  func saveListingFromDraft(_ draft: ListingDraft, userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
       let listing = Listing(
-        id: UUID().uuidString,
+          id: UUID().uuidString,
           title: draft.title,
-          creationTime: Date(),
+          creationTime: draft.creationTime,
           description: draft.description,
           category: draft.category,
+          userID: userID,
           size: draft.size,
           price: draft.price,
           color: draft.color,
           condition: draft.condition,
-          photoURLs: draft.photoURLs,
+          photoURLs: draft.photoURLs,  // Ensure this has values here
           tags: draft.tags,
           brand: draft.brand,
           maxRentalDuration: draft.maxRentalDuration,
-          pickupLocation: draft.pickupLocation,
-          available: draft.available,
-          rating: draft.rating
+          pickupLocations: draft.pickupLocations,
+          available: draft.available
       )
-      print("Saving listing with URLs:", listing.photoURLs)
-        
+      
+      print("Listing before saving: \(listing)")  // Check if photoURLs are populated here
       saveListing(listing, completion: completion)
   }
-  
-  // fetch all listings from Firestore
-      func fetchListings(completion: @escaping (Result<[Listing], Error>) -> Void) {
-          let db = Firestore.firestore()
-          db.collection("Listings").getDocuments { snapshot, error in
-              if let error = error {
-                  completion(.failure(error))
-                  return
-              }
-              
-              let listings = snapshot?.documents.compactMap { document in
-                  try? document.data(as: Listing.self)
-              } ?? []
-              completion(.success(listings))
-          }
-      }
-      
-  // delete a listing from Firestore
-  func deleteListing(_ id: String, completion: @escaping (Result<Void, Error>) -> Void) {
-      let db = Firestore.firestore()
-      db.collection("Listings").document(id).delete { error in
-          if let error = error {
-              completion(.failure(error))
-          } else {
-              completion(.success(()))
-          }
-      }
-  }
+
+    // Fetch Listings
+    func fetchListings(completion: @escaping (Result<[Listing], Error>) -> Void) {
+        let db = Firestore.firestore()
+        db.collection("Listings").getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            let listings = snapshot?.documents.compactMap { try? $0.data(as: Listing.self) } ?? []
+            completion(.success(listings))
+        }
+    }
+
+    // Delete Listing
+    func deleteListing(_ id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let db = Firestore.firestore()
+        db.collection("Listings").document(id).delete { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
 }
-
-
-

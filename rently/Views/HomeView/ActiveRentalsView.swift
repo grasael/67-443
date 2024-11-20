@@ -27,7 +27,11 @@ struct ActiveRentalsView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
                     ForEach(rentalViewModel.rentals) { rental in
-                        ActiveRentalCard(rental: rental)
+                        if let listing = rentalViewModel.listing {
+                            ActiveRentalCard(rental: rental, listing: listing)
+                        } else {
+                            Text("Loading...")
+                        }
                     }
                 }
                 .padding(.vertical)

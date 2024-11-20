@@ -15,7 +15,7 @@ class ActiveRentalsViewModel: ObservableObject {
     @Published var listing: Listing?
     
     private var db = Firestore.firestore()
-    private let renteeID = "0" // Replace with actual hardcoded ID
+    private let renteeID = "0" // Replace with actual ID
     
     func fetchActiveRentals() {
         isLoading = true
@@ -38,7 +38,12 @@ class ActiveRentalsViewModel: ObservableObject {
                 self.rentals = documents.compactMap { document in
                     do {
                         let rental = try document.data(as: Rental.self)
-                        return rental.isActiveOrUpcoming ? rental : nil
+                        if rental.isActiveOrUpcoming {
+                            // Fetch the listing for this rental
+                            self.loadListingDetails(rental: rental)
+                            return rental
+                        }
+                        return nil
                     } catch {
                         print("Error decoding rental: \(error.localizedDescription)")
                         return nil
@@ -48,6 +53,7 @@ class ActiveRentalsViewModel: ObservableObject {
                 print("Successfully fetched \(self.rentals.count) active rentals.")
             }
     }
+
   
       
   func loadRenterDetails(rental: Rental) {

@@ -10,6 +10,7 @@ import SwiftUI
 
 // MARK: - SearchBarView
 struct SearchBarView: View {
+    let user: User
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
         
@@ -33,7 +34,7 @@ struct SearchBarView: View {
                 }
               
             }
-          Text("hi, Grace!")
+            Text("hi, "+user.firstName)
               .font(.largeTitle)
               .foregroundColor(.green)
         }

@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct AppView: View {
-    var body: some View {
+  let user: User
+  var body: some View {
         TabView {
-         HomeView()
+            HomeView(user: user)
          .tabItem {
          Image(systemName: "house")
          Text("home")
          }
-         SearchView()
+         SearchView(query: "")
          .tabItem {
          Image(systemName: "magnifyingglass")
          Text("search")
@@ -30,7 +31,7 @@ struct AppView: View {
          Image(systemName: "hanger")
          Text("rentals")
          }
-         ProfileView()
+          ProfileView(user: user)
          .tabItem {
          Image(systemName: "person")
          Text("profile")
@@ -39,6 +40,3 @@ struct AppView: View {
     }
 }
 
-#Preview {
-    AppView()
-}

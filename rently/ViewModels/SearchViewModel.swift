@@ -76,7 +76,8 @@ class SearchViewModel: ObservableObject {
             self.listings = self.allListings.filter { listing in
                 listing.title.lowercased().contains(lowercasedQuery) ||
                 listing.category.rawValue.lowercased().contains(lowercasedQuery) ||
-                listing.description.lowercased().contains(lowercasedQuery)
+                listing.description.lowercased().contains(lowercasedQuery) ||
+                listing.tags.contains { $0.rawValue.lowercased().contains(lowercasedQuery) }
             }
             
             self.users = self.allUsers.filter { user in

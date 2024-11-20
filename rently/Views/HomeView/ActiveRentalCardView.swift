@@ -1,10 +1,3 @@
-//
-//  ActiveRentalCardView.swift
-//  rently
-//
-//  Created by Tishyaa Chaudhry on 11/2/24.
-//
-
 import Foundation
 import SwiftUI
 

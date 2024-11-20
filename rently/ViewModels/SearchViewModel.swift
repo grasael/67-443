@@ -13,15 +13,17 @@ class SearchViewModel: ObservableObject {
     @Published var users = [User]()
     private let db = Firestore.firestore()
     
+    private var allListings = [Listing]()
+    private var allUsers = [User]()
+    
     func fetchListings() {
-        // Fetches listings from Firestore
         db.collection("Listings").getDocuments { snapshot, error in
             if let error = error {
                 print("Error fetching listings: \(error)")
                 return
             }
             
-            self.listings = snapshot?.documents.map { document in
+            self.allListings = snapshot?.documents.map { document in
                 let data = document.data()
                 let uuid = UUID(uuidString: document.documentID) ?? UUID()
                 
@@ -44,43 +46,45 @@ class SearchViewModel: ObservableObject {
                     available: data["available"] as? Bool ?? false
                 )
             } ?? []
+            
+            self.listings = self.allListings
         }
     }
     
     func fetchUsers() {
-        // Fetches users from Firestore
         db.collection("Users").getDocuments { snapshot, error in
             if let error = error {
                 print("Error fetching users: \(error)")
                 return
             }
             
-            self.users = snapshot?.documents.compactMap { document in
+            self.allUsers = snapshot?.documents.compactMap { document in
                 try? document.data(as: User.self)
             } ?? []
+            
+            self.users = self.allUsers // Initialize users with all data
         }
     }
     
-    func performSearch(query: String) {
-        if query.isEmpty {
-            self.listings = []
-            self.users = []
-            return
-        }
-        
+    func filterListingsAndUsers(query: String) {
         let lowercasedQuery = query.lowercased()
         
-        self.listings = listings.filter { listing in
-            listing.title.lowercased().contains(lowercasedQuery) ||
-            listing.category.rawValue.lowercased().contains(lowercasedQuery) ||
-            listing.description.lowercased().contains(lowercasedQuery)
-        }
-        
-        self.users = users.filter { user in
-            user.username.lowercased().contains(lowercasedQuery) ||
-            user.firstName.lowercased().contains(lowercasedQuery) ||
-            user.lastName.lowercased().contains(lowercasedQuery) ||
-            (user.firstName.lowercased() + user.lastName.lowercased()).contains(lowercasedQuery)
+        if lowercasedQuery.isEmpty {
+            self.listings = self.allListings
+            self.users = self.allUsers
+        } else {
+            self.listings = self.allListings.filter { listing in
+                listing.title.lowercased().contains(lowercasedQuery) ||
+                listing.category.rawValue.lowercased().contains(lowercasedQuery) ||
+                listing.description.lowercased().contains(lowercasedQuery)
+            }
+            
+            self.users = self.allUsers.filter { user in
+                user.username.lowercased().contains(lowercasedQuery) ||
+                user.firstName.lowercased().contains(lowercasedQuery) ||
+                user.lastName.lowercased().contains(lowercasedQuery) ||
+                (user.firstName.lowercased() + user.lastName.lowercased()).contains(lowercasedQuery)
+            }
         }
     }
 }

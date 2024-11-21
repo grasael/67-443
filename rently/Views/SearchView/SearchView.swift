@@ -6,7 +6,6 @@
 //
 
 
-
 import SwiftUI
 
 struct SearchView: View {
@@ -44,28 +43,45 @@ struct SearchView: View {
             
             // Show relevant results based on search query
             if !searchText.isEmpty {
-                List(viewModel.listings) { listing in
-                    NavigationLink(destination: ListingView(listing: listing)) {
-                        HStack {
-                            AsyncImage(url: URL(string: listing.photoURLs.first ?? "")) { phase in
-                                if let image = phase.image {
-                                    image.resizable()
-                                        .scaledToFill()
-                                        .frame(width: 50, height: 50)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                } else if phase.error != nil {
-                                    Image(systemName: "xmark.circle")
-                                        .frame(width: 50, height: 50)
-                                } else {
-                                    ProgressView()
-                                        .frame(width: 50, height: 50)
+                List {
+                    Section(header: Text("Listings")) {
+                        ForEach(viewModel.listings) { listing in
+                            NavigationLink(destination: ListingView(listing: listing)) {
+                                HStack {
+                                    AsyncImage(url: URL(string: listing.photoURLs.first ?? "")) { phase in
+                                        if let image = phase.image {
+                                            image.resizable()
+                                                .scaledToFill()
+                                                .frame(width: 50, height: 50)
+                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        } else if phase.error != nil {
+                                            Image(systemName: "xmark.circle")
+                                                .frame(width: 50, height: 50)
+                                        } else {
+                                            ProgressView()
+                                                .frame(width: 50, height: 50)
+                                        }
+                                    }
+                                    VStack(alignment: .leading) {
+                                        Text(listing.title)
+                                            .font(.headline)
+                                        Text("$\(listing.price, specifier: "%.2f")")
+                                            .font(.subheadline)
+                                    }
                                 }
                             }
-                            VStack(alignment: .leading) {
-                                Text(listing.title)
-                                    .font(.headline)
-                                Text("$\(listing.price, specifier: "%.2f")")
-                                    .font(.subheadline)
+                        }
+                    }
+                    Section(header: Text("Users")) {
+                        ForEach(viewModel.users) { user in
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("\(user.firstName) \(user.lastName)")
+                                        .font(.headline)
+                                    Text("@\(user.username)")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
                             }
                         }
                     }
@@ -119,8 +135,6 @@ struct SearchView: View {
         viewModel.filterListingsAndUsers(query: searchText)
     }
 }
-
-
 
 // Updated CategoryIcon to include an action
 struct CategoryIcon: View {

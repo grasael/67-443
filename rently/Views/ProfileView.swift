@@ -61,6 +61,7 @@ struct ProfileView: View {
                         Image(systemName: "graduationcap.fill")
                         Text(user.university)
                         Button(action: {
+                            
                         }) {
                             Text("edit profile")
                                 .font(.system(size: 16, weight: .medium))

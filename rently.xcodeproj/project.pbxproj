@@ -12,6 +12,7 @@
 		7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */; };
 		7F1FD5732CCD757500C7A788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5722CCD757500C7A788 /* Assets.xcassets */; };
 		7F1FD5762CCD757500C7A788 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5752CCD757500C7A788 /* Preview Assets.xcassets */; };
+		7F3810392CEFF3BD002DFCF3 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3810382CEFF3BD002DFCF3 /* EditProfileView.swift */; };
 		7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB6D2CCEDAF700181DB6 /* AppView.swift */; };
 		7F46DB732CCEDBA700181DB6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB722CCEDBA700181DB6 /* HomeView.swift */; };
 		7F46DB772CCEDBBD00181DB6 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB762CCEDBBD00181DB6 /* ListView.swift */; };
@@ -42,6 +43,7 @@
 		7F46DBC02CD560B000181DB6 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 7F46DBBF2CD560B000181DB6 /* FirebaseStorageCombine-Community */; };
 		7F46DBC22CD560B000181DB6 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = 7F46DBC12CD560B000181DB6 /* FirebaseVertexAI */; };
 		7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DBC32CD5612600181DB6 /* UserViewModel.swift */; };
+		7F4B95242CE9C05B00CD7B3E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B95232CE9C05B00CD7B3E /* CardView.swift */; };
 		7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */; };
 		CA127FA62CD94DCF006330DC /* RentalDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA52CD94DCF006330DC /* RentalDetailView.swift */; };
 		CA127FA82CD958F2006330DC /* Rental.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA72CD958F2006330DC /* Rental.swift */; };
@@ -90,12 +92,14 @@
 		7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rentlyApp.swift; sourceTree = "<group>"; };
 		7F1FD5722CCD757500C7A788 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F1FD5752CCD757500C7A788 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7F3810382CEFF3BD002DFCF3 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		7F46DB6D2CCEDAF700181DB6 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		7F46DB722CCEDBA700181DB6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7F46DB762CCEDBBD00181DB6 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		7F46DB782CCEDBC900181DB6 /* RentalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalsView.swift; sourceTree = "<group>"; };
 		7F46DB902CD454D600181DB6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7F46DBC32CD5612600181DB6 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		7F4B95232CE9C05B00CD7B3E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CA127FA52CD94DCF006330DC /* RentalDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalDetailView.swift; sourceTree = "<group>"; };
 		CA127FA72CD958F2006330DC /* Rental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rental.swift; sourceTree = "<group>"; };
@@ -212,12 +216,22 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		7F3810372CEFF3AF002DFCF3 /* EditProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				7F3810382CEFF3BD002DFCF3 /* EditProfileView.swift */,
+			);
+			path = EditProfileView;
+			sourceTree = "<group>";
+		};
 		7F46DB6F2CCEDB4700181DB6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				CA2F2E112CE85DE3008D3021 /* ProfileView.swift */,
+				7F3810372CEFF3AF002DFCF3 /* EditProfileView */,
 				CA2F2E032CE85B4F008D3021 /* LikesView.swift */,
 				CA2F2E002CE85B4F008D3021 /* ListingsProfileView.swift */,
+				7F4B95232CE9C05B00CD7B3E /* CardView.swift */,
 				CA2F2DFD2CE85B4E008D3021 /* OnboardingView.swift */,
 				CA2F2E042CE85B4F008D3021 /* ReviewsView.swift */,
 				CA2F2DFB2CE85B4E008D3021 /* SignInView.swift */,
@@ -445,6 +459,7 @@
 				CA2F2E162CE85ECC008D3021 /* ListingRepository.swift in Sources */,
 				CA2F2E0B2CE85B4F008D3021 /* MakeListingTwoView.swift in Sources */,
 				CAFA5B332CDAE40400D92C14 /* ListingViewModel.swift in Sources */,
+				7F3810392CEFF3BD002DFCF3 /* EditProfileView.swift in Sources */,
 				CA127FB02CD9763F006330DC /* RentalTimelineView.swift in Sources */,
 				CA2F2E0A2CE85B4F008D3021 /* ListingsProfileView.swift in Sources */,
 				529156EA2CE29E7C009EBD96 /* SearchView.swift in Sources */,
@@ -463,6 +478,7 @@
 				CA7CD1892CDE5B080009DF72 /* ListingDetailViewModel.swift in Sources */,
 				CA127FAC2CD9761D006330DC /* RentalHeaderView.swift in Sources */,
 				CA2F2DFA2CE85B20008D3021 /* UserRepository.swift in Sources */,
+				7F4B95242CE9C05B00CD7B3E /* CardView.swift in Sources */,
 				CA7CD18D2CDE5C6D0009DF72 /* ListingDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,17 +8,29 @@
 import SwiftUI
 
 struct ListingsProfileView: View {
-    @StateObject private var viewModel = ListingsViewModel() // Using the provided ViewModel
-    
+    @StateObject private var viewModel = ListingsViewModel()
+
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
     var body: some View {
         NavigationView {
-            List(viewModel.listings) { listing in
-                Text(listing.title) // Display only the title
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(viewModel.listings) { listing in
+                        NavigationLink(destination: ListingDetailView(listing: listing)) {
+                            CardView(listing: listing)
+                        }
+                    }
+                }
+                .padding(.horizontal)
             }
             .onAppear {
-                viewModel.fetchListings() // Fetch listings when the view appears
+                viewModel.fetchListings()
             }
-            .navigationTitle("Listings")
         }
+        .navigationTitle("Profile")
     }
 }

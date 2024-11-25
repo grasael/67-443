@@ -59,11 +59,12 @@ struct SignInView: View {
                 Spacer()
                 
                 // Navigation link to ProfileView (to be triggered after successful login)
-                if let user = user {
-                    NavigationLink(destination: ProfileView(user: user), isActive: $navigateToProfile) {
-                        EmptyView()
-                    }
-                }
+//                if let user = user {
+//                    //NavigationLink(destination: ProfileView(userViewModel: userViewModel), isActive: $navigateToProfile)
+//                    {
+//                        EmptyView()
+//                    }
+//                }
             }
             .padding()
             .alert(isPresented: $showAlert) {

@@ -11,10 +11,13 @@ struct EditProfileView: View {
     @ObservedObject var userViewModel: UserViewModel
     @State private var isShowingImagePicker = false
     @State private var profileImage: UIImage?
-
+    @State private var showSaveAlert = false
+    var onSave: (() -> Void)?
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
+                // Profile Image Section
                 Button(action: {
                     isShowingImagePicker.toggle()
                 }) {
@@ -66,13 +69,8 @@ struct EditProfileView: View {
                     HStack {
                         Text("Pronouns")
                             .frame(width: 100, alignment: .leading)
-                        Picker("Pronouns", selection: $userViewModel.user.pronouns) {
-                            Text("She/Her").tag("She/Her")
-                            Text("He/Him").tag("He/Him")
-                            Text("They/Them").tag("They/Them")
-                            Text("Other").tag("Other")
-                        }
-                        .pickerStyle(MenuPickerStyle())
+                        TextField("Pronouns", text: $userViewModel.user.pronouns)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
                     }
 
                     HStack {
@@ -87,7 +85,7 @@ struct EditProfileView: View {
                 Spacer()
 
                 Button(action: {
-                    userViewModel.updateUser()
+                    saveChanges()
                 }) {
                     Text("Save Changes")
                         .font(.headline)
@@ -96,6 +94,9 @@ struct EditProfileView: View {
                         .padding()
                         .background(Color.blue)
                         .cornerRadius(8)
+                }
+                .alert(isPresented: $showSaveAlert) {
+                    Alert(title: Text("Profile Updated"), message: Text("Your profile information has been saved successfully."), dismissButton: .default(Text("OK")))
                 }
 
                 Button(action: {
@@ -112,5 +113,15 @@ struct EditProfileView: View {
             .padding()
             .navigationTitle("Edit Profile")
         }
+    }
+
+    // Save Changes Function
+    private func saveChanges() {
+//        if let profileImage = profileImage {
+//            user.photo = profileImage.pngData() // Save profile image data to the user object
+//        }
+        userViewModel.updateUser()
+        showSaveAlert = true
+        onSave?() // Notify parent view if needed
     }
 }

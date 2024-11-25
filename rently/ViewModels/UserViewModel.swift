@@ -16,6 +16,7 @@ class UserViewModel: ObservableObject, Identifiable {
 
     init(user: User) {
         self.user = user
+        print("🔍 Initializing UserViewModel with user ID: \(user.id ?? "nil")")
         $user
             .compactMap { $0.id }
             .assign(to: \.id, on: self)
@@ -27,6 +28,8 @@ class UserViewModel: ObservableObject, Identifiable {
     }
 
     func updateUser() {
+        print("Updating user with ID: \(user.id ?? "no ID")")
+        print("Current user data: \(user)")
         userRepository.update(user)
     }
 

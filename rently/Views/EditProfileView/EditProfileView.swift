@@ -17,6 +17,7 @@ struct EditProfileView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
+                // Profile Image Section
                 Button(action: {
                     isShowingImagePicker.toggle()
                 }) {
@@ -120,6 +121,6 @@ struct EditProfileView: View {
 //        }
         userViewModel.updateUser()
         showSaveAlert = true
-        onSave?()
+        onSave?() // Notify parent view if needed
     }
 }

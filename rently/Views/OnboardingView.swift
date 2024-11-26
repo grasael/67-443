@@ -92,31 +92,10 @@ struct OnboardingView: View {
             Alert(
                 title: Text("Success"),
                 message: Text("You have successfully signed up!"),
-                dismissButton: .default(Text("Continue")) {
-                    // Create the new user object and pass it back to ContentView
-                    let newUser = User(
-                        firstName: name,
-                        lastName: lastName,
-                        username: username,
-                        pronouns: pronouns,
-                        email: email,
-                        password: password,
-                        university: university,
-                        rating: 0,
-                        listings: [],
-                        likedItems: [],
-                        styleChoices: [],
-                        events: []
-                    )
-                    // Initialize UserViewModel and add user to Firestore
-                    let userViewModel = UserViewModel(user: newUser)
-                    userViewModel.addUser() // Call addUser to save the user in Firestore
-                    
-                    print("DEBUG GRACE: we are completing onboarding.")
-                    onboardingComplete(newUser)
-                }
+                dismissButton: .default(Text("OK"))
             )
         }
+
         .alert(isPresented: $showErrorAlert) {
             Alert(
                 title: Text("Error"),
@@ -139,10 +118,29 @@ struct OnboardingView: View {
             return
         }
 
+        let newUser = User(
+            firstName: name,
+            lastName: lastName,
+            username: username,
+            pronouns: pronouns,
+            email: email,
+            password: password,
+            university: university,
+            rating: 0,
+            listings: [],
+            likedItems: [],
+            styleChoices: [],
+            events: []
+        )
+
+        let userViewModel = UserViewModel(user: newUser)
+        userViewModel.addUser()
+
+        onboardingComplete(newUser)
+
         showSuccessAlert = true
     }
 
-    
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$"
         let emailPredicate = NSPredicate(format: "SELF MATCHES[c] %@", emailRegex)

@@ -13,7 +13,7 @@ struct AppView: View {
 
     init(user: User) {
         self.user = user
-        _userViewModel = StateObject(wrappedValue: UserViewModel(user: user)) // Initialize StateObject here
+        _userViewModel = StateObject(wrappedValue: UserViewModel(user: user))
     }
 
     var body: some View {

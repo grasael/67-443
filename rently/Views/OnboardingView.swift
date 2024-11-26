@@ -117,6 +117,13 @@ struct OnboardingView: View {
                 }
             )
         }
+        .alert(isPresented: $showErrorAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(errorMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
     
     private func signUp() {
@@ -126,7 +133,19 @@ struct OnboardingView: View {
             return
         }
 
-        // Show success alert after the validation passes
+        guard isValidEmail(email) else {
+            errorMessage = "Please enter a valid email address."
+            showErrorAlert = true
+            return
+        }
+
         showSuccessAlert = true
+    }
+
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES[c] %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
     }
 }

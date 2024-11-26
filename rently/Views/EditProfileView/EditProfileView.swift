@@ -17,7 +17,6 @@ struct EditProfileView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                // Profile Image Section
                 Button(action: {
                     isShowingImagePicker.toggle()
                 }) {
@@ -115,13 +114,12 @@ struct EditProfileView: View {
         }
     }
 
-    // Save Changes Function
     private func saveChanges() {
 //        if let profileImage = profileImage {
 //            user.photo = profileImage.pngData() // Save profile image data to the user object
 //        }
         userViewModel.updateUser()
         showSaveAlert = true
-        onSave?() // Notify parent view if needed
+        onSave?()
     }
 }

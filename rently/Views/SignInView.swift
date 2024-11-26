@@ -15,7 +15,7 @@ struct SignInView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var navigateToProfile = false
-    @State private var user: User? = nil // Hold the user data for navigation
+    @State private var user: User? = nil
 
     var body: some View {
         NavigationView {

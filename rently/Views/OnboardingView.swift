@@ -20,58 +20,171 @@ struct OnboardingView: View {
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @State private var showSuccessAlert = false
+    @State private var agreeToTerms = false
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Let's get you started")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            Divider()
-            
-            TextField("First Name", text: $name)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
-                .padding(.horizontal)
-            
-            TextField("Last Name", text: $lastName)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
-                .padding(.horizontal)
-            
-            TextField("Username", text: $username)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
-                .padding(.horizontal)
-            
-            TextField("Pronouns", text: $pronouns)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
+            Text("let's get you set up")
+                .font(.title2)
+                .fontWeight(.medium)
+                .padding(.top, 40)
+
+           // Divider()
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Color.green.opacity(0.5)) // Light green color
                 .padding(.horizontal)
 
-            TextField("Email", text: $email)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
-                .padding(.horizontal)
-                .keyboardType(.emailAddress)
-                .autocapitalization(.none)
-
-            SecureField("Password", text: $password)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
-                .padding(.horizontal)
             
-            TextField("University", text: $university)
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
-                .padding(.horizontal)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("username: *")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+                    .fontWeight(.semibold)
+
+                TextField("", text: $username)
+                    .padding(8)
+                    .font(.system(size: 14))
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                    .autocapitalization(.none)
+
+                Text("No special characters or spaces")
+                    .font(.system(size: 12))
+                    .foregroundColor(.gray)
+            }
+            .padding(.horizontal)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("first name: *")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+                    .fontWeight(.semibold)
+
+                TextField("", text: $name)
+                    .padding(8)
+                    .font(.system(size: 14))
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+            }
+            .padding(.horizontal)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("last name:")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+                    .fontWeight(.semibold)
+
+                TextField("", text: $lastName)
+                    .padding(8)
+                    .font(.system(size: 14))
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+            }
+            .padding(.horizontal)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("pronouns: *")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+                    .fontWeight(.semibold)
+
+                TextField("", text: $pronouns)
+                    .padding(8)
+                    .font(.system(size: 14))
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+            }
+            .padding(.horizontal)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text("email: *")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+                    .fontWeight(.semibold)
+
+                TextField("", text: $email)
+                    .padding(8)
+                    .font(.system(size: 14))
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+            }
+            .padding(.horizontal)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("university: *")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+                    .fontWeight(.semibold)
+
+                TextField("", text: $university)
+                    .padding(8)
+                    .font(.system(size: 14))
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+            }
+            .padding(.horizontal)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text("password: *")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+                    .fontWeight(.semibold)
+
+                SecureField("", text: $password)
+                    .padding(8)
+                    .font(.system(size: 14))
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+
+                VStack(alignment: .leading, spacing: 4) { // Fine-tuned spacing between bullet points
+                    Text("• 8 characters or more")
+                    Text("• At least 1 number")
+                    Text("• At least 1 letter")
+                }
+                .font(.system(size: 12))
+                .foregroundColor(.gray)
+            }
+            .padding(.horizontal)
+
+            // Agree to Terms Toggle
+            HStack {
+                Toggle(isOn: $agreeToTerms) {
+                    HStack(spacing: 4) {
+                        Text("I agree with")
+                        Button("terms of use") {
+                            // Add action for showing terms of use here
+                        }
+                        .foregroundColor(.blue)
+                        .fontWeight(.semibold)
+                    }
+                }
+                .toggleStyle(SwitchToggleStyle(tint: .blue))
+            }
+            .padding(.horizontal)
+            .font(.system(size: 12))
+            .padding(.bottom, 10)
 
             Button(action: signUp) {
                 Text("Sign Up")
@@ -80,11 +193,16 @@ struct OnboardingView: View {
                     .frame(maxWidth: .infinity)
             }
             .background(
-                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]), startPoint: .leading, endPoint: .trailing)
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.blue, Color.green]),
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
             )
             .cornerRadius(8)
             .padding(.horizontal)
-            
+
+
             Spacer()
         }
         .padding()
@@ -95,7 +213,8 @@ struct OnboardingView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-
+        .background(Color(red: 0.8, green: 0.93, blue: 1)) // Light sky blue color
+        .edgesIgnoringSafeArea(.all) // Extend background to cover the entire screen
         .alert(isPresented: $showErrorAlert) {
             Alert(
                 title: Text("Error"),

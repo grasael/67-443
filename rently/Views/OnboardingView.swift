@@ -27,15 +27,13 @@ struct OnboardingView: View {
             Text("let's get you set up")
                 .font(.title2)
                 .fontWeight(.medium)
-                .padding(.top, 40)
+                .padding(.top, 20)
 
-           // Divider()
             Rectangle()
                 .frame(height: 1)
-                .foregroundColor(Color.green.opacity(0.5)) // Light green color
+                .foregroundColor(Color.green.opacity(0.5))
                 .padding(.horizontal)
 
-            
             VStack(alignment: .leading, spacing: 4) {
                 Text("username: *")
                     .foregroundColor(.black)
@@ -158,7 +156,7 @@ struct OnboardingView: View {
                             .stroke(Color.gray, lineWidth: 1)
                     )
 
-                VStack(alignment: .leading, spacing: 4) { // Fine-tuned spacing between bullet points
+                VStack(alignment: .leading, spacing: 4) {
                     Text("• 8 characters or more")
                     Text("• At least 1 number")
                     Text("• At least 1 letter")
@@ -168,7 +166,6 @@ struct OnboardingView: View {
             }
             .padding(.horizontal)
 
-            // Agree to Terms Toggle
             HStack {
                 Toggle(isOn: $agreeToTerms) {
                     HStack(spacing: 4) {
@@ -184,13 +181,13 @@ struct OnboardingView: View {
             }
             .padding(.horizontal)
             .font(.system(size: 12))
-            .padding(.bottom, 10)
 
             Button(action: signUp) {
                 Text("Sign Up")
                     .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 40)
+                    .font(.system(size: 16, weight: .semibold))
             }
             .background(
                 LinearGradient(
@@ -200,8 +197,9 @@ struct OnboardingView: View {
                 )
             )
             .cornerRadius(8)
+            .padding(.top, 20)
+            .padding(.bottom, 20)
             .padding(.horizontal)
-
 
             Spacer()
         }
@@ -213,8 +211,8 @@ struct OnboardingView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-        .background(Color(red: 0.8, green: 0.93, blue: 1)) // Light sky blue color
-        .edgesIgnoringSafeArea(.all) // Extend background to cover the entire screen
+        .background(Color(red: 0.8, green: 0.93, blue: 1))
+        .edgesIgnoringSafeArea(.all)
         .alert(isPresented: $showErrorAlert) {
             Alert(
                 title: Text("Error"),

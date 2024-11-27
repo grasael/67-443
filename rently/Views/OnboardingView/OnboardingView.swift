@@ -223,7 +223,7 @@ struct OnboardingView: View {
     }
     
     private func signUp() {
-        guard !name.isEmpty, !lastName.isEmpty, !username.isEmpty, !pronouns.isEmpty, !email.isEmpty, !password.isEmpty, !university.isEmpty else {
+        guard !name.isEmpty, !username.isEmpty, !pronouns.isEmpty, !email.isEmpty, !password.isEmpty, !university.isEmpty else {
             errorMessage = "Please fill out all fields."
             showErrorAlert = true
             return

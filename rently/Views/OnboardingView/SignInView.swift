@@ -20,34 +20,53 @@ struct SignInView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                Text("Welcome Back")
+                Text("welcome back")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top)
                 
                 Divider()
                 
-                // Email TextField
-                TextField("Email", text: $email)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-                    .padding(.horizontal)
-                    .keyboardType(.emailAddress)
-                    .autocapitalization(.none)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("email:")
+                        .foregroundColor(.black)
+                        .font(.system(size: 14))
+                        .fontWeight(.semibold)
+
+                    TextField("", text: $email)
+                        .padding(8)
+                        .font(.system(size: 14))
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                }
+                .padding(.horizontal)
                 
-                // Password SecureField
-                SecureField("Password", text: $password)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-                    .padding(.horizontal)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("password:")
+                        .foregroundColor(.black)
+                        .font(.system(size: 14))
+                        .fontWeight(.semibold)
+
+                    SecureField("", text: $password)
+                        .padding(8)
+                        .font(.system(size: 14))
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                }
+                .padding(.horizontal)
                 
                 // Sign In Button
                 Button(action: signIn) {
-                    Text("Sign In")
+                    Text("sign in")
                         .foregroundColor(.white)
-                        .padding()
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 40)
                         .frame(maxWidth: .infinity)
                 }
                 .background(
@@ -126,5 +145,11 @@ struct SignInView: View {
                 self.showAlert = true
             }
         }
+    }
+}
+
+struct SignInView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignInView()
     }
 }

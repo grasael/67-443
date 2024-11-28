@@ -95,6 +95,7 @@ struct OnboardingView: View {
                 dismissButton: .default(Text("Continue")) {
                     // Create the new user object and pass it back to ContentView
                     let newUser = User(
+                        id: nil,  // Firestore will assign this
                         firstName: name,
                         lastName: lastName,
                         username: username,
@@ -112,7 +113,7 @@ struct OnboardingView: View {
                     let userViewModel = UserViewModel(user: newUser)
                     userViewModel.addUser {
                         print("DEBUG: UserViewModel initialized with user ID: \(userViewModel.user.id ?? "nil")")
-                        onboardingComplete(newUser)
+                        onboardingComplete(userViewModel.user) // Pass back the updated user
                     }
                 }
             )

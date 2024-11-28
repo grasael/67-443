@@ -22,7 +22,7 @@ struct WelcomeView: View {
 
                 Spacer()
 
-                NavigationLink(destination: OnboardingView { _ in }) {
+                NavigationLink(destination: VerifyView()) {
                     Text("get started")
                         .font(.headline)
                         .foregroundColor(.white)

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ListingDetailView: View {
     let listing: Listing
+    @State private var showShareView = false
+    @State private var showReportView = false
 
     var body: some View {
         VStack {
@@ -27,6 +29,22 @@ struct ListingDetailView: View {
                         Text("5")
                         Spacer()
                         Image(systemName: "ellipsis")
+                            .contextMenu {
+                                // Share Listing
+                                Button(action: {
+                                    showShareView.toggle()
+                                }) {
+                                    Label("Share Listing", systemImage: "square.and.arrow.up")
+                                }
+
+                                // Report Listing
+                                Button(action: {
+                                    showReportView.toggle()
+                                }) {
+                                    Label("Report Listing", systemImage: "exclamationmark.bubble")
+                                        .foregroundColor(.red)
+                                }
+                            }
                     }
                     .padding([.horizontal, .top])
 
@@ -91,5 +109,13 @@ struct ListingDetailView: View {
         }
         .navigationTitle("Listing Details")
         .navigationBarTitleDisplayMode(.inline)
+        // Present Share Listing View
+        .sheet(isPresented: $showShareView) {
+            ShareListingView()
+        }
+        // Present Report Listing View
+        .sheet(isPresented: $showReportView) {
+            ReportListingView()
+        }
     }
 }

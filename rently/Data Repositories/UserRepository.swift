@@ -36,19 +36,31 @@ class UserRepository: ObservableObject {
   }
 
   // MARK: CRUD methods
-  func create(_ user: User) {
-    do {
-      let newUser = user
-      _ = try store.collection(path).addDocument(from: newUser)
-        print("User added to Firestore")
-    } catch {
-      fatalError("Unable to add user: \(error.localizedDescription).")
-    }
-  }
-
-  func update(_ user: User) {
-    guard let userId = user.id else { return }
+//  func create(_ user: User) {
+//    do {
+//      let newUser = user
+//      _ = try store.collection(path).addDocument(from: newUser)
+//        print("User added to Firestore")
+//    } catch {
+//      fatalError("Unable to add user: \(error.localizedDescription).")
+//    }
+//  }
     
+    func create(_ user: User) {
+        do {
+            // Add user to Firestore and get the DocumentReference
+            let documentReference = try store.collection(path).addDocument(from: user)
+            
+            // Print the Document ID
+            print("User added to Firestore with Document ID: \(documentReference.documentID)")
+        } catch {
+            fatalError("Unable to add user: \(error.localizedDescription).")
+        }
+    }
+    
+  func update(_ user: User) {
+    print("USER ID is \(user.id)")
+    guard let userId = user.id else { return }
     do {
       try store.collection(path).document(userId).setData(from: user)
     } catch {

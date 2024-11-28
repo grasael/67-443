@@ -47,6 +47,13 @@
 		7F4B95242CE9C05B00CD7B3E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B95232CE9C05B00CD7B3E /* CardView.swift */; };
 		7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */; };
 		7FE838B92CF78AF700CCCBF1 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838B82CF78AF700CCCBF1 /* WelcomeView.swift */; };
+		7FE838BB2CF78F2A00CCCBF1 /* VerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838BA2CF78F2A00CCCBF1 /* VerifyView.swift */; };
+		7FE838BD2CF8052200CCCBF1 /* VerifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838BC2CF8052200CCCBF1 /* VerifiedView.swift */; };
+		7FE838BF2CF8054100CCCBF1 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838BE2CF8054100CCCBF1 /* QuizView.swift */; };
+		7FE838C12CF8055F00CCCBF1 /* AllowLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838C02CF8055F00CCCBF1 /* AllowLocationView.swift */; };
+		7FE838C32CF8057800CCCBF1 /* AllowPushView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838C22CF8057800CCCBF1 /* AllowPushView.swift */; };
+		7FE838C72CF8356E00CCCBF1 /* ShareListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838C62CF8356E00CCCBF1 /* ShareListingView.swift */; };
+		7FE838C92CF8368700CCCBF1 /* ReportListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838C82CF8368700CCCBF1 /* ReportListingView.swift */; };
 		CA127FA62CD94DCF006330DC /* RentalDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA52CD94DCF006330DC /* RentalDetailView.swift */; };
 		CA127FA82CD958F2006330DC /* Rental.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA72CD958F2006330DC /* Rental.swift */; };
 		CA127FAA2CD95954006330DC /* ActiveRentalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA92CD95954006330DC /* ActiveRentalsViewModel.swift */; };
@@ -105,6 +112,13 @@
 		7F4B95232CE9C05B00CD7B3E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7FE838B82CF78AF700CCCBF1 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		7FE838BA2CF78F2A00CCCBF1 /* VerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyView.swift; sourceTree = "<group>"; };
+		7FE838BC2CF8052200CCCBF1 /* VerifiedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedView.swift; sourceTree = "<group>"; };
+		7FE838BE2CF8054100CCCBF1 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		7FE838C02CF8055F00CCCBF1 /* AllowLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowLocationView.swift; sourceTree = "<group>"; };
+		7FE838C22CF8057800CCCBF1 /* AllowPushView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowPushView.swift; sourceTree = "<group>"; };
+		7FE838C62CF8356E00CCCBF1 /* ShareListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListingView.swift; sourceTree = "<group>"; };
+		7FE838C82CF8368700CCCBF1 /* ReportListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportListingView.swift; sourceTree = "<group>"; };
 		CA127FA52CD94DCF006330DC /* RentalDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalDetailView.swift; sourceTree = "<group>"; };
 		CA127FA72CD958F2006330DC /* Rental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rental.swift; sourceTree = "<group>"; };
 		CA127FA92CD95954006330DC /* ActiveRentalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRentalsViewModel.swift; sourceTree = "<group>"; };
@@ -232,9 +246,11 @@
 		7F46DB6F2CCEDB4700181DB6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7FE838C52CF8355E00CCCBF1 /* ShareListingView */,
 				7F3810372CEFF3AF002DFCF3 /* EditProfileView */,
 				7FE838B62CF7867B00CCCBF1 /* ProfileView */,
 				7FE838B72CF786A800CCCBF1 /* OnboardingView */,
+				7FE838C42CF834A500CCCBF1 /* ReportListingView */,
 				CA7CD1852CDE5A7D0009DF72 /* MakeListingView */,
 				CA7CD17B2CDE59F40009DF72 /* SearchView */,
 				CA127FA42CD94DB4006330DC /* RentalView */,
@@ -289,10 +305,31 @@
 			isa = PBXGroup;
 			children = (
 				CA2F2DFD2CE85B4E008D3021 /* OnboardingView.swift */,
+				7FE838BC2CF8052200CCCBF1 /* VerifiedView.swift */,
+				7FE838BE2CF8054100CCCBF1 /* QuizView.swift */,
+				7FE838C02CF8055F00CCCBF1 /* AllowLocationView.swift */,
+				7FE838C22CF8057800CCCBF1 /* AllowPushView.swift */,
+				7FE838BA2CF78F2A00CCCBF1 /* VerifyView.swift */,
 				CA2F2DFB2CE85B4E008D3021 /* SignInView.swift */,
 				7FE838B82CF78AF700CCCBF1 /* WelcomeView.swift */,
 			);
 			path = OnboardingView;
+			sourceTree = "<group>";
+		};
+		7FE838C42CF834A500CCCBF1 /* ReportListingView */ = {
+			isa = PBXGroup;
+			children = (
+				7FE838C82CF8368700CCCBF1 /* ReportListingView.swift */,
+			);
+			path = ReportListingView;
+			sourceTree = "<group>";
+		};
+		7FE838C52CF8355E00CCCBF1 /* ShareListingView */ = {
+			isa = PBXGroup;
+			children = (
+				7FE838C62CF8356E00CCCBF1 /* ShareListingView.swift */,
+			);
+			path = ShareListingView;
 			sourceTree = "<group>";
 		};
 		CA127FA42CD94DB4006330DC /* RentalView */ = {
@@ -453,14 +490,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FE838C32CF8057800CCCBF1 /* AllowPushView.swift in Sources */,
 				CA96ED1D2CD670CA00E6D750 /* ActiveRentalsView.swift in Sources */,
 				7F46DB792CCEDBC900181DB6 /* RentalsView.swift in Sources */,
 				7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */,
 				CA2F2E0D2CE85B4F008D3021 /* LikesView.swift in Sources */,
 				CA127FB42CD9765A006330DC /* RentalPriceView.swift in Sources */,
+				7FE838BD2CF8052200CCCBF1 /* VerifiedView.swift in Sources */,
 				CA7CD18B2CDE5C290009DF72 /* ListingRow.swift in Sources */,
 				CAFA5B352CDAE41100D92C14 /* Listing.swift in Sources */,
 				CA2F2E182CE85F11008D3021 /* Review.swift in Sources */,
+				7FE838C72CF8356E00CCCBF1 /* ShareListingView.swift in Sources */,
 				CA2F2E072CE85B4F008D3021 /* OnboardingView.swift in Sources */,
 				CA127FAA2CD95954006330DC /* ActiveRentalsViewModel.swift in Sources */,
 				7F46DB732CCEDBA700181DB6 /* HomeView.swift in Sources */,
@@ -471,6 +511,7 @@
 				CA2F2E1A2CE860ED008D3021 /* ReviewRepository.swift in Sources */,
 				7F46DB772CCEDBBD00181DB6 /* ListView.swift in Sources */,
 				CA2F2E052CE85B4F008D3021 /* SignInView.swift in Sources */,
+				7FE838C12CF8055F00CCCBF1 /* AllowLocationView.swift in Sources */,
 				CA8C1D0F2CDD783C00D75B93 /* ListingView.swift in Sources */,
 				CA96ED1B2CD670BC00E6D750 /* SearchBarView.swift in Sources */,
 				7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */,
@@ -480,7 +521,9 @@
 				CA7CD17F2CDE5A430009DF72 /* UserProfileRow.swift in Sources */,
 				CA127FA82CD958F2006330DC /* Rental.swift in Sources */,
 				CA2F2E162CE85ECC008D3021 /* ListingRepository.swift in Sources */,
+				7FE838C92CF8368700CCCBF1 /* ReportListingView.swift in Sources */,
 				CA2F2E0B2CE85B4F008D3021 /* MakeListingTwoView.swift in Sources */,
+				7FE838BF2CF8054100CCCBF1 /* QuizView.swift in Sources */,
 				7F38103B2CF0EC4A002DFCF3 /* ImagePicker.swift in Sources */,
 				CAFA5B332CDAE40400D92C14 /* ListingViewModel.swift in Sources */,
 				7F3810392CEFF3BD002DFCF3 /* EditProfileView.swift in Sources */,
@@ -492,6 +535,7 @@
 				CA2F2E092CE85B4F008D3021 /* MakeListingView.swift in Sources */,
 				CA2F2E1C2CE86187008D3021 /* ListingsViewModel.swift in Sources */,
 				CA96ED252CD6A05E00E6D750 /* ActiveRentalCardView.swift in Sources */,
+				7FE838BB2CF78F2A00CCCBF1 /* VerifyView.swift in Sources */,
 				CA127FBA2CD9CCFF006330DC /* TrendingViewModel.swift in Sources */,
 				7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */,
 				CA96ED212CD670DF00E6D750 /* SuggestedItemsView.swift in Sources */,

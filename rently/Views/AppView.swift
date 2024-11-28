@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AppView: View {
   let user: User
+  @StateObject private var listingsViewModel = ListingsViewModel()
+  
   var body: some View {
         TabView {
          HomeView()
@@ -21,10 +23,11 @@ struct AppView: View {
          Image(systemName: "magnifyingglass")
          Text("search")
          }
-         MakeListingView()
-         .tabItem {
-         Image(systemName: "plus")
-         Text("list")
+          MakeListingView(user: user)
+            .environmentObject(listingsViewModel)
+             .tabItem {
+             Image(systemName: "plus")
+             Text("list")
          }
          RentalsView()
          .tabItem {

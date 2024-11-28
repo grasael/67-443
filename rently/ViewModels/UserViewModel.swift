@@ -16,15 +16,24 @@ class UserViewModel: ObservableObject, Identifiable {
 
     init(user: User) {
         self.user = user
+      print("DEBUG: UserViewModel initialized with user ID: \(user.id ?? "nil")")
         $user
             .compactMap { $0.id }
             .assign(to: \.id, on: self)
             .store(in: &cancellables)
     }
 
-    func addUser() {
-        userRepository.create(user)
-    }
+  func addUser(completion: @escaping () -> Void = {}) {
+      userRepository.create(user) { newUser in
+          DispatchQueue.main.async {
+              self.user = newUser // Update the user object with the correct ID
+            self.id = newUser.id ?? "" // Explicitly set UserViewModel.id
+            print("DEBUG: User updated with ID: \(newUser.id ?? "nil")")
+              completion() // Signal that the operation is complete
+          }
+      }
+  }
+
 
     func updateUser() {
         userRepository.update(user)

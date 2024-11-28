@@ -11,7 +11,7 @@ import Foundation
 import FirebaseFirestore
 
 // Enums
-enum ItemSize: String, Codable {
+enum ItemSize: String, CaseIterable, Codable {
     case xxsmall = "XXS"
     case xsmall = "XS"
     case small = "S"
@@ -56,7 +56,7 @@ enum Condition: String, CaseIterable, Codable {
     case fair = "fair"
 }
 
-enum RentalDuration: String, Codable {
+enum RentalDuration: String, CaseIterable, Codable {
     case oneWeek = "1 week"
     case twoWeeks = "2 weeks"
     case oneMonth = "1 month"

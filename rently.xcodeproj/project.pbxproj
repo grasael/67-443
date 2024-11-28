@@ -54,6 +54,10 @@
 		7FE838C32CF8057800CCCBF1 /* AllowPushView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838C22CF8057800CCCBF1 /* AllowPushView.swift */; };
 		7FE838C72CF8356E00CCCBF1 /* ShareListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838C62CF8356E00CCCBF1 /* ShareListingView.swift */; };
 		7FE838C92CF8368700CCCBF1 /* ReportListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838C82CF8368700CCCBF1 /* ReportListingView.swift */; };
+		7FE838CB2CF8393000CCCBF1 /* CounterfeitReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838CA2CF8393000CCCBF1 /* CounterfeitReportView.swift */; };
+		7FE838CF2CF839B500CCCBF1 /* NVHReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838CE2CF839B500CCCBF1 /* NVHReportView.swift */; };
+		7FE838D12CF839CB00CCCBF1 /* DislikeReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838D02CF839CB00CCCBF1 /* DislikeReportView.swift */; };
+		7FE838D32CF839DC00CCCBF1 /* CustomReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838D22CF839DC00CCCBF1 /* CustomReportView.swift */; };
 		CA127FA62CD94DCF006330DC /* RentalDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA52CD94DCF006330DC /* RentalDetailView.swift */; };
 		CA127FA82CD958F2006330DC /* Rental.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA72CD958F2006330DC /* Rental.swift */; };
 		CA127FAA2CD95954006330DC /* ActiveRentalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA92CD95954006330DC /* ActiveRentalsViewModel.swift */; };
@@ -119,6 +123,10 @@
 		7FE838C22CF8057800CCCBF1 /* AllowPushView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowPushView.swift; sourceTree = "<group>"; };
 		7FE838C62CF8356E00CCCBF1 /* ShareListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareListingView.swift; sourceTree = "<group>"; };
 		7FE838C82CF8368700CCCBF1 /* ReportListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportListingView.swift; sourceTree = "<group>"; };
+		7FE838CA2CF8393000CCCBF1 /* CounterfeitReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterfeitReportView.swift; sourceTree = "<group>"; };
+		7FE838CE2CF839B500CCCBF1 /* NVHReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVHReportView.swift; sourceTree = "<group>"; };
+		7FE838D02CF839CB00CCCBF1 /* DislikeReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DislikeReportView.swift; sourceTree = "<group>"; };
+		7FE838D22CF839DC00CCCBF1 /* CustomReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomReportView.swift; sourceTree = "<group>"; };
 		CA127FA52CD94DCF006330DC /* RentalDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalDetailView.swift; sourceTree = "<group>"; };
 		CA127FA72CD958F2006330DC /* Rental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rental.swift; sourceTree = "<group>"; };
 		CA127FA92CD95954006330DC /* ActiveRentalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRentalsViewModel.swift; sourceTree = "<group>"; };
@@ -320,6 +328,10 @@
 			isa = PBXGroup;
 			children = (
 				7FE838C82CF8368700CCCBF1 /* ReportListingView.swift */,
+				7FE838D22CF839DC00CCCBF1 /* CustomReportView.swift */,
+				7FE838D02CF839CB00CCCBF1 /* DislikeReportView.swift */,
+				7FE838CE2CF839B500CCCBF1 /* NVHReportView.swift */,
+				7FE838CA2CF8393000CCCBF1 /* CounterfeitReportView.swift */,
 			);
 			path = ReportListingView;
 			sourceTree = "<group>";
@@ -491,10 +503,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FE838C32CF8057800CCCBF1 /* AllowPushView.swift in Sources */,
+				7FE838CF2CF839B500CCCBF1 /* NVHReportView.swift in Sources */,
 				CA96ED1D2CD670CA00E6D750 /* ActiveRentalsView.swift in Sources */,
+				7FE838D12CF839CB00CCCBF1 /* DislikeReportView.swift in Sources */,
 				7F46DB792CCEDBC900181DB6 /* RentalsView.swift in Sources */,
 				7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */,
 				CA2F2E0D2CE85B4F008D3021 /* LikesView.swift in Sources */,
+				7FE838D32CF839DC00CCCBF1 /* CustomReportView.swift in Sources */,
 				CA127FB42CD9765A006330DC /* RentalPriceView.swift in Sources */,
 				7FE838BD2CF8052200CCCBF1 /* VerifiedView.swift in Sources */,
 				CA7CD18B2CDE5C290009DF72 /* ListingRow.swift in Sources */,
@@ -539,6 +554,7 @@
 				CA127FBA2CD9CCFF006330DC /* TrendingViewModel.swift in Sources */,
 				7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */,
 				CA96ED212CD670DF00E6D750 /* SuggestedItemsView.swift in Sources */,
+				7FE838CB2CF8393000CCCBF1 /* CounterfeitReportView.swift in Sources */,
 				CA127FA62CD94DCF006330DC /* RentalDetailView.swift in Sources */,
 				7F46DB912CD454D600181DB6 /* User.swift in Sources */,
 				CA127FAE2CD97632006330DC /* RentalItemDetailsView.swift in Sources */,

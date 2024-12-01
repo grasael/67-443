@@ -11,14 +11,15 @@ struct ContentView: View {
     @State private var user: User?
 
     var body: some View {
-        if isOnboardingComplete, let currentUser = user {
-            AppView(user: currentUser)
-        } else {
-            OnboardingView(onboardingComplete: { newUser in
-                self.user = newUser
-                self.isOnboardingComplete = true
-            })
-        }
+//        if isOnboardingComplete, let currentUser = user {
+//            AppView(user: currentUser)
+//        } else {
+//            OnboardingView(onboardingComplete: { newUser in
+//                self.user = newUser
+//                self.isOnboardingComplete = true
+//            })
+//        }
+        LocationTestView()
     }
 }
 

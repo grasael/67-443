@@ -13,6 +13,8 @@
 		7F1FD5732CCD757500C7A788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5722CCD757500C7A788 /* Assets.xcassets */; };
 		7F1FD5762CCD757500C7A788 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5752CCD757500C7A788 /* Preview Assets.xcassets */; };
 		7F2B6F022CFA1E430006C4AE /* LocationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B6F012CFA1E430006C4AE /* LocationTestView.swift */; };
+		7F2B6F062CFD3EDB0006C4AE /* FollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B6F052CFD3EDB0006C4AE /* FollowingView.swift */; };
+		7F2B6F082CFD3F850006C4AE /* FollowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B6F072CFD3F850006C4AE /* FollowerView.swift */; };
 		7F3810392CEFF3BD002DFCF3 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3810382CEFF3BD002DFCF3 /* EditProfileView.swift */; };
 		7F38103B2CF0EC4A002DFCF3 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F38103A2CF0EC4A002DFCF3 /* ImagePicker.swift */; };
 		7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB6D2CCEDAF700181DB6 /* AppView.swift */; };
@@ -122,6 +124,8 @@
 		7F1FD5752CCD757500C7A788 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7F2B6F012CFA1E430006C4AE /* LocationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTestView.swift; sourceTree = "<group>"; };
 		7F2B6F032CFA58060006C4AE /* rently.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = rently.entitlements; sourceTree = "<group>"; };
+		7F2B6F052CFD3EDB0006C4AE /* FollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingView.swift; sourceTree = "<group>"; };
+		7F2B6F072CFD3F850006C4AE /* FollowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerView.swift; sourceTree = "<group>"; };
 		7F3810382CEFF3BD002DFCF3 /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		7F38103A2CF0EC4A002DFCF3 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		7F46DB6D2CCEDAF700181DB6 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
@@ -264,6 +268,15 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		7F2B6F042CFD3EC70006C4AE /* Follow */ = {
+			isa = PBXGroup;
+			children = (
+				7F2B6F052CFD3EDB0006C4AE /* FollowingView.swift */,
+				7F2B6F072CFD3F850006C4AE /* FollowerView.swift */,
+			);
+			path = Follow;
+			sourceTree = "<group>";
+		};
 		7F3810372CEFF3AF002DFCF3 /* EditProfileView */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,6 +289,7 @@
 		7F46DB6F2CCEDB4700181DB6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7F2B6F042CFD3EC70006C4AE /* Follow */,
 				7FE838C52CF8355E00CCCBF1 /* ShareListingView */,
 				7F3810372CEFF3AF002DFCF3 /* EditProfileView */,
 				7FE838B62CF7867B00CCCBF1 /* ProfileView */,
@@ -542,6 +556,7 @@
 				7FE838D12CF839CB00CCCBF1 /* DislikeReportView.swift in Sources */,
 				7F46DB792CCEDBC900181DB6 /* RentalsView.swift in Sources */,
 				7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */,
+				7F2B6F082CFD3F850006C4AE /* FollowerView.swift in Sources */,
 				CA2F2E0D2CE85B4F008D3021 /* LikesView.swift in Sources */,
 				7FE838D32CF839DC00CCCBF1 /* CustomReportView.swift in Sources */,
 				CA127FB42CD9765A006330DC /* RentalPriceView.swift in Sources */,
@@ -583,6 +598,7 @@
 				529156EA2CE29E7C009EBD96 /* SearchView.swift in Sources */,
 				CA127FB62CD97668006330DC /* RentalContactView.swift in Sources */,
 				CA96ED232CD670EC00E6D750 /* TrendingSearchesView.swift in Sources */,
+				7F2B6F062CFD3EDB0006C4AE /* FollowingView.swift in Sources */,
 				CA2F2E092CE85B4F008D3021 /* MakeListingView.swift in Sources */,
 				CA2F2E1C2CE86187008D3021 /* ListingsViewModel.swift in Sources */,
 				CA96ED252CD6A05E00E6D750 /* ActiveRentalCardView.swift in Sources */,

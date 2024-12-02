@@ -77,5 +77,61 @@ class UserRepository: ObservableObject {
       }
     }
   }
+    
+    // Add a follower
+    func addFollower(to userID: String, followerID: String) {
+        let userRef = store.collection(path).document(userID)
+        userRef.updateData([
+            "followers": FieldValue.arrayUnion([followerID])
+        ]) { error in
+            if let error = error {
+                print("Error adding follower: \(error.localizedDescription)")
+            } else {
+                print("Follower added successfully to user \(userID).")
+            }
+        }
+    }
+
+    // Remove a follower
+    func removeFollower(from userID: String, followerID: String) {
+        let userRef = store.collection(path).document(userID)
+        userRef.updateData([
+            "followers": FieldValue.arrayRemove([followerID])
+        ]) { error in
+            if let error = error {
+                print("Error removing follower: \(error.localizedDescription)")
+            } else {
+                print("Follower removed successfully from user \(userID).")
+            }
+        }
+    }
+
+    // Add to following
+    func addFollowing(for userID: String, followingID: String) {
+        let userRef = store.collection(path).document(userID)
+        userRef.updateData([
+            "following": FieldValue.arrayUnion([followingID])
+        ]) { error in
+            if let error = error {
+                print("Error adding to following: \(error.localizedDescription)")
+            } else {
+                print("Following added successfully for user \(userID).")
+            }
+        }
+    }
+
+    // Remove from following
+    func removeFollowing(for userID: String, followingID: String) {
+        let userRef = store.collection(path).document(userID)
+        userRef.updateData([
+            "following": FieldValue.arrayRemove([followingID])
+        ]) { error in
+            if let error = error {
+                print("Error removing from following: \(error.localizedDescription)")
+            } else {
+                print("Following removed successfully for user \(userID).")
+            }
+        }
+    }
   
 }

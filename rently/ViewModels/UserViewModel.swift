@@ -36,4 +36,22 @@ class UserViewModel: ObservableObject, Identifiable {
     func deleteUser() {
         userRepository.delete(user)
     }
+    
+    func followUser(userID: String) {
+           guard let currentUserID = user.id else { return }
+           userRepository.addFollowing(for: currentUserID, followingID: userID)
+           userRepository.addFollower(to: userID, followerID: currentUserID)
+           if !user.following.contains(userID) {
+               user.following.append(userID)
+           }
+       }
+
+       func unfollowUser(userID: String) {
+           guard let currentUserID = user.id else { return }
+           userRepository.removeFollowing(for: currentUserID, followingID: userID)
+           userRepository.removeFollower(from: userID, followerID: currentUserID)
+           if let index = user.following.firstIndex(of: userID) {
+               user.following.remove(at: index)
+           }
+       }
 }

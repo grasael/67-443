@@ -34,6 +34,15 @@ enum ItemColor: String, CaseIterable, Codable {
   case brown = "brown"
   case cream = "cream"
   case tan = "tan"
+  case gray = "gray"
+  case grey = "grey"
+  case unknown // Fallback case
+
+  init(from decoder: Decoder) throws {
+    let container = try decoder.singleValueContainer()
+    let rawValue = try container.decode(String.self)
+    self = ItemColor(rawValue: rawValue) ?? .unknown
+  }
 }
 
 enum Category: String, CaseIterable, Codable {
@@ -47,6 +56,15 @@ enum Category: String, CaseIterable, Codable {
     case mensOuterwear = "Men's Outerwear"
     case mensActivewear = "Men's Activewear"
     case mensFormalwear = "Men's Formalwear"
+    case dressesRompers = "Dresses & Rompers"
+    
+    case unknown // Fallback case
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = Category(rawValue: rawValue) ?? .unknown
+    }
 }
 
 enum Condition: String, CaseIterable, Codable {

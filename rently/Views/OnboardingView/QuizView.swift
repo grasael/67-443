@@ -6,3 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
+
+struct QuizView: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("Style and events quiz goes here.")
+        }
+    }
+}

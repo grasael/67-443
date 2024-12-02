@@ -247,7 +247,9 @@ struct OnboardingView: View {
             listings: [],
             likedItems: [],
             styleChoices: [],
-            events: []
+            events: [],
+            followers: [],
+            following: []
         )
 
         let userViewModel = UserViewModel(user: newUser)

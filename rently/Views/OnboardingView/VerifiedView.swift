@@ -11,7 +11,7 @@ import SwiftUI
 struct VerifiedView: View {
     var body: some View {
         VStack(spacing: 20) {
-            /*@START_MENU_TOKEN@*/Text("Placeholder")/*@END_MENU_TOKEN@*/
+            Text("Student is verified!")
         }
     }
 }

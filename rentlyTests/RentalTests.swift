@@ -4,7 +4,6 @@
 //
 //  Created by Sara Riyad on 12/3/24.
 //
-
 import XCTest
 import FirebaseFirestore
 @testable import rently
@@ -43,7 +42,6 @@ class RentalTests: XCTestCase {
     // MARK: - Test Firestore Decoding
 
     func testRentalDecodingFromFirestore() {
-        // Add a rental document to Firestore for testing
         let rentalData: [String: Any] = [
             "renteeID": "user2",
             "renterID": "user1",
@@ -60,7 +58,6 @@ class RentalTests: XCTestCase {
             XCTAssertNil(error, "Failed to set Firestore rental document")
         }
         
-        // Retrieve and decode the rental document
         rentalRef.getDocument { (document, error) in
             XCTAssertNil(error, "Failed to get Firestore rental document")
             
@@ -80,7 +77,6 @@ class RentalTests: XCTestCase {
     }
 
     func testListingDecodingFromFirestore() {
-        // Add a listing document to Firestore for testing
         let listingData: [String: Any] = [
             "title": mockListing.title,
             "creationTime": Timestamp(date: mockListing.creationTime),
@@ -104,7 +100,6 @@ class RentalTests: XCTestCase {
             XCTAssertNil(error, "Failed to set Firestore listing document")
         }
         
-        // Retrieve and decode the listing document
         listingRef.getDocument { (document, error) in
             XCTAssertNil(error, "Failed to get Firestore listing document")
             
@@ -123,28 +118,62 @@ class RentalTests: XCTestCase {
         }
     }
 
-    func testUserHasListings() {
-        // Test if the mock user has the expected listings
-        XCTAssertTrue(mockUser.listings.contains("listing1"), "User's listings are incorrect")
-    }
-    
+    // MARK: - Test Rental Logic
+
     func testRentalIsActiveOrUpcoming() {
-        // Check if the rental is active or upcoming
         XCTAssertTrue(mockRental.isActiveOrUpcoming, "Rental should be active or upcoming")
     }
-    
-    func testDaysUntilPickup() throws {
-        let pickupDate = Calendar.current.date(byAdding: .day, value: 3, to: Date())!
-        let rental = Rental(renteeID: "user2", renterID: "user1", startDate: pickupDate, endDate: pickupDate.addingTimeInterval(86400), pickupLocation: "Location", listingID: "listing1", message: "Looking forward to the rental!", status: "active")
-        
-        // Now simply access the daysUntilPickup property
-        let daysUntilPickup = rental.daysUntilPickup
 
-        // Assert that the result is greater than 0
-        XCTAssertGreaterThan(daysUntilPickup, 0, "Days until pickup should be greater than 0")
+    func testDaysUntilPickupFutureStartDate() throws {
+        let futurePickupDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())!
+        let rental = Rental(id: "rental2", renteeID: "user2", renterID: "user1", startDate: futurePickupDate, endDate: futurePickupDate.addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing1", message: "Looking forward to the rental!", status: "active")
+        
+        // Test daysUntilPickup for a future start date
+        let daysUntilPickup = rental.daysUntilPickup
+        XCTAssertEqual(daysUntilPickup, 5, "Days until pickup should be 5")
+    }
+    
+    func testDaysUntilPickupPastStartDate() throws {
+        let pastStartDate = Calendar.current.date(byAdding: .day, value: -5, to: Date())!
+        let rental = Rental(id: "rental2", renteeID: "user2", renterID: "user1", startDate: pastStartDate, endDate: pastStartDate.addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing1", message: "Looking forward to the rental!", status: "active")
+        
+        // Test daysUntilPickup for a past start date
+        let daysUntilPickup = rental.daysUntilPickup
+        XCTAssertEqual(daysUntilPickup, 0, "Days until pickup should be 0 for past start date")
+    }
+    
+    func testRentalStatusText() throws {
+        let futurePickupDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())!
+        let rental = Rental(id: "rental2", renteeID: "user2", renterID: "user1", startDate: futurePickupDate, endDate: futurePickupDate.addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing1", message: "Looking forward to the rental!", status: "active")
+        
+        // Test rentalStatusText for a rental starting in the future
+        let rentalStatus = rental.rentalStatusText
+        XCTAssertEqual(rentalStatus, "5 days until pickup", "Rental status text should reflect the days until pickup")
+        
+        // Test for rental with startDate in the past and endDate in the future
+        let pastRental = Rental(id: "rental3", renteeID: "user2", renterID: "user1", startDate: Date().addingTimeInterval(-86400), endDate: Date().addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing1", message: "Looking forward to the rental!", status: "active")
+        
+        let pastRentalStatus = pastRental.rentalStatusText
+        XCTAssertEqual(pastRentalStatus, "1 days until dropoff", "Rental status text should reflect the days until dropoff")
+    }
+    
+    func testGetListing() throws {
+        let listings: [Listing] = [mockListing] // Ensure it's a non-optional array
+
+        // Test that getListing returns the correct listing
+        if let foundListing = mockRental.getListing(from: listings) {
+            XCTAssertEqual(foundListing.id, "listing1", "Failed to find the correct listing")
+        } else {
+            XCTFail("Failed to find listing from list")
+        }
     }
 
 
-
-
+    func testCalculateTotalCost() throws {
+        let rental = Rental(id: "rental1", renteeID: "user2", renterID: "user1", startDate: Date(), endDate: Date().addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing2", message: "Looking forward to the rental!", status: "active")
+        
+        // Test that calculateTotalCost handles a nil listing
+        let totalCost = rental.calculateTotalCost(for: nil)
+        XCTAssertEqual(totalCost, 0.0, "Total cost should be 0.0 when listing is nil")
+    }
 }

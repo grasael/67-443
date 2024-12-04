@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct WelcomeView: View {
+    var onboardingComplete: (User) -> Void
+
     var body: some View {
         NavigationView {
             VStack {
@@ -22,7 +24,7 @@ struct WelcomeView: View {
 
                 Spacer()
 
-                NavigationLink(destination: VerifyView()) {
+                NavigationLink(destination: VerifyView(onboardingComplete: onboardingComplete)) {
                     Text("get started")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -60,11 +62,5 @@ struct WelcomeView: View {
             )
         }
         .navigationBarHidden(true)
-    }
-}
-
-struct WelcomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        WelcomeView()
     }
 }

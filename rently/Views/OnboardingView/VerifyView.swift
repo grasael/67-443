@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct VerifyView: View {
+    var onboardingComplete: (User) -> Void
+    
     @State private var selectedInstitution = ""
     @State private var studentEmail = ""
     @State private var institutions = ["University of Pittsburgh", "Carnegie Mellon University"]
@@ -76,7 +78,7 @@ struct VerifyView: View {
             Spacer()
 
             HStack {
-                NavigationLink(destination: WelcomeView()) {
+                NavigationLink(destination: WelcomeView(onboardingComplete: onboardingComplete)) {
                     Text("back")
                         .font(.system(size: 16))
                         .fontWeight(.semibold)
@@ -89,7 +91,7 @@ struct VerifyView: View {
                         )
                 }
 
-                NavigationLink(destination: ListView()) {
+                NavigationLink(destination: VerifiedView(onboardingComplete: onboardingComplete, email: studentEmail, university: selectedInstitution)) {
                     Text("next")
                         .font(.system(size: 16))
                         .fontWeight(.semibold)
@@ -123,8 +125,3 @@ struct VerifyView: View {
     }
 }
 
-struct VerifyView_Previews: PreviewProvider {
-    static var previews: some View {
-        VerifyView()
-    }
-}

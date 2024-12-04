@@ -9,14 +9,16 @@ import SwiftUI
 
 struct OnboardingView: View {
     var onboardingComplete: (User) -> Void
+    var email: String
+    var university: String
     
     @State private var name = ""
     @State private var lastName = ""
     @State private var username = ""
     @State private var pronouns = ""
-    @State private var email = ""
+    @State private var email2 = ""
     @State private var password = ""
-    @State private var university = ""
+    @State private var university2 = ""
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @State private var showSuccessAlert = false
@@ -29,11 +31,11 @@ struct OnboardingView: View {
                 .fontWeight(.medium)
                 .padding(.top, 20)
 
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(Color.green.opacity(0.5))
-                .padding(.horizontal)
-
+//            Rectangle()
+//                .frame(height: 1)
+//                .foregroundColor(Color.green.opacity(0.5))
+//                .padding(.horizontal)
+//
             VStack(alignment: .leading, spacing: 4) {
                 Text("username: *")
                     .foregroundColor(.black)
@@ -53,10 +55,7 @@ struct OnboardingView: View {
                 Text("No special characters or spaces")
                     .font(.system(size: 12))
                     .foregroundColor(.gray)
-            }
-            .padding(.horizontal)
-            
-            VStack(alignment: .leading, spacing: 4) {
+
                 Text("first name: *")
                     .foregroundColor(.black)
                     .font(.system(size: 14))
@@ -70,10 +69,7 @@ struct OnboardingView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-            }
-            .padding(.horizontal)
-            
-            VStack(alignment: .leading, spacing: 4) {
+                
                 Text("last name:")
                     .foregroundColor(.black)
                     .font(.system(size: 14))
@@ -87,10 +83,7 @@ struct OnboardingView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-            }
-            .padding(.horizontal)
-            
-            VStack(alignment: .leading, spacing: 4) {
+                
                 Text("pronouns: *")
                     .foregroundColor(.black)
                     .font(.system(size: 14))
@@ -104,44 +97,58 @@ struct OnboardingView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-            }
-            .padding(.horizontal)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("email: *")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
-
-                TextField("", text: $email)
-                    .padding(8)
-                    .font(.system(size: 14))
-                    .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-            }
-            .padding(.horizontal)
             
-            VStack(alignment: .leading, spacing: 4) {
-                Text("university: *")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
+//            VStack(alignment: .leading, spacing: 4) {
+//                Text("pronouns: *")
+//                    .foregroundColor(.black)
+//                    .font(.system(size: 14))
+//                    .fontWeight(.semibold)
+//
+//                TextField("", text: $pronouns)
+//                    .padding(8)
+//                    .font(.system(size: 14))
+//                    .background(Color.white)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 8)
+//                            .stroke(Color.gray, lineWidth: 1)
+//                    )
+//            }
+//            .padding(.horizontal)
 
-                TextField("", text: $university)
-                    .padding(8)
-                    .font(.system(size: 14))
-                    .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-            }
-            .padding(.horizontal)
+//            VStack(alignment: .leading, spacing: 4) {
+//                Text("email: *")
+//                    .foregroundColor(.black)
+//                    .font(.system(size: 14))
+//                    .fontWeight(.semibold)
+//
+//                TextField("", text: $email2)
+//                    .padding(8)
+//                    .font(.system(size: 14))
+//                    .background(Color.white)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 8)
+//                            .stroke(Color.gray, lineWidth: 1)
+//                    )
+//            }
+//            .padding(.horizontal)
+            
+//            VStack(alignment: .leading, spacing: 4) {
+//                Text("university: *")
+//                    .foregroundColor(.black)
+//                    .font(.system(size: 14))
+//                    .fontWeight(.semibold)
+//
+//                TextField("", text: $university2)
+//                    .padding(8)
+//                    .font(.system(size: 14))
+//                    .background(Color.white)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 8)
+//                            .stroke(Color.gray, lineWidth: 1)
+//                    )
+//            }
+//            .padding(.horizontal)
 
-            VStack(alignment: .leading, spacing: 4) {
                 Text("password: *")
                     .foregroundColor(.black)
                     .font(.system(size: 14))
@@ -155,7 +162,6 @@ struct OnboardingView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-
                 VStack(alignment: .leading, spacing: 4) {
                     Text("• 8 characters or more")
                     Text("• At least 1 number")
@@ -197,11 +203,11 @@ struct OnboardingView: View {
                 )
             )
             .cornerRadius(8)
-            .padding(.top, 20)
-            .padding(.bottom, 20)
+//            .padding(.top, 20)
+//            .padding(.bottom, 20)
             .padding(.horizontal)
-
-            Spacer()
+//
+//            Spacer()
         }
         .padding()
         .alert(isPresented: $showSuccessAlert) {
@@ -211,8 +217,8 @@ struct OnboardingView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-        .background(Color(red: 0.8, green: 0.93, blue: 1))
-        .edgesIgnoringSafeArea(.all)
+//        .background(Color(red: 0.8, green: 0.93, blue: 1))
+//        .edgesIgnoringSafeArea(.all)
         .alert(isPresented: $showErrorAlert) {
             Alert(
                 title: Text("Error"),
@@ -223,14 +229,8 @@ struct OnboardingView: View {
     }
     
     private func signUp() {
-        guard !name.isEmpty, !username.isEmpty, !pronouns.isEmpty, !email.isEmpty, !password.isEmpty, !university.isEmpty else {
+        guard !name.isEmpty, !username.isEmpty, !pronouns.isEmpty, !password.isEmpty else {
             errorMessage = "Please fill out all fields."
-            showErrorAlert = true
-            return
-        }
-
-        guard isValidEmail(email) else {
-            errorMessage = "Please enter a valid email address."
             showErrorAlert = true
             return
         }
@@ -259,10 +259,14 @@ struct OnboardingView: View {
 
         showSuccessAlert = true
     }
+}
 
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$"
-        let emailPredicate = NSPredicate(format: "SELF MATCHES[c] %@", emailRegex)
-        return emailPredicate.evaluate(with: email)
+struct OnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        OnboardingView(
+            onboardingComplete: { _ in },
+            email: "test@example.com",
+            university: "Test University"
+        )
     }
 }

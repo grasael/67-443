@@ -8,15 +8,15 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isOnboardingComplete = false
-    @State private var user: User?
+    @ObservedObject private var userManager = UserManager.shared
 
     var body: some View {
-        if isOnboardingComplete, let currentUser = user {
+        if let currentUser = userManager.user {
             AppView(user: currentUser)
         } else {
             OnboardingView(onboardingComplete: { newUser in
-                self.user = newUser
-                self.isOnboardingComplete = true
+                userManager.saveUser(newUser)  // Save user to UserManager
+                isOnboardingComplete = true
             })
         }
     }

@@ -54,7 +54,7 @@ struct ProfileView: View {
                                 .foregroundColor(.blue)
                         }
 
-                        NavigationLink(destination: FollowerView(followerIDs: userViewModel.user.followers, followingIDs: userViewModel.user.following)) {
+                        NavigationLink(destination: FollowingView(userViewModel: userViewModel)) {
                             Text("\(userViewModel.user.following.count) following")
                                 .foregroundColor(.blue)
                         }

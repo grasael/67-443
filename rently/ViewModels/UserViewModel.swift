@@ -63,4 +63,13 @@ class UserViewModel: ObservableObject, Identifiable {
                user.following.remove(at: index)
            }
        }
+    
+    func fetchFollowingUsers(completion: @escaping ([User]) -> Void) {
+        userRepository.fetchUsers(withIDs: user.following) { users in
+            DispatchQueue.main.async {
+                completion(users)
+            }
+        }
+    }
+
 }

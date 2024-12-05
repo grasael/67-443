@@ -17,7 +17,7 @@ struct AppView: View {
                     Image(systemName: "house")
                     Text("home")
                 }
-            SearchView()
+            SearchView(userViewModel: userViewModel)
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("search")

@@ -133,28 +133,30 @@ struct OnboardingView: View {
                 .padding(.horizontal)
                 .font(.system(size: 12))
 
-                NavigationLink(
-                    destination: AppView(userViewModel: userViewModel),
-                    isActive: $navigateToAppView
-                ) {
-                    Button(action: signUp) {
-                        Text("Sign Up")
-                            .foregroundColor(.white)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 40)
-                            .font(.system(size: 16, weight: .semibold))
-                    }
-                    .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color.blue, Color.green]),
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .cornerRadius(8)
-                }
-
-            }
+                Button(action: signUp) {
+                                Text("Sign Up")
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal, 40)
+                                    .font(.system(size: 16, weight: .semibold))
+                            }
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.blue, Color.green]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .cornerRadius(8)
+                            .padding(.horizontal)
+                        }
+                        .padding()
+                        .fullScreenCover(isPresented: $navigateToAppView) {
+                            AppView(userViewModel: userViewModel)
+                                .onDisappear {
+                                    navigateToAppView = false
+                                }
+                        }
             .padding()
             .alert(isPresented: $showSuccessAlert) {
                 Alert(

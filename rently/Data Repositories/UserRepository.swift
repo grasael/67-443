@@ -163,5 +163,43 @@ class UserRepository: ObservableObject {
             }
         }
     }
-  
+    
+        func fetchUsers(withIDs userIDs: [String], completion: @escaping ([User]) -> Void) {
+            var fetchedUsers: [User] = []
+            let dispatchGroup = DispatchGroup()
+
+            for userID in userIDs {
+                dispatchGroup.enter()
+                store.collection(path).document(userID).getDocument { documentSnapshot, error in
+                    if let error = error {
+                        print("Error fetching user with ID \(userID): \(error.localizedDescription)")
+                        dispatchGroup.leave()
+                        return
+                    }
+
+                    guard let document = documentSnapshot, document.exists else {
+                        print("No document found for user with ID \(userID)")
+                        dispatchGroup.leave()
+                        return
+                    }
+
+                    do {
+                        // Decode the document into a User
+                        var user = try document.data(as: User.self)
+                        // Assign the document ID explicitly to the user's ID
+                        user.id = document.documentID
+                        // Append the user to the fetchedUsers array
+                        fetchedUsers.append(user)
+                    } catch {
+                        print("Error decoding user with ID \(userID): \(error.localizedDescription)")
+                    }
+
+                    dispatchGroup.leave()
+                }
+            }
+
+            dispatchGroup.notify(queue: .main) {
+                completion(fetchedUsers)
+            }
+    }
 }

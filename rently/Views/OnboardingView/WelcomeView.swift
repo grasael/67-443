@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct WelcomeView: View {
-    var onboardingComplete: (User) -> Void
+    @ObservedObject var userViewModel: UserViewModel
 
     var body: some View {
         NavigationView {
@@ -24,7 +24,7 @@ struct WelcomeView: View {
 
                 Spacer()
 
-                NavigationLink(destination: VerifyView(onboardingComplete: onboardingComplete)) {
+                NavigationLink(destination: VerifyView(userViewModel: userViewModel)) {
                     Text("get started")
                         .font(.headline)
                         .foregroundColor(.white)

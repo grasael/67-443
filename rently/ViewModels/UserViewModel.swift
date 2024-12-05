@@ -16,7 +16,7 @@ class UserViewModel: ObservableObject, Identifiable {
 
     init(user: User) {
         self.user = user
-        print("🔍 Initializing UserViewModel with user ID: \(user.id ?? "nil")")
+        print("❌ Initializing UserViewModel with user ID: \(user.id ?? "nil") at \(Date())")
         $user
             .compactMap { $0.id }
             .assign(to: \.id, on: self)
@@ -24,7 +24,16 @@ class UserViewModel: ObservableObject, Identifiable {
     }
 
     func addUser() {
-        userRepository.create(user)
+        userRepository.create(user) { [weak self] documentID in
+            guard let self = self else { return }
+            if let documentID = documentID {
+                print("🔥 User ID set to: \(documentID)")
+                self.user.id = documentID // Set the user's ID
+                self.updateUser() // Save the updated user with the ID to Firestore
+            } else {
+                print("❌ Failed to create user in Firestore.")
+            }
+        }
     }
 
     func updateUser() {

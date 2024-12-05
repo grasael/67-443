@@ -21,19 +21,35 @@ class UserRepository: ObservableObject {
     self.get()
   }
 
-  func get() {
-    store.collection(path)
-      .addSnapshotListener { querySnapshot, error in
-        if let error = error {
-          print("Error getting users: \(error.localizedDescription)")
-          return
-        }
+//  func get() {
+//    store.collection(path)
+//      .addSnapshotListener { querySnapshot, error in
+//        if let error = error {
+//          print("Error getting users: \(error.localizedDescription)")
+//          return
+//        }
+//
+//        self.users = querySnapshot?.documents.compactMap { document in
+//          try? document.data(as: User.self)
+//        } ?? []
+//      }
+//  }
+    
+    func get() {
+        store.collection(path)
+            .addSnapshotListener { querySnapshot, error in
+                if let error = error {
+                    print("Error getting users: \(error.localizedDescription)")
+                    return
+                }
 
-        self.users = querySnapshot?.documents.compactMap { document in
-          try? document.data(as: User.self)
-        } ?? []
-      }
-  }
+                self.users = querySnapshot?.documents.compactMap { document in
+                    var user = try? document.data(as: User.self)
+                    user?.id = document.documentID // Explicitly set the document ID
+                    return user
+                } ?? []
+            }
+    }
 
   // MARK: CRUD methods
 //  func create(_ user: User) {
@@ -46,27 +62,41 @@ class UserRepository: ObservableObject {
 //    }
 //  }
     
-    func create(_ user: User) {
+    func create(_ user: User, completion: @escaping (String?) -> Void) {
         do {
-            // Add user to Firestore and get the DocumentReference
             let documentReference = try store.collection(path).addDocument(from: user)
-            
-            // Print the Document ID
-            print("User added to Firestore with Document ID: \(documentReference.documentID)")
+            let documentID = documentReference.documentID
+            print("✅ User added to Firestore with ID: \(documentID)")
+            completion(documentID)
         } catch {
-            fatalError("Unable to add user: \(error.localizedDescription).")
+            print("❌ Error adding user to Firestore: \(error)")
+            completion(nil)
         }
     }
     
-  func update(_ user: User) {
-    print("USER ID is \(user.id)")
-    guard let userId = user.id else { return }
-    do {
-      try store.collection(path).document(userId).setData(from: user)
-    } catch {
-      fatalError("Unable to update user: \(error.localizedDescription).")
+//  func update(_ user: User) {
+//    print("USER ID is \(user.id)")
+//    guard let userId = user.id else { return }
+//    do {
+//      try store.collection(path).document(userId).setData(from: user)
+//    } catch {
+//      fatalError("Unable to update user: \(error.localizedDescription).")
+//    }
+//  }
+    
+    func update(_ user: User) {
+        print("USER ID is \(user.id)")
+        guard let userId = user.id else {
+            print("Error: User ID is nil. Update aborted.")
+            return
+        }
+        do {
+            try store.collection(path).document(userId).setData(from: user)
+            print("✅ User successfully updated.")
+        } catch {
+            print("Unable to update user: \(error.localizedDescription).")
+        }
     }
-  }
 
   func delete(_ user: User) {
     guard let userId = user.id else { return }

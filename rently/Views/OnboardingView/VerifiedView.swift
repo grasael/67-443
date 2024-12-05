@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct VerifiedView: View {
-    var onboardingComplete: (User) -> Void
+    @ObservedObject var userViewModel: UserViewModel
     var email: String
     var university: String
 
@@ -23,9 +23,9 @@ struct VerifiedView: View {
 
             NavigationLink(
                 destination: OnboardingView(
-                    onboardingComplete: onboardingComplete,
                     email: email,
-                    university: university
+                    university: university,
+                    userViewModel: userViewModel
                 )
             ) {
                 Text("Continue to Onboarding")
@@ -41,15 +41,5 @@ struct VerifiedView: View {
             Spacer()
         }
         .navigationBarHidden(true)
-    }
-}
-
-struct VerifiedView_Previews: PreviewProvider {
-    static var previews: some View {
-        VerifiedView(
-            onboardingComplete: { _ in },
-            email: "test@example.com",
-            university: "Test University"
-        )
     }
 }

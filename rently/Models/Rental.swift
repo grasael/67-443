@@ -26,18 +26,17 @@ struct Rental: Codable, Identifiable {
     }
   
     var daysUntilPickup: Int {
-        let currentDate = Date()
-        let calendar = Calendar.current
-        if startDate > currentDate {
-            // Days until pickup if startDate is in the future
-            return calendar.dateComponents([.day], from: currentDate, to: startDate).day ?? 0
-        } else if endDate >= currentDate && startDate <= currentDate {
-            // Days until dropoff if startDate is in the past but endDate is in the future
-            return calendar.dateComponents([.day], from: currentDate, to: endDate).day ?? 0
+        let currentDate = Calendar.current.startOfDay(for: Date())
+        let adjustedStartDate = Calendar.current.startOfDay(for: startDate)
+        if adjustedStartDate > currentDate {
+            return Calendar.current.dateComponents([.day], from: currentDate, to: adjustedStartDate).day ?? 0
+        } else if endDate >= currentDate && adjustedStartDate <= currentDate {
+            return Calendar.current.dateComponents([.day], from: currentDate, to: Calendar.current.startOfDay(for: endDate)).day ?? 0
         } else {
             return 0
         }
     }
+
   
     var rentalStatusText: String {
         if startDate > Date() {

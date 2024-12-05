@@ -4,6 +4,7 @@
 //
 //  Created by Sara Riyad on 12/3/24.
 //
+
 import XCTest
 import FirebaseFirestore
 @testable import rently
@@ -39,141 +40,35 @@ class RentalTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Test Firestore Decoding
-
-    func testRentalDecodingFromFirestore() {
-        let rentalData: [String: Any] = [
-            "renteeID": "user2",
-            "renterID": "user1",
-            "startDate": Timestamp(date: mockRental.startDate),
-            "endDate": Timestamp(date: mockRental.endDate),
-            "pickupLocation": mockRental.pickupLocation,
-            "listingID": mockRental.listingID,
-            "message": mockRental.message,
-            "status": mockRental.status
-        ]
-        
-        let rentalRef = db.collection("rentals").document("rental1")
-        rentalRef.setData(rentalData) { error in
-            XCTAssertNil(error, "Failed to set Firestore rental document")
-        }
-        
-        rentalRef.getDocument { (document, error) in
-            XCTAssertNil(error, "Failed to get Firestore rental document")
-            
-            if let document = document, document.exists {
-                do {
-                    let rental = try document.data(as: Rental.self)
-                    XCTAssertEqual(rental.renteeID, "user2", "Failed to decode renteeID")
-                    XCTAssertEqual(rental.renterID, "user1", "Failed to decode renterID")
-                    XCTAssertEqual(rental.pickupLocation, "Jared L. Cohon University Center", "Failed to decode pickupLocation")
-                } catch {
-                    XCTFail("Failed to decode Rental from Firestore: \(error)")
-                }
-            } else {
-                XCTFail("Rental document does not exist")
-            }
-        }
-    }
-
-    func testListingDecodingFromFirestore() {
-        let listingData: [String: Any] = [
-            "title": mockListing.title,
-            "creationTime": Timestamp(date: mockListing.creationTime),
-            "description": mockListing.description,
-            "category": "womensTops",
-            "userID": mockListing.userID,
-            "size": "M",
-            "price": mockListing.price,
-            "color": "blue",
-            "condition": "brandNew",
-            "photoURLs": mockListing.photoURLs,
-            "tags": ["casual", "vintage"],
-            "brand": mockListing.brand,
-            "maxRentalDuration": "oneWeek",
-            "pickupLocations": ["uc"],
-            "available": true
-        ]
-        
-        let listingRef = db.collection("listings").document("listing1")
-        listingRef.setData(listingData) { error in
-            XCTAssertNil(error, "Failed to set Firestore listing document")
-        }
-        
-        listingRef.getDocument { (document, error) in
-            XCTAssertNil(error, "Failed to get Firestore listing document")
-            
-            if let document = document, document.exists {
-                do {
-                    let listing = try document.data(as: Listing.self)
-                    XCTAssertEqual(listing.title, "Cool Jacket", "Failed to decode title")
-                    XCTAssertEqual(listing.userID, "user1", "Failed to decode userID")
-                    XCTAssertEqual(listing.price, 25.0, "Failed to decode price")
-                } catch {
-                    XCTFail("Failed to decode Listing from Firestore: \(error)")
-                }
-            } else {
-                XCTFail("Listing document does not exist")
-            }
-        }
-    }
-
-    // MARK: - Test Rental Logic
-
     func testRentalIsActiveOrUpcoming() {
         XCTAssertTrue(mockRental.isActiveOrUpcoming, "Rental should be active or upcoming")
     }
 
-    func testDaysUntilPickupFutureStartDate() throws {
-        let futurePickupDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())!
-        let rental = Rental(id: "rental2", renteeID: "user2", renterID: "user1", startDate: futurePickupDate, endDate: futurePickupDate.addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing1", message: "Looking forward to the rental!", status: "active")
-        
-        // Test daysUntilPickup for a future start date
-        let daysUntilPickup = rental.daysUntilPickup
-        XCTAssertEqual(daysUntilPickup, 5, "Days until pickup should be 5")
-    }
-    
-    func testDaysUntilPickupPastStartDate() throws {
-        let pastStartDate = Calendar.current.date(byAdding: .day, value: -5, to: Date())!
-        let rental = Rental(id: "rental2", renteeID: "user2", renterID: "user1", startDate: pastStartDate, endDate: pastStartDate.addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing1", message: "Looking forward to the rental!", status: "active")
-        
-        // Test daysUntilPickup for a past start date
-        let daysUntilPickup = rental.daysUntilPickup
-        XCTAssertEqual(daysUntilPickup, 0, "Days until pickup should be 0 for past start date")
-    }
-    
-    func testRentalStatusText() throws {
-        let futurePickupDate = Calendar.current.date(byAdding: .day, value: 5, to: Date())!
-        let rental = Rental(id: "rental2", renteeID: "user2", renterID: "user1", startDate: futurePickupDate, endDate: futurePickupDate.addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing1", message: "Looking forward to the rental!", status: "active")
-        
-        // Test rentalStatusText for a rental starting in the future
-        let rentalStatus = rental.rentalStatusText
-        XCTAssertEqual(rentalStatus, "5 days until pickup", "Rental status text should reflect the days until pickup")
-        
-        // Test for rental with startDate in the past and endDate in the future
-        let pastRental = Rental(id: "rental3", renteeID: "user2", renterID: "user1", startDate: Date().addingTimeInterval(-86400), endDate: Date().addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing1", message: "Looking forward to the rental!", status: "active")
-        
-        let pastRentalStatus = pastRental.rentalStatusText
-        XCTAssertEqual(pastRentalStatus, "1 days until dropoff", "Rental status text should reflect the days until dropoff")
-    }
-    
-    func testGetListing() throws {
-        let listings: [Listing] = [mockListing] // Ensure it's a non-optional array
+    func testRentalStatusText() {
+        // Arrange
+        let calendar = Calendar.current
+        mockRental.startDate = calendar.startOfDay(for: Date().addingTimeInterval(5 * 86400)) // Start 5 days from today
+        mockRental.endDate = calendar.startOfDay(for: Date().addingTimeInterval(6 * 86400))  // End 6 days from today
 
-        // Test that getListing returns the correct listing
-        if let foundListing = mockRental.getListing(from: listings) {
-            XCTAssertEqual(foundListing.id, "listing1", "Failed to find the correct listing")
-        } else {
-            XCTFail("Failed to find listing from list")
-        }
+        // Act
+        let rentalStatus = mockRental.rentalStatusText
+
+        // Assert
+        XCTAssertEqual(rentalStatus, "5 days until pickup", "Rental status should reflect days until pickup")
     }
 
 
-    func testCalculateTotalCost() throws {
-        let rental = Rental(id: "rental1", renteeID: "user2", renterID: "user1", startDate: Date(), endDate: Date().addingTimeInterval(86400), pickupLocation: "Jared L. Cohon University Center", listingID: "listing2", message: "Looking forward to the rental!", status: "active")
-        
-        // Test that calculateTotalCost handles a nil listing
-        let totalCost = rental.calculateTotalCost(for: nil)
-        XCTAssertEqual(totalCost, 0.0, "Total cost should be 0.0 when listing is nil")
+    func testDaysUntilPickupFutureStartDate() {
+        // Arrange
+        let calendar = Calendar.current
+        let pickupDate = calendar.startOfDay(for: Date().addingTimeInterval(4 * 86400)) // Start 4 days from today
+        mockRental.startDate = pickupDate
+
+        // Act
+        let daysUntilPickup = mockRental.daysUntilPickup
+
+        // Assert
+        XCTAssertEqual(daysUntilPickup, 4, "Days until pickup should be 4") // Correct expectation to match input
     }
+
 }

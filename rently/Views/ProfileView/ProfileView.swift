@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct ProfileView: View {
-    let user: User
-    @StateObject private var listingsViewModel = ListingsViewModel() // Create an instance of ListingsViewModel
+    @ObservedObject var userViewModel: UserViewModel
+
+    @StateObject private var listingsViewModel = ListingsViewModel()
     @State private var selectedTab = 0 // 0 for Listings, 1 for Likes
 
     var body: some View {
@@ -31,13 +32,13 @@ struct ProfileView: View {
                             .foregroundColor(.gray)
                         
                         VStack(alignment: .leading) {
-                            Text("\(user.firstName) \(user.lastName)")
+                            Text("\(userViewModel.user.firstName) \(userViewModel.user.lastName)")
                                 .font(.title2)
                                 .fontWeight(.bold)
                             
                             NavigationLink(destination: ReviewsView()) {
                                 HStack(spacing: 2) {
-                                    Text("\(user.rating, specifier: "%.1f")")
+                                    Text("\(userViewModel.user.rating, specifier: "%.1f")")
                                     Image(systemName: "star.fill")
                                         .foregroundColor(.yellow)
                                 }
@@ -59,9 +60,8 @@ struct ProfileView: View {
                     
                     HStack {
                         Image(systemName: "graduationcap.fill")
-                        Text(user.university)
-                        Button(action: {
-                        }) {
+                        Text(userViewModel.user.university)
+                        NavigationLink(destination: EditProfileView(userViewModel: userViewModel)) {
                             Text("edit profile")
                                 .font(.system(size: 16, weight: .medium))
                                 .foregroundColor(.white)

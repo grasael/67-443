@@ -14,13 +14,16 @@ struct MakeListingTwoView: View {
     @State private var displayedMonth: Date = Date()
     @State private var maxRentalDuration: RentalDuration = .oneWeek
     @State private var selectedLocations: [PickupLocation] = []
-    @State private var nextScreen = false
     @State private var isSaving = false
     @State private var saveError: String? = nil
 
     let user: User
+    @Binding var selectedTab: Int
     @EnvironmentObject var viewModel: ListingsViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     @Binding var draft: ListingDraft
+  
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         ScrollView {
@@ -128,25 +131,17 @@ struct MakeListingTwoView: View {
                 .frame(maxWidth: 200)
                 .frame(maxWidth: .infinity)
                 .padding(.top)
-
-                if let errorMessage = saveError {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .padding(.top)
-                }
             }
             .padding()
         }
-        .navigationDestination(isPresented: $nextScreen) {
-          ProfileView(user: user) // redirect to ProfileView
-        }
+        .disabled(isSaving)
         .alert(isPresented: .constant(saveError != nil)) {
-            Alert(
-                title: Text("Error"),
-                message: Text(saveError ?? "Unknown error occurred"),
-                dismissButton: .default(Text("OK"), action: { saveError = nil })
-            )
-        }
+                    Alert(
+                        title: Text("Error"),
+                        message: Text(saveError ?? "Unknown error occurred"),
+                        dismissButton: .default(Text("OK"), action: { saveError = nil })
+                    )
+                }
     }
 
   private func saveListingAndRedirect() {
@@ -164,13 +159,21 @@ struct MakeListingTwoView: View {
     }
 
     viewModel.addListingFromDraft(draft, userID: userId) { result in
-      isSaving = false
-      switch result {
-        case .success:
-          nextScreen = true
-        case .failure(let error):
-          saveError = error.localizedDescription
-      }
+        DispatchQueue.main.async {
+            isSaving = false
+            switch result {
+            case .success:
+              // Reset states
+                              draft = ListingDraft()
+                              selectedDates.removeAll()
+                              selectedLocations.removeAll()
+                              maxRentalDuration = .oneWeek
+                              selectedTab = 4 // Navigate to Profile tab
+                              dismiss()
+            case .failure(let error):
+                saveError = error.localizedDescription
+            }
+        }
     }
   }
 }

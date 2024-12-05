@@ -27,31 +27,22 @@ struct ListingDraft: Codable {
 
 struct MakeListingView: View {
   let user: User
+  @Binding var selectedTab: Int
   @Environment(\.presentationMode) var presentationMode
   @EnvironmentObject var viewModel: ListingsViewModel
+  @EnvironmentObject var userViewModel: UserViewModel
 
   @State private var draft = ListingDraft()
+  @State private var path: [String] = []
   
   // photo selection
   @State private var selectedImages: [PhotosPickerItem?] = Array(repeating: nil, count: 4)
   @State private var uploadedImages: [UIImage?] = Array(repeating: nil, count: 4)
   
   var body: some View {
-      NavigationView {
+    NavigationStack(path: $path) {
           ScrollView {
               VStack(alignment: .leading, spacing: 16) {
-                  // Cancel button
-                  HStack {
-                      Button(action: {
-                          presentationMode.wrappedValue.dismiss()
-                      }) {
-                          Image(systemName: "xmark")
-                              .font(.title2)
-                              .padding(10)
-                      }
-                      Spacer()
-                  }
-                  
                   // Page title
                   Text("make a listing")
                       .font(.title)
@@ -252,21 +243,21 @@ struct MakeListingView: View {
 
                   
                   // navigation to next screen
-                  NavigationLink(destination: MakeListingTwoView(user: user, draft: $draft)) {
-                      Text("next")
-                      .font(.system(size: 22))
-                                        .foregroundColor(.white)
-                                        .padding(.vertical, 8)
-                                        .padding(.horizontal, 40)
-                                        .background(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
-                                        )
-                                        .cornerRadius(25)
-                                        .shadow(radius: 5)
+                NavigationLink(destination: MakeListingTwoView(user: user, selectedTab: $selectedTab, draft: $draft)) {
+                    Text("next")
+                        .font(.system(size: 22))
+                        .foregroundColor(.white)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 40)
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .cornerRadius(25)
+                        .shadow(radius: 5)
                   }
                   .simultaneousGesture(TapGesture().onEnded {
                                 uploadImagesAndContinue()
@@ -276,6 +267,12 @@ struct MakeListingView: View {
                   .padding(.top)
               }
               .padding()
+          }
+          .onAppear {
+            draft = ListingDraft() // create a new draft to reset the fields
+            selectedImages = Array(repeating: nil, count: 4)
+                uploadedImages = Array(repeating: nil, count: 4)
+            path.removeAll() // Clear navigation stack
           }
       }
   }

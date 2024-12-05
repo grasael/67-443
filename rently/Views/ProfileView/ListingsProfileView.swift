@@ -20,9 +20,10 @@ struct ListingsProfileView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(viewModel.listings) { listing in
-                        NavigationLink(destination: ListingDetailView(listing: listing)) {
+                        NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")) {
                             CardView(listing: listing)
                         }
+
                     }
                 }
                 .padding(.horizontal)

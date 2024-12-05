@@ -7,17 +7,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isOnboardingComplete = false
-    @State private var user: User?
+//    @State private var isOnboardingComplete = false
+//    @State private var user: User?
+//    @StateObject private var userViewModel = UserViewModel(user: User(firstName: "", lastName: "", username: "", pronouns: "", email: "", password: "", university: "", rating: 0, listings: [], likedItems: [], styleChoices: [], events: [], followers: [], following: []))
+    
+    @StateObject private var userViewModel = UserViewModel(user: User(firstName: "", lastName: "", username: "", pronouns: "", email: "", password: "", university: "", rating: 0, listings: [], likedItems: [], styleChoices: [], events: [], followers: [], following: []))
+
 
     var body: some View {
-        if isOnboardingComplete, let currentUser = user {
-            AppView(user: currentUser)
-        } else {
-            OnboardingView(onboardingComplete: { newUser in
-                self.user = newUser
-                self.isOnboardingComplete = true
-            })
+        NavigationView {
+//            if isOnboardingComplete, let currentUser = user {
+//                AppView(userViewModel: userViewModel)
+//            } else {
+//                WelcomeView(onboardingComplete: { newUser in
+//                    self.user = newUser
+//                    self.userViewModel.user = newUser // Update the user in the ViewModel
+//                    self.isOnboardingComplete = true
+//                })
+//            }
+            
+            WelcomeView(userViewModel: userViewModel)
         }
     }
 }
@@ -25,4 +34,3 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
-

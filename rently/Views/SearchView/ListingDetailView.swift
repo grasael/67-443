@@ -10,6 +10,9 @@ import SwiftUI
 
 struct ListingDetailView: View {
     let listingID: String
+    @State private var showShareView = false
+    @State private var showReportView = false
+    
     @StateObject private var viewModel = ListingDetailViewModel()
 
     var body: some View {
@@ -31,6 +34,22 @@ struct ListingDetailView: View {
                             Text("5")
                             Spacer()
                             Image(systemName: "ellipsis")
+                                .contextMenu {
+                                    // Share Listing
+                                    Button(action: {
+                                        showShareView.toggle()
+                                    }) {
+                                        Label("Share Listing", systemImage: "square.and.arrow.up")
+                                    }
+
+                                    // Report Listing
+                                    Button(action: {
+                                        showReportView.toggle()
+                                    }) {
+                                        Label("Report Listing", systemImage: "exclamationmark.bubble")
+                                            .foregroundColor(.red)
+                                    }
+                                }
                         }
                         .padding([.horizontal, .top])
 
@@ -101,5 +120,17 @@ struct ListingDetailView: View {
         }
         .navigationTitle("Listing Details")
         .navigationBarTitleDisplayMode(.inline)
+        // Present Share Listing View
+        .sheet(isPresented: $showShareView) {
+            NavigationView {
+                ShareListingView()
+            }
+        }
+        // Present Report Listing View
+        .sheet(isPresented: $showReportView) {
+            NavigationView {
+                ReportListingView()
+            }
+        }
     }
 }

@@ -22,6 +22,8 @@ struct User: Codable, Identifiable {
     var likedItems: [String] // Item IDs
     var styleChoices: [String]
     var events: [String]
+    var renting: [String] // IDs of items the user is renting
+    var myItems: [String] // IDs of items the user has listed for rent
     //var notifications: [Notification]
     //var busySlots: [BusySlot]
     
@@ -40,5 +42,7 @@ struct User: Codable, Identifiable {
         case likedItems
         case styleChoices
         case events
+        case renting
+        case myItems
     }
 }

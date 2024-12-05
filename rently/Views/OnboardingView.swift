@@ -106,7 +106,10 @@ struct OnboardingView: View {
                         listings: [],
                         likedItems: [],
                         styleChoices: [],
-                        events: []
+                        events: [],
+                        renting: [],
+                        myItems: []
+                        
                     )
                     // Initialize UserViewModel and add user to Firestore
                     let userViewModel = UserViewModel(user: newUser)

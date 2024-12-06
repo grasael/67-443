@@ -52,58 +52,44 @@ class UserRepository: ObservableObject {
     }
 
   // MARK: CRUD methods
-  func create(_ user: User, completion: @escaping (User) -> Void) {
-      do {
-          let documentRef = try store.collection(path).addDocument(from: user)
-          
-          // Fetch the document ID and update the user object
-          var newUser = user
-          newUser.id = documentRef.documentID
-          print("User created successfully with ID:", newUser.id ?? "nil")
-          
-          // Call the completion handler with the updated user
-          completion(newUser)
-      } catch {
-          print("Error creating user:", error.localizedDescription)
-          fatalError("Unable to add user: \(error.localizedDescription).")
+  func create(_ user: User, completion: @escaping (String?) -> Void) {
+          do {
+              let documentReference = try store.collection(path).addDocument(from: user)
+              let documentID = documentReference.documentID
+              print("✅ User added to Firestore with ID: \(documentID)")
+              completion(documentID)
+          } catch {
+              print("❌ Error adding user to Firestore: \(error)")
+              completion(nil)
+          }
       }
-  }
 
 
 
   func update(_ user: User) {
-    guard let userId = user.id else { return }
-//  func create(_ user: User) {
-//    do {
-//      let newUser = user
-//      _ = try store.collection(path).addDocument(from: newUser)
-//        print("User added to Firestore")
-//    } catch {
-//      fatalError("Unable to add user: \(error.localizedDescription).")
-//    }
-//  }
-
-//  func update(_ user: User) {
-//    print("USER ID is \(user.id)")
-//    guard let userId = user.id else { return }
-//    do {
-//      try store.collection(path).document(userId).setData(from: user)
-//    } catch {
-//      fatalError("Unable to update user: \(error.localizedDescription).")
-//    }
-//  }
-    
-
+          print("USER ID is \(user.id)")
+          guard let userId = user.id else {
+              print("Error: User ID is nil. Update aborted.")
+              return
+          }
+          do {
+              try store.collection(path).document(userId).setData(from: user)
+              print("✅ User successfully updated.")
+          } catch {
+              print("Unable to update user: \(error.localizedDescription).")
+          }
+      }
+  
   func delete(_ user: User) {
-    guard let userId = user.id else { return }
-    
-    store.collection(path).document(userId).delete { error in
-      if let error = error {
-        print("Unable to remove user: \(error.localizedDescription)")
+      guard let userId = user.id else { return }
+      
+      store.collection(path).document(userId).delete { error in
+        if let error = error {
+          print("Unable to remove user: \(error.localizedDescription)")
+        }
       }
     }
-  }
-    
+      
     // Add a follower
     func addFollower(to userID: String, followerID: String) {
         let userRef = store.collection(path).document(userID)

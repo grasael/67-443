@@ -10,14 +10,8 @@ import SwiftUI
 struct AppView: View {
   @State private var selectedTab: Int = 0
   @StateObject private var listingsViewModel = ListingsViewModel()
-  let user: User
-    @StateObject private var userViewModel: UserViewModel
+  @StateObject var viewModel: UserViewModel
 
-      init(user: User) {
-          self.user = user
-          _userViewModel = StateObject(wrappedValue: UserViewModel(user: user))
-      }
-  
   var body: some View {
         TabView(selection: $selectedTab) {
          HomeView()
@@ -26,15 +20,15 @@ struct AppView: View {
              Text("home")
            }
            .tag(0)
-         SearchView()
+         SearchView(userViewModel: viewModel)
            .tabItem {
              Image(systemName: "magnifyingglass")
              Text("search")
            }
            .tag(1)
-          MakeListingView(user: user, selectedTab: $selectedTab)
+          MakeListingView(selectedTab: $selectedTab)
             .environmentObject(listingsViewModel)
-            .environmentObject(userViewModel)
+            .environmentObject(viewModel)
              .tabItem {
                Image(systemName: "plus")
                Text("list")
@@ -46,7 +40,7 @@ struct AppView: View {
                Text("rentals")
             }
             .tag(3)
-         ProfileView(userViewModel: userViewModel)
+         ProfileView(userViewModel: viewModel)
             .tabItem {
                Image(systemName: "person")
                Text("profile")

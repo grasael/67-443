@@ -17,7 +17,6 @@ struct MakeListingTwoView: View {
     @State private var isSaving = false
     @State private var saveError: String? = nil
 
-    let user: User
     @Binding var selectedTab: Int
     @EnvironmentObject var viewModel: ListingsViewModel
     @EnvironmentObject var userViewModel: UserViewModel
@@ -152,7 +151,7 @@ struct MakeListingTwoView: View {
     draft.maxRentalDuration = maxRentalDuration
     draft.pickupLocations = selectedLocations
     
-    guard let userId = user.id else {
+    guard let userId = userViewModel.user.id else {
         saveError = "User ID is missing. Cannot save listing."
         isSaving = false
         return

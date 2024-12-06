@@ -26,7 +26,6 @@ struct ListingDraft: Codable {
 }
 
 struct MakeListingView: View {
-  let user: User
   @Binding var selectedTab: Int
   @Environment(\.presentationMode) var presentationMode
   @EnvironmentObject var viewModel: ListingsViewModel
@@ -243,7 +242,7 @@ struct MakeListingView: View {
 
                   
                   // navigation to next screen
-                NavigationLink(destination: MakeListingTwoView(user: user, selectedTab: $selectedTab, draft: $draft)) {
+                NavigationLink(destination: MakeListingTwoView(selectedTab: $selectedTab, draft: $draft)) {
                     Text("next")
                         .font(.system(size: 22))
                         .foregroundColor(.white)

@@ -152,7 +152,7 @@ struct OnboardingView: View {
                         }
                         .padding()
                         .fullScreenCover(isPresented: $navigateToAppView) {
-                            AppView(userViewModel: userViewModel)
+                          AppView(viewModel: userViewModel)
                                 .onDisappear {
                                     navigateToAppView = false
                                 }

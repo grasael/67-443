@@ -36,6 +36,15 @@ class ListingRepository: ObservableObject {
                 } ?? []
             }
     }
+    
+    func fetchListings(for userID: String) -> AnyPublisher<[Listing], Error> {
+        let url = URL(string: "https://example.com/api/listings?userId=\(userID)")! // Replace with your API URL
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .map { $0.data }
+            .decode(type: [Listing].self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 
     // create new listing
     func createListing(_ listing: Listing, completion: @escaping (Result<Void, Error>) -> Void) {

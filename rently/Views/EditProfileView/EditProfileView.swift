@@ -112,6 +112,8 @@ struct EditProfileView: View {
             }
             .padding()
             .navigationTitle("Edit Profile")
+        }.onAppear {
+            print("❄️ EditProfileView Appeared - User ID: \(userViewModel.user.id ?? "NIL")")
         }
     }
 

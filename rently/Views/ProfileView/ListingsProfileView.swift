@@ -34,4 +34,3 @@ struct ListingsProfileView: View {
         .navigationTitle("Profile")
     }
 }
-

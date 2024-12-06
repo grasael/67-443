@@ -4,7 +4,6 @@
 //
 //  Created by Grace Liao on 10/27/24.
 //
-
 import SwiftUI
 
 struct ProfileView: View {
@@ -50,8 +49,15 @@ struct ProfileView: View {
                     .padding(.horizontal)
                     
                     HStack(spacing: 16) {
-                        Text("0 followers")
-                        Text("0 following")
+                        NavigationLink(destination: FollowerView(followerIDs: userViewModel.user.followers, followingIDs: userViewModel.user.following)) {
+                            Text("\(userViewModel.user.followers.count) followers")
+                                .foregroundColor(.blue)
+                        }
+
+                        NavigationLink(destination: FollowingView(userViewModel: userViewModel)) {
+                            Text("\(userViewModel.user.following.count) following")
+                                .foregroundColor(.blue)
+                        }
                         Text("0 rented")
                     }
                     .font(.subheadline)

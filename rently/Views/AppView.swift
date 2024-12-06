@@ -55,4 +55,3 @@ struct AppView: View {
          }
     }
 }
-

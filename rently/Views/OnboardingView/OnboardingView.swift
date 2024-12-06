@@ -6,261 +6,205 @@
 //
 
 import SwiftUI
+import Combine
 
 struct OnboardingView: View {
-    var onboardingComplete: (User) -> Void
-    
+    var email: String
+    var university: String
+    @ObservedObject var userViewModel: UserViewModel
+
     @State private var name = ""
     @State private var lastName = ""
     @State private var username = ""
     @State private var pronouns = ""
-    @State private var email = ""
     @State private var password = ""
-    @State private var university = ""
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @State private var showSuccessAlert = false
     @State private var agreeToTerms = false
-
+    @State private var cancellables = Set<AnyCancellable>()
+    @State private var navigateToAppView = false
+    
     var body: some View {
-        VStack(spacing: 20) {
-            Text("let's get you set up")
-                .font(.title2)
-                .fontWeight(.medium)
-                .padding(.top, 20)
+            VStack(spacing: 20) {
+                Text("let's get you set up")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                    .padding(.top, 20)
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("username: *")
+                        .foregroundColor(.black)
+                        .font(.system(size: 14))
+                        .fontWeight(.semibold)
 
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(Color.green.opacity(0.5))
-                .padding(.horizontal)
+                    TextField("", text: $username)
+                        .padding(8)
+                        .font(.system(size: 14))
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                        .autocapitalization(.none)
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text("username: *")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
+                    Text("No special characters or spaces")
+                        .font(.system(size: 12))
+                        .foregroundColor(.gray)
 
-                TextField("", text: $username)
-                    .padding(8)
-                    .font(.system(size: 14))
-                    .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-                    .autocapitalization(.none)
+                    Text("first name: *")
+                        .foregroundColor(.black)
+                        .font(.system(size: 14))
+                        .fontWeight(.semibold)
 
-                Text("No special characters or spaces")
+                    TextField("", text: $name)
+                        .padding(8)
+                        .font(.system(size: 14))
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                    
+                    Text("last name:")
+                        .foregroundColor(.black)
+                        .font(.system(size: 14))
+                        .fontWeight(.semibold)
+
+                    TextField("", text: $lastName)
+                        .padding(8)
+                        .font(.system(size: 14))
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                    
+                    Text("pronouns: *")
+                        .foregroundColor(.black)
+                        .font(.system(size: 14))
+                        .fontWeight(.semibold)
+
+                    TextField("", text: $pronouns)
+                        .padding(8)
+                        .font(.system(size: 14))
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+
+                    Text("password: *")
+                        .foregroundColor(.black)
+                        .font(.system(size: 14))
+                        .fontWeight(.semibold)
+
+                    SecureField("", text: $password)
+                        .padding(8)
+                        .font(.system(size: 14))
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("• 8 characters or more")
+                        Text("• At least 1 number")
+                        Text("• At least 1 letter")
+                    }
                     .font(.system(size: 12))
                     .foregroundColor(.gray)
-            }
-            .padding(.horizontal)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("first name: *")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
-
-                TextField("", text: $name)
-                    .padding(8)
-                    .font(.system(size: 14))
-                    .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-            }
-            .padding(.horizontal)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("last name:")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
-
-                TextField("", text: $lastName)
-                    .padding(8)
-                    .font(.system(size: 14))
-                    .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-            }
-            .padding(.horizontal)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("pronouns: *")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
-
-                TextField("", text: $pronouns)
-                    .padding(8)
-                    .font(.system(size: 14))
-                    .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-            }
-            .padding(.horizontal)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("email: *")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
-
-                TextField("", text: $email)
-                    .padding(8)
-                    .font(.system(size: 14))
-                    .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-            }
-            .padding(.horizontal)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("university: *")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
-
-                TextField("", text: $university)
-                    .padding(8)
-                    .font(.system(size: 14))
-                    .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-            }
-            .padding(.horizontal)
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("password: *")
-                    .foregroundColor(.black)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
-
-                SecureField("", text: $password)
-                    .padding(8)
-                    .font(.system(size: 14))
-                    .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("• 8 characters or more")
-                    Text("• At least 1 number")
-                    Text("• At least 1 letter")
                 }
-                .font(.system(size: 12))
-                .foregroundColor(.gray)
-            }
-            .padding(.horizontal)
+                .padding(.horizontal)
 
-            HStack {
-                Toggle(isOn: $agreeToTerms) {
-                    HStack(spacing: 4) {
-                        Text("I agree with")
-                        Button("terms of use") {
-                            // Add action for showing terms of use here
+                HStack {
+                    Toggle(isOn: $agreeToTerms) {
+                        HStack(spacing: 4) {
+                            Text("I agree with")
+                            Button("terms of use") {
+                                // Add action for showing terms of use here
+                            }
+                            .foregroundColor(.blue)
+                            .fontWeight(.semibold)
                         }
-                        .foregroundColor(.blue)
-                        .fontWeight(.semibold)
                     }
+                    .toggleStyle(SwitchToggleStyle(tint: .blue))
                 }
-                .toggleStyle(SwitchToggleStyle(tint: .blue))
-            }
-            .padding(.horizontal)
-            .font(.system(size: 12))
+                .padding(.horizontal)
+                .font(.system(size: 12))
 
-            Button(action: signUp) {
-                Text("Sign Up")
-                    .foregroundColor(.white)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 40)
-                    .font(.system(size: 16, weight: .semibold))
-            }
-            .background(
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.blue, Color.green]),
-                    startPoint: .leading,
-                    endPoint: .trailing
+                Button(action: signUp) {
+                                Text("Sign Up")
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal, 40)
+                                    .font(.system(size: 16, weight: .semibold))
+                            }
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color.blue, Color.green]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .cornerRadius(8)
+                            .padding(.horizontal)
+                        }
+                        .padding()
+                        .fullScreenCover(isPresented: $navigateToAppView) {
+                            AppView(userViewModel: userViewModel)
+                                .onDisappear {
+                                    navigateToAppView = false
+                                }
+                        }
+            .padding()
+            .alert(isPresented: $showSuccessAlert) {
+                Alert(
+                    title: Text("Success"),
+                    message: Text("You have successfully signed up!"),
+                    dismissButton: .default(Text("OK"))
                 )
-            )
-            .cornerRadius(8)
-            .padding(.top, 20)
-            .padding(.bottom, 20)
-            .padding(.horizontal)
-
-            Spacer()
-        }
-        .padding()
-        .alert(isPresented: $showSuccessAlert) {
-            Alert(
-                title: Text("Success"),
-                message: Text("You have successfully signed up!"),
-                dismissButton: .default(Text("OK"))
-            )
-        }
-        .background(Color(red: 0.8, green: 0.93, blue: 1))
-        .edgesIgnoringSafeArea(.all)
-        .alert(isPresented: $showErrorAlert) {
-            Alert(
-                title: Text("Error"),
-                message: Text(errorMessage),
-                dismissButton: .default(Text("OK"))
-            )
-        }
+            }
+            .alert(isPresented: $showErrorAlert) {
+                Alert(
+                    title: Text("Error"),
+                    message: Text(errorMessage),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+        
     }
     
     private func signUp() {
-        guard !name.isEmpty, !username.isEmpty, !pronouns.isEmpty, !email.isEmpty, !password.isEmpty, !university.isEmpty else {
+        guard !name.isEmpty, !username.isEmpty, !pronouns.isEmpty, !password.isEmpty else {
             errorMessage = "Please fill out all fields."
             showErrorAlert = true
             return
         }
+        
+        userViewModel.user.firstName = name
+        userViewModel.user.lastName = lastName
+        userViewModel.user.username = username
+        userViewModel.user.pronouns = pronouns
+        userViewModel.user.password = password
+        userViewModel.user.email = email
+        userViewModel.user.university = university
 
-        guard isValidEmail(email) else {
-            errorMessage = "Please enter a valid email address."
-            showErrorAlert = true
-            return
-        }
+        userViewModel.addUser()
 
-        let newUser = User(
-            firstName: name,
-            lastName: lastName,
-            username: username,
-            pronouns: pronouns,
-            email: email,
-            password: password,
-            university: university,
-            rating: 0,
-            listings: [],
-            likedItems: [],
-            styleChoices: [],
-            events: []
-        )
-
-        let userViewModel = UserViewModel(user: newUser)
-        userViewModel.addUser {
-          print("DEBUG: UserViewModel initialized with user ID: \(userViewModel.user.id ?? "nil")")
-          onboardingComplete(userViewModel.user) // Pass back the updated user
-        }
-        showSuccessAlert = true
-    }
-
-    private func isValidEmail(_ email: String) -> Bool {
-        let emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$"
-        let emailPredicate = NSPredicate(format: "SELF MATCHES[c] %@", emailRegex)
-        return emailPredicate.evaluate(with: email)
+        userViewModel.$user
+            .handleEvents(receiveOutput: { user in
+                print("🔍 User emitted from $user: \(user)")
+            })
+            .compactMap { $0.id }
+            .first()
+            .sink { id in
+                print("🌟 User ID available: \(id)")
+                print("🔗 Navigating to AppView...")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.navigateToAppView = true
+                }
+            }
+            .store(in: &cancellables)
     }
 }

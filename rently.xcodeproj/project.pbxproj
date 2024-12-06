@@ -388,20 +388,12 @@
 		7F46DB6F2CCEDB4700181DB6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				6F187EC02CFD54BE008D92D7 /* OnboardingView */,
-				6F187EB52CFD52C1008D92D7 /* ReportListingView */,
-				6F187EB22CFD529F008D92D7 /* ShareListingView */,
-				6F187EAB2CFD50DC008D92D7 /* ProfileView */,
-				6F187EA62CFD5078008D92D7 /* EditProfileView */,
-=======
 				7F2B6F042CFD3EC70006C4AE /* Follow */,
 				7FE838C52CF8355E00CCCBF1 /* ShareListingView */,
 				7F3810372CEFF3AF002DFCF3 /* EditProfileView */,
 				7FE838B62CF7867B00CCCBF1 /* ProfileView */,
 				7FE838B72CF786A800CCCBF1 /* OnboardingView */,
 				7FE838C42CF834A500CCCBF1 /* ReportListingView */,
->>>>>>> 16f6cadd3ace38d2f8be8132813f274885b8221a
 				CA7CD1852CDE5A7D0009DF72 /* MakeListingView */,
 				CA7CD17B2CDE59F40009DF72 /* SearchView */,
 				CA127FA42CD94DB4006330DC /* RentalView */,

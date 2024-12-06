@@ -116,7 +116,8 @@ struct OnboardingView: View {
                     userViewModel.addUser() // Call addUser to save the user in Firestore
                     
                     print("DEBUG GRACE: we are completing onboarding.")
-                    onboardingComplete(newUser)
+                  onboardingComplete(userViewModel.user)
+                  
                 }
             )
         }

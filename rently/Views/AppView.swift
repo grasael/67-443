@@ -11,7 +11,7 @@ struct AppView: View {
   let user: User
   var body: some View {
         TabView {
-            HomeView(user: user)
+            HomeView()
          .tabItem {
          Image(systemName: "house")
          Text("home")

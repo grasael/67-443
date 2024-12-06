@@ -105,13 +105,24 @@ struct ListingView: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
-                
-                Spacer()
-            }
-            .padding()
-        }
-        .navigationBarTitle("Listing Details", displayMode: .inline)
-        .navigationBarBackButtonHidden(false) // Ensure back button is visible
+              
+              Spacer()
+
+              // Rent Button with NavigationLink
+              NavigationLink(destination: RentAnItemView(listing: listing)) {
+                  Text("Rent")
+                      .font(.headline)
+                      .frame(maxWidth: .infinity)
+                      .padding()
+                      .background(Color.blue)
+                      .foregroundColor(.white)
+                      .cornerRadius(8)
+              }
+              .padding(.top, 16)
+          }
+          .padding()
+      }
+      .navigationBarTitle("Listing Details", displayMode: .inline)
     }
 }
 

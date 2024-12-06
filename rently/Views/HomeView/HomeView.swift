@@ -10,12 +10,12 @@ import SwiftUI
 import Foundation
 
 struct HomeView: View {
-  let user: User
   var body: some View {
     NavigationView {
       ScrollView {
         VStack(spacing: 30) {
-            SearchBarView(user: user)
+//            SearchBarView(user: user)
+          SearchBarView()
           ActiveRentalsView()
 //          KeepSearchingView() to be uncommented later
           SuggestedItemsView()

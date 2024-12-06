@@ -25,8 +25,6 @@ class SearchViewModel: ObservableObject {
             
             self.allListings = snapshot?.documents.map { document in
                 let data = document.data()
-                let uuid = UUID(uuidString: document.documentID) ?? UUID()
-                
                 return Listing(
                     id: document.documentID,
                     title: data["title"] as? String ?? "Untitled",
@@ -47,7 +45,9 @@ class SearchViewModel: ObservableObject {
                 )
             } ?? []
             
-            self.listings = self.allListings
+            DispatchQueue.main.async {
+                self.listings = self.allListings
+            }
         }
     }
     
@@ -62,29 +62,35 @@ class SearchViewModel: ObservableObject {
                 try? document.data(as: User.self)
             } ?? []
             
-            self.users = self.allUsers // Initialize users with all data
+            DispatchQueue.main.async {
+                self.users = self.allUsers
+            }
         }
     }
     
     func filterListingsAndUsers(query: String) {
-        let lowercasedQuery = query.lowercased()
+        let lowercasedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         
         if lowercasedQuery.isEmpty {
-            self.listings = self.allListings
-            self.users = self.allUsers
-        } else {
-            self.listings = self.allListings.filter { listing in
-                listing.title.lowercased().contains(lowercasedQuery) ||
-                listing.category.rawValue.lowercased().contains(lowercasedQuery) ||
-                listing.description.lowercased().contains(lowercasedQuery) ||
-                listing.tags.contains { $0.rawValue.lowercased().contains(lowercasedQuery) }
+            DispatchQueue.main.async {
+                self.listings = self.allListings
+                self.users = self.allUsers
             }
-            
-            self.users = self.allUsers.filter { user in
-                user.username.lowercased().contains(lowercasedQuery) ||
-                user.firstName.lowercased().contains(lowercasedQuery) ||
-                user.lastName.lowercased().contains(lowercasedQuery) ||
-                (user.firstName.lowercased() + user.lastName.lowercased()).contains(lowercasedQuery)
+        } else {
+            DispatchQueue.main.async {
+                self.listings = self.allListings.filter { listing in
+                    listing.title.lowercased().contains(lowercasedQuery) ||
+                    listing.category.rawValue.lowercased().contains(lowercasedQuery) ||
+                    listing.description.lowercased().contains(lowercasedQuery) ||
+                    listing.tags.contains { $0.rawValue.lowercased().contains(lowercasedQuery) }
+                }
+                
+                self.users = self.allUsers.filter { user in
+                    user.username.lowercased().contains(lowercasedQuery) ||
+                    user.firstName.lowercased().contains(lowercasedQuery) ||
+                    user.lastName.lowercased().contains(lowercasedQuery) ||
+                    (user.firstName + " " + user.lastName).lowercased().contains(lowercasedQuery)
+                }
             }
         }
     }

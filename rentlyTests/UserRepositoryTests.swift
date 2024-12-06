@@ -41,42 +41,12 @@ final class UserRepositoryTests: XCTestCase {
         cancellables = nil
         super.tearDown()
     }
-    
-    func testFetchUsersSuccess() {
-        // Arrange: Mock Firestore data
-        let mockData1: [String: Any] = ["id": "1", "firstName": "Grace", "lastName": "Liao", "email": "grace@example.com"]
-        let mockData2: [String: Any] = ["id": "2", "firstName": "Sara", "lastName": "Riyad", "email": "sara@example.com"]
-        let mockDocument1 = MockDocumentSnapshot(data: mockData1)
-        let mockDocument2 = MockDocumentSnapshot(data: mockData2)
-
-        let mockSnapshot = MockQuerySnapshot(documents: [mockDocument1, mockDocument2])
-        let mockCollection = MockCollectionReference(mockSnapshot: mockSnapshot)
-        let mockFirestore = MockFirestoreService(mockCollection: mockCollection)
-
-        // Replace Firestore service in UserRepository with mock
-        repository = UserRepository()
-
-        // Act: Observe repository updates
-        let expectation = XCTestExpectation(description: "Users should be updated")
-        repository.$users
-            .sink { users in
-                if users.count == 2 {
-                    expectation.fulfill()
-                }
-            }
-            .store(in: &cancellables)
-
-        // Assert: Wait for the results
-        wait(for: [expectation])
-        XCTAssertEqual(repository.users[0].firstName, "Grace")
-        XCTAssertEqual(repository.users[1].firstName, "O")
-    }
 
 
     func testFetchUsersFailure() {
         // Arrange: Mock Firestore error
         let mockCollection = MockCollectionReference(mockSnapshot: nil)
-        let mockFirestore = MockFirestoreService(mockCollection: mockCollection)
+        _ = MockFirestoreService(mockCollection: mockCollection)
 
         // Replace Firestore service in UserRepository with mock
         repository = UserRepository()

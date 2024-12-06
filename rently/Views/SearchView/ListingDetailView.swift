@@ -26,7 +26,7 @@ struct ListingDetailView: View {
             if let listing = viewModel.listing {
                 ScrollView {
                     VStack(alignment: .leading) {
-                        // Header with User Info and Icons
+                      // Header with User Info and Icons
                       HStack {
                           // Profile Icon
                           Image(systemName: "person.circle")
@@ -36,111 +36,115 @@ struct ListingDetailView: View {
 
                           // Username and Rating
                           VStack(alignment: .leading) {
-                              Text("loveeekiwi") // Replace with actual user data
+                            Text("\(userViewModel.user.username)")
                                   .font(.headline)
-                                  .foregroundColor(.primary) // Ensure it's visible
+                                  .foregroundColor(.primary)
 
                               HStack(spacing: 2) {
                                   Image(systemName: "star.fill")
                                       .foregroundColor(.yellow)
                                       .font(.caption)
-                                  Text("5") // Example rating
+                                Text("\(String(format: "%.1f", userViewModel.user.rating))")
                                       .font(.subheadline)
                                       .foregroundColor(.gray)
                               }
                           }
-                          .padding(.leading, 8) // Add slight padding for better alignment
+                          .padding(.leading, 8)
 
                           Spacer()
 
-                          // Ellipsis Button
+                        // ellipsis Button
                         Menu {
-                                if userViewModel.user.listings.contains(listing.id ?? "") {
-                                    Button("Edit Listing") {
-                                        showEditView = true
-                                    }
-                                    Button("Delete Listing") {
-                                        showDeleteAlert = true
-                                    }
-                                    .foregroundColor(.red)
-                                } else {
-                                    Button("Share Listing") {
-                                        showShareView = true
-                                    }
-                                    Button("Report Listing") {
-                                        showReportView = true
-                                    }
-                                    .foregroundColor(.red)
-                                }
-                            } label: {
-                                Image(systemName: "ellipsis")
+                          
+                          if userViewModel.user.id == listing.userID {
+                            Button("edit listing") {
+                              showEditView = true
                             }
-                            .foregroundColor(.primary)
-                      }
-                      .padding([.horizontal, .top])
-
-                        // Main Image
-                        AsyncImage(url: URL(string: listing.photoURLs.first ?? "")) { image in
-                            image.resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .cornerRadius(10)
-                        } placeholder: {
-                            ProgressView()
+                            Button("share listing") {
+                                showShareView = true
+                            }
+                            Button("delete listing") {
+                                showDeleteAlert = true
+                            }
+                            .foregroundColor(.red)
+                        } else {
+                            Button("share listing") {
+                                showShareView = true
+                            }
+                            Button("report listing") {
+                                showReportView = true
+                            }
+                            .foregroundColor(.red)
                         }
-                        .padding(.horizontal)
+                    } label: {
+                        Image(systemName: "ellipsis")
+                    }
+                    .foregroundColor(.primary)
+              }
+              .padding([.horizontal, .top])
 
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(listing.title)
-                                .font(.title2)
-                                .bold()
-                            HStack {
-                                Text(listing.brand)
-                                    .font(.subheadline)
-                                    .padding(5)
-                                    .background(Color.blue.opacity(0.2))
-                                    .cornerRadius(8)
-                              Text(listing.condition.rawValue)
-                                    .font(.subheadline)
-                                    .padding(5)
-                                    .background(Color.gray.opacity(0.2))
-                                    .cornerRadius(8)
-                                Text("size \(listing.size.rawValue)")
-                                    .font(.subheadline)
-                                    .padding(5)
-                                    .background(Color.gray.opacity(0.2))
-                                    .cornerRadius(8)
-                            }
+              // Main Image
+              AsyncImage(url: URL(string: listing.photoURLs.first ?? "")) { image in
+                  image.resizable()
+                      .aspectRatio(contentMode: .fit)
+                      .cornerRadius(10)
+              } placeholder: {
+                  ProgressView()
+              }
+              .padding(.horizontal)
 
-                            Text(listing.description)
-                                .font(.body)
-                                .padding(.top, 5)
-                            
-                            Spacer()
+              VStack(alignment: .leading, spacing: 8) {
+                  Text(listing.title)
+                      .font(.title2)
+                      .bold()
+                  HStack {
+                      Text(listing.brand)
+                          .font(.subheadline)
+                          .padding(5)
+                          .background(Color.blue.opacity(0.2))
+                          .cornerRadius(8)
+                    Text(listing.condition.rawValue)
+                          .font(.subheadline)
+                          .padding(5)
+                          .background(Color.gray.opacity(0.2))
+                          .cornerRadius(8)
+                      Text("size \(listing.size.rawValue)")
+                          .font(.subheadline)
+                          .padding(5)
+                          .background(Color.gray.opacity(0.2))
+                          .cornerRadius(8)
+                  }
 
-                            HStack {
-                                Text("$\(String(format: "%.2f", listing.price))/day")
-                                    .font(.headline)
-                                    .foregroundColor(.primary)
-                                Spacer()
-                                Button(action: {
-                                }) {
-                                    Text("rent")
-                                        .font(.headline)
-                                        .padding()
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color.green.opacity(0.7))
-                                        .cornerRadius(10)
-                                        .foregroundColor(.white)
-                                }
+                  Text(listing.description)
+                      .font(.body)
+                      .padding(.top, 5)
+                  
+                  Spacer()
+
+                  HStack {
+                      Text("$\(String(format: "%.2f", listing.price))/day")
+                          .font(.headline)
+                          .foregroundColor(.primary)
+                      Spacer()
+                      Button(action: {
+                      }) {
+                          Text("rent")
+                              .font(.headline)
+                              .padding()
+                              .frame(maxWidth: .infinity)
+                              .background(Color.green.opacity(0.7))
+                              .cornerRadius(10)
+                              .foregroundColor(.white)
                             }
                         }
-                        .padding()
+                    }
+                    .padding()
                     }
                 }
             } else {
-                ProgressView("Loading...")
-            }
+              ProgressView("Loading...")
         }
+      }
         .onAppear {
             viewModel.fetchListing(by: listingID)
         }

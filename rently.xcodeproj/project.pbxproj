@@ -10,6 +10,7 @@
 		529156EA2CE29E7C009EBD96 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529156E92CE29E7C009EBD96 /* SearchView.swift */; };
 		529156EE2CE3F0DC009EBD96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 529156ED2CE3F0DC009EBD96 /* GoogleService-Info.plist */; };
 		6F7CC5D02D029B7C00575DCC /* LikesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7CC5CF2D029B7800575DCC /* LikesView.swift */; };
+		6F7CC5D32D02A58B00575DCC /* EditListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7CC5D22D02A58800575DCC /* EditListingView.swift */; };
 		6FFD9D112CEAAC8A00499F0E /* CalendarWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD9D102CEAAC8A00499F0E /* CalendarWrapperView.swift */; };
 		6FFD9D132CEAAC9300499F0E /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD9D122CEAAC9300499F0E /* CheckboxView.swift */; };
 		7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */; };
@@ -132,6 +133,7 @@
 		529156ED2CE3F0DC009EBD96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		529DD9642CFED4390093D1C9 /* rentlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rentlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F7CC5CF2D029B7800575DCC /* LikesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikesView.swift; sourceTree = "<group>"; };
+		6F7CC5D22D02A58800575DCC /* EditListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListingView.swift; sourceTree = "<group>"; };
 		6FFD9D102CEAAC8A00499F0E /* CalendarWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWrapperView.swift; sourceTree = "<group>"; };
 		6FFD9D122CEAAC9300499F0E /* CheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
 		7F1FD56B2CCD757400C7A788 /* rently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rently.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -252,6 +254,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F7CC5D12D02A58200575DCC /* EditListingView */ = {
+			isa = PBXGroup;
+			children = (
+				6F7CC5D22D02A58800575DCC /* EditListingView.swift */,
+			);
+			path = EditListingView;
+			sourceTree = "<group>";
+		};
 		7F1FD5622CCD757400C7A788 = {
 			isa = PBXGroup;
 			children = (
@@ -317,6 +327,7 @@
 		7F46DB6F2CCEDB4700181DB6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6F7CC5D12D02A58200575DCC /* EditListingView */,
 				7F2B6F042CFD3EC70006C4AE /* Follow */,
 				7FE838C52CF8355E00CCCBF1 /* ShareListingView */,
 				7F3810372CEFF3AF002DFCF3 /* EditProfileView */,
@@ -652,6 +663,7 @@
 				7FE838C12CF8055F00CCCBF1 /* AllowLocationView.swift in Sources */,
 				CA8C1D0F2CDD783C00D75B93 /* ListingView.swift in Sources */,
 				CA96ED1B2CD670BC00E6D750 /* SearchBarView.swift in Sources */,
+				6F7CC5D32D02A58B00575DCC /* EditListingView.swift in Sources */,
 				7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */,
 				CA7CD1872CDE5AC70009DF72 /* SearchViewModel.swift in Sources */,
 				7FE838B92CF78AF700CCCBF1 /* WelcomeView.swift in Sources */,

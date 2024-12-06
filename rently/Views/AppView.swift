@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppView: View {
   @State private var selectedTab: Int = 0
-  @StateObject private var listingsViewModel = ListingsViewModel()
+  @StateObject var listingsViewModel = ListingsViewModel()
   @StateObject var viewModel: UserViewModel
 
   var body: some View {

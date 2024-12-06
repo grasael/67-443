@@ -29,6 +29,11 @@ class ListingsViewModel: ObservableObject {
     repository.fetchListings()
   }
   
+  // fetch listings for a specific user
+  func fetchListings(for userID: String) {
+      repository.fetchListings(for: userID)
+  }
+
   // add listing from draft
   func addListingFromDraft(_ draft: ListingDraft, userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
     repository.saveListingFromDraft(draft, userID: userID, completion: completion)
@@ -41,6 +46,6 @@ class ListingsViewModel: ObservableObject {
 
   // delete listing
   func deleteListing(_ id: String, completion: @escaping (Result<Void, Error>) -> Void) {
-      repository.deleteListing(id, completion: completion)
+    repository.deleteListing(id, completion: completion)
   }
 }

@@ -37,14 +37,28 @@ class ListingRepository: ObservableObject {
             }
     }
     
-    func fetchListings(for userID: String) -> AnyPublisher<[Listing], Error> {
-        let url = URL(string: "https://example.com/api/listings?userId=\(userID)")! // Replace with your API URL
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
-            .decode(type: [Listing].self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
+  // fetch listings for a specific user or all listings if `userID` is nil
+  func fetchListings(for userID: String? = nil) {
+      let query: Query
+      if let userID = userID {
+          // Fetch only listings that belong to the user
+          query = store.collection(path).whereField("userID", isEqualTo: userID)
+      } else {
+          // Fetch all listings
+          query = store.collection(path)
+      }
+
+      query.addSnapshotListener { querySnapshot, error in
+          if let error = error {
+              print("Error fetching listings: \(error.localizedDescription)")
+              return
+          }
+
+          self.listings = querySnapshot?.documents.compactMap { document in
+              try? document.data(as: Listing.self)
+          } ?? []
+      }
+  }
 
     // create new listing
     func createListing(_ listing: Listing, completion: @escaping (Result<Void, Error>) -> Void) {

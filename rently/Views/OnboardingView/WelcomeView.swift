@@ -32,7 +32,7 @@ struct WelcomeView: View {
                         .padding()
                         .background(
                             LinearGradient(
-                                gradient: Gradient(colors: [Color.blue.opacity(0.4), Color.green.opacity(0.8)]),
+                                gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -54,7 +54,7 @@ struct WelcomeView: View {
             }
             .background(
                 LinearGradient(
-                    gradient: Gradient(colors: [Color(red: 0.9, green: 0.95, blue: 1), Color.white]),
+                  gradient: Gradient(colors: [Color("MediumBlue"), Color("Yellow")]),
                     startPoint: .top,
                     endPoint: .bottom
                 )

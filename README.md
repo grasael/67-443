@@ -8,7 +8,7 @@ Grace Liao
 Tishyaa Chaudry
 Abby Chen
 
-# Overview
+## Overview
 Rently is designed for users who value sustainable fashion and wish to participate in the circular economy. It facilitates clothing rentals within college campuses, enabling users to share items conveniently and securely. By renting instead of buying, users can reduce their contribution to fast fashion’s environmental impact, including:
 * 10% of global carbon dioxide emissions.
 * 20% of global wastewater production.
@@ -16,7 +16,7 @@ Rently is designed for users who value sustainable fashion and wish to participa
   
 Rently fosters community connections and makes eco-friendly fashion accessible to students, providing a sustainable alternative to conventional shopping. Rently is tailored for college students by college students. 
 
-# Data
+## Data
 Rently manages the following data categories:
 1. Listings: Information about available clothing items, including details, photos, and rental terms.
 2. Rentals: Records of items rented, duration, and associated users.
@@ -27,7 +27,7 @@ All data is stored in Firestore for real-time synchronization.
 
 
 
-# Technical Implementation
+## Technical Implementation
 **Frameworks & Tools Used:**
 *Swift: The primary programming language for the application.
 *Firebase: For user authentication (Firebase Authentication), data storage (Firestore), and real-time data synchronization.
@@ -51,7 +51,7 @@ All data is stored in Firestore for real-time synchronization.
 *Search Functionality: Users can search listings by various criteria, with search data also pulled from Firestore.
 
 
-# Testing:
+## Testing:
 We performed unit testing on the code we've implemented, including:
 
 Models: Listing, Rental, Review, User models.
@@ -60,7 +60,7 @@ Views: While some basic UI testing was done, we did not test the actual views in
 Test coverage currently stands at 23%, which primarily reflects coverage for our core models and view models. 
 
 
-# Design Decisions
+## Design Decisions
 
 Why School Emails?
 Based on user interviews, we chose to require school email logins to:
@@ -73,7 +73,7 @@ Based on user interviews, we chose to require school email logins to:
 
 
 
-# Additional Notes
+## Additional Notes
 Please make sure your device is logged in on Apple's email app with your school email. The email prompt will not work otherwise. This feature cannot be tested on the simulator. 
 
 For the best experience, we recommend ensuring a stable internet connection when creating or renting listings, as image uploads and notifications may require network access.

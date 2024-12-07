@@ -24,6 +24,8 @@ struct User: Codable, Identifiable {
     var events: [String]
     //var notifications: [Notification]
     //var busySlots: [BusySlot]
+    var followers: [String]
+    var following: [String]
     
     // MARK: Codable
     enum CodingKeys: String, CodingKey {
@@ -40,5 +42,7 @@ struct User: Codable, Identifiable {
         case likedItems
         case styleChoices
         case events
+        case followers
+        case following
     }
 }

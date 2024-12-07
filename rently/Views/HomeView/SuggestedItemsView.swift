@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SuggestedItemsView: View {
-  @StateObject private var viewModel = ListingViewModel()
+  @StateObject private var viewModel = ListingsViewModel()
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {

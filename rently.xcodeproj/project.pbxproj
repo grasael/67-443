@@ -107,6 +107,7 @@
 		CAC321DE2D03EF0F00BC0059 /* MailComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC321D92D03EF0F00BC0059 /* MailComposeView.swift */; };
 		CAC321E02D03EF1C00BC0059 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC321DF2D03EF1C00BC0059 /* ConfirmationView.swift */; };
 		CAC322062D03F05200BC0059 /* RentalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC322052D03F05200BC0059 /* RentalViewModel.swift */; };
+		CAC322402D03F1E300BC0059 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC3223F2D03F1E300BC0059 /* UserManager.swift */; };
 		CAFA5B352CDAE41100D92C14 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFA5B342CDAE41100D92C14 /* Listing.swift */; };
 /* End PBXBuildFile section */
 
@@ -215,6 +216,7 @@
 		CAC321DB2D03EF0F00BC0059 /* RentAnItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentAnItemView.swift; sourceTree = "<group>"; };
 		CAC321DF2D03EF1C00BC0059 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		CAC322052D03F05200BC0059 /* RentalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalViewModel.swift; sourceTree = "<group>"; };
+		CAC3223F2D03F1E300BC0059 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		CAFA5B342CDAE41100D92C14 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -360,6 +362,7 @@
 		7F46DB702CCEDB5200181DB6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CAC3223F2D03F1E300BC0059 /* UserManager.swift */,
 				CA2F2E172CE85F11008D3021 /* Review.swift */,
 				7F46DB902CD454D600181DB6 /* User.swift */,
 				CA127FA72CD958F2006330DC /* Rental.swift */,
@@ -674,6 +677,7 @@
 				CA2F2E072CE85B4F008D3021 /* OnboardingView.swift in Sources */,
 				CA127FAA2CD95954006330DC /* ActiveRentalsViewModel.swift in Sources */,
 				7F46DB732CCEDBA700181DB6 /* HomeView.swift in Sources */,
+				CAC322402D03F1E300BC0059 /* UserManager.swift in Sources */,
 				6F7CC5D02D029B7C00575DCC /* LikesView.swift in Sources */,
 				7FE838E52CF8B8E500CCCBF1 /* LocationManager.swift in Sources */,
 				CA127FB82CD9CCE2006330DC /* TrendingItem.swift in Sources */,

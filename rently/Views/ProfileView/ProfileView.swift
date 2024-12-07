@@ -100,9 +100,11 @@ struct ProfileView: View {
                     if selectedTab == 0 {
                         ListingsProfileView()
                             .environmentObject(listingsViewModel)
-                            .environmentObject(userViewModel)  
+                            .environmentObject(userViewModel)
                     } else {
                         LikesView()
+                            .environmentObject(userViewModel)
+                            .environmentObject(listingsViewModel)
                     }
 
                     Spacer()

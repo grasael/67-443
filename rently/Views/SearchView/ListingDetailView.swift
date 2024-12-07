@@ -20,6 +20,7 @@ struct ListingDetailView: View {
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var listingsViewModel: ListingsViewModel
     @Environment(\.dismiss) var dismiss
+    @State private var isLiked: Bool = false
 
     var body: some View {
         VStack {
@@ -125,21 +126,27 @@ struct ListingDetailView: View {
                           .font(.headline)
                           .foregroundColor(.primary)
                       Spacer()
-
-                                  // Rent Button with NavigationLink
-                                  NavigationLink(destination: RentAnItemView(listing: listing)) {
-                                      Text("Rent")
-                                          .font(.headline)
-                                          .frame(maxWidth: .infinity)
-                                          .padding()
-                                          .background(Color.blue)
-                                          .foregroundColor(.white)
-                                          .cornerRadius(8)
-                                  }
-                                  .padding(.top, 16)
+                      Button(action: {
+                      }) {
+                          Text("rent")
+                              .font(.headline)
+                              .padding()
+                              .frame(maxWidth: .infinity)
+                              .background(Color.green.opacity(0.7))
+                              .cornerRadius(10)
+                              .foregroundColor(.white)
+                            }
                         }
                     }
                     .padding()
+                        
+                    Button(action: {
+                        toggleLike(for: listing)
+                    }) {
+                        Image(systemName: isLiked ? "heart.fill" : "heart")
+                            .font(.system(size: 24))
+                            .foregroundColor(isLiked ? .red : .gray)
+                    }
                     }
                 }
             } else {
@@ -148,6 +155,7 @@ struct ListingDetailView: View {
       }
         .onAppear {
             viewModel.fetchListing(by: listingID)
+            checkIfLiked()
         }
         .navigationTitle("Listing Details")
         .navigationBarTitleDisplayMode(.inline)
@@ -197,62 +205,78 @@ struct ListingDetailView: View {
             }
         }
     }
-}
-
-struct ListingDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        // Mock a sample listing
-        let sampleListing = Listing(
-            id: "1",
-            title: "Sample Dress",
-            creationTime: Date(),
-            description: "A beautiful summer dress.",
-            category: .womensTops,
-            userID: "123", // Matches the mock user's ID
-            size: .medium,
-            price: 25.0,
-            color: .blue,
-            condition: .veryGood,
-            photoURLs: ["https://via.placeholder.com/150"],
-            tags: [.formal],
-            brand: "Gucci",
-            maxRentalDuration: .oneWeek,
-            pickupLocations: [],
-            available: true
-        )
-        
-        // Mock User
-        let mockUser = User(
-            id: "123", // Matches the listing's userID
-            firstName: "Grace",
-            lastName: "Liao",
-            username: "gracel",
-            pronouns: "she/her",
-            email: "grace@example.com",
-            password: "password123",
-            university: "Sample University",
-            rating: 4.9,
-            listings: ["1"], // Listing ID of the sample listing
-            likedItems: [],
-            styleChoices: ["Bohemian", "Chic"],
-            events: [],
-            followers: [],
-            following: [],
-            renting: [],
-            myItems: []
-        )
-        
-        // Initialize UserViewModel with the mock user
-        let mockUserViewModel = UserViewModel(user: mockUser)
-        
-        // Mock ListingsViewModel
-        let mockListingsViewModel = ListingsViewModel()
-        mockListingsViewModel.listings = [sampleListing]
-        
-        return NavigationView {
-            ListingDetailView(listingID: sampleListing.id ?? "")
-                .environmentObject(mockUserViewModel)
-                .environmentObject(mockListingsViewModel)
+    
+    private func checkIfLiked() {
+            if let listingID = viewModel.listing?.id {
+                isLiked = userViewModel.user.likedItems.contains(listingID)
+            }
         }
+    
+    private func toggleLike(for listing: Listing) {
+        guard let listingID = listing.id else { return }
+        
+        if isLiked {
+            userViewModel.user.likedItems.removeAll { $0 == listingID }
+        } else {
+            userViewModel.user.likedItems.append(listingID)
+        }
+        isLiked.toggle()
+        userViewModel.updateUser()
     }
 }
+//
+//struct ListingDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        // Mock a sample listing
+//        let sampleListing = Listing(
+//            id: "1",
+//            title: "Sample Dress",
+//            creationTime: Date(),
+//            description: "A beautiful summer dress.",
+//            category: .womensTops,
+//            userID: "123", // Matches the mock user's ID
+//            size: .medium,
+//            price: 25.0,
+//            color: .blue,
+//            condition: .veryGood,
+//            photoURLs: ["https://via.placeholder.com/150"],
+//            tags: [.formal],
+//            brand: "Gucci",
+//            maxRentalDuration: .oneWeek,
+//            pickupLocations: [],
+//            available: true
+//        )
+//        
+//        // Mock User
+//        let mockUser = User(
+//            id: "123", // Matches the listing's userID
+//            firstName: "Grace",
+//            lastName: "Liao",
+//            username: "gracel",
+//            pronouns: "she/her",
+//            email: "grace@example.com",
+//            password: "password123",
+//            university: "Sample University",
+//            rating: 4.9,
+//            listings: ["1"], // Listing ID of the sample listing
+//            likedItems: [],
+//            styleChoices: ["Bohemian", "Chic"],
+//            events: [],
+//            followers: [],
+//            following: []
+//        )
+//        
+//        // Initialize UserViewModel with the mock user
+//        let mockUserViewModel = UserViewModel(user: mockUser)
+//        
+//        // Mock ListingsViewModel
+//        let mockListingsViewModel = ListingsViewModel()
+//        mockListingsViewModel.listings = [sampleListing]
+//        
+//        return NavigationView {
+//            ListingDetailView(listingID: sampleListing.id ?? "")
+//                .environmentObject(mockUserViewModel)
+//                .environmentObject(mockListingsViewModel)
+//        }
+//    }
+//}

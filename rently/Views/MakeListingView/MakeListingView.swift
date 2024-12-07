@@ -36,7 +36,7 @@ struct MakeListingView: View {
   
   // photo selection
   @State private var selectedImages: [PhotosPickerItem?] = Array(repeating: nil, count: 4)
-  @State private var uploadedImages: [UIImage?] = Array(repeating: nil, count: 4)
+  @State private var uploadedImages: [UIImage?] = Array(repeating: nil, count: 4) 
   
   var body: some View {
     NavigationStack(path: $path) {
@@ -285,12 +285,12 @@ struct MakeListingView: View {
       }
   }
 
-private func uploadImagesAndContinue() {
-  let nonNilImages = uploadedImages.compactMap { $0 } // filter out nil images
-  
-  // call listingsviewmodel to upload images
-  viewModel.uploadImages(nonNilImages) { urls in
-    draft.photoURLs = urls
+  private func uploadImagesAndContinue() {
+    let nonNilImages = uploadedImages.compactMap { $0 } // filter out nil images
+    
+    // call listingsviewmodel to upload images
+    viewModel.uploadImages(nonNilImages) { urls in
+      draft.photoURLs = urls
+    }
   }
-}
 }

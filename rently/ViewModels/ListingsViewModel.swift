@@ -38,6 +38,11 @@ class ListingsViewModel: ObservableObject {
   func addListingFromDraft(_ draft: ListingDraft, userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
     repository.saveListingFromDraft(draft, userID: userID, completion: completion)
   }
+  
+  // edit existing listing
+  func editListing(_ listingID: String, draft: ListingDraft, userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    repository.updateListing(listingID: listingID, with: draft, userID: userID, completion: completion)
+  }
 
   // upload images via repository
   func uploadImages(_ images: [UIImage], completion: @escaping ([String]) -> Void) {

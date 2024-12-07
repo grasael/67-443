@@ -78,6 +78,34 @@ class ListingRepository: ObservableObject {
             completion(.failure(error))
         }
     }
+  
+  func updateListing(listingID: String, with draft: ListingDraft, userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
+      let updatedData: [String: Any] = [
+          "title": draft.title,
+          "description": draft.description,
+          "category": draft.category.rawValue,
+          "userID": userID,
+          "size": draft.size.rawValue,
+          "price": draft.price,
+          "color": draft.color.rawValue,
+          "condition": draft.condition.rawValue,
+          "photoURLs": draft.photoURLs,
+          "tags": draft.tags.map { $0.rawValue },
+          "brand": draft.brand,
+          "maxRentalDuration": draft.maxRentalDuration.rawValue,
+          "pickupLocations": draft.pickupLocations.map { $0.rawValue },
+          "available": draft.available
+      ]
+
+      store.collection("Listings").document(listingID).updateData(updatedData) { error in
+          if let error = error {
+              completion(.failure(error))
+          } else {
+              completion(.success(()))
+          }
+      }
+  }
+
 
     // upload images to Firebase Storage and return their URLs
     func uploadImages(_ images: [UIImage], completion: @escaping ([String]) -> Void) {

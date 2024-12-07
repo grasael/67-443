@@ -55,7 +55,6 @@ struct ListingDetailView: View {
 
                         // ellipsis Button
                         Menu {
-                          
                           if userViewModel.user.id == listing.userID {
                             Button("edit listing") {
                               showEditView = true

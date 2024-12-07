@@ -37,9 +37,6 @@ struct MakeListingTwoView: View {
                 Text("select dates when you're unavailable for pickups:")
                     .font(.system(size: 16))
                     .padding(.horizontal, 30)
-                Text("you can always edit this in your settings!")
-                    .font(.system(size: 14))
-                    .padding(.horizontal, 30)
 
                 // calendar
                 CalendarWrapperView(selectedDates: $selectedDates)

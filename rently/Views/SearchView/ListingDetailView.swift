@@ -125,16 +125,18 @@ struct ListingDetailView: View {
                           .font(.headline)
                           .foregroundColor(.primary)
                       Spacer()
-                      Button(action: {
-                      }) {
-                          Text("rent")
-                              .font(.headline)
-                              .padding()
-                              .frame(maxWidth: .infinity)
-                              .background(Color.green.opacity(0.7))
-                              .cornerRadius(10)
-                              .foregroundColor(.white)
-                            }
+
+                                  // Rent Button with NavigationLink
+                                  NavigationLink(destination: RentAnItemView(listing: listing)) {
+                                      Text("Rent")
+                                          .font(.headline)
+                                          .frame(maxWidth: .infinity)
+                                          .padding()
+                                          .background(Color.blue)
+                                          .foregroundColor(.white)
+                                          .cornerRadius(8)
+                                  }
+                                  .padding(.top, 16)
                         }
                     }
                     .padding()

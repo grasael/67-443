@@ -46,5 +46,7 @@ struct User: Codable, Identifiable {
         case events
         case followers
         case following
+        case renting
+        case myItems
     }
 }

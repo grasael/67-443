@@ -235,7 +235,9 @@ struct ListingDetailView_Previews: PreviewProvider {
             styleChoices: ["Bohemian", "Chic"],
             events: [],
             followers: [],
-            following: []
+            following: [],
+            renting: [],
+            myItems: []
         )
         
         // Initialize UserViewModel with the mock user

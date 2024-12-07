@@ -5,12 +5,12 @@
 //  Created by Grace Liao on 10/27/24.
 //
 
-
 import SwiftUI
 
 struct SearchView: View {
+    @Binding var searchText: String // Accepting a binding from the parent view
+    
     @ObservedObject var viewModel = SearchViewModel()
-    @State private var searchText = ""
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -27,7 +27,7 @@ struct SearchView: View {
             }
             .padding(.horizontal)
             
-            // Search Bar
+            // Search Bar with binding to searchText
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
@@ -136,6 +136,8 @@ struct SearchView: View {
     }
 }
 
+
+
 // Updated CategoryIcon to include an action
 struct CategoryIcon: View {
     let name: String
@@ -182,8 +184,4 @@ struct SeasonalSection: View {
                 .padding(.top, 5)
         }
     }
-}
-
-#Preview {
-    SearchView()
 }

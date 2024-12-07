@@ -2,7 +2,7 @@
 //  rentlyApp.swift
 //  rently
 //
-//  Created by Grace Liao on 10/26/24.
+//  /Users/sarariyad/Documents/GitHub/rently/rently.xcodeprojCreated by Grace Liao on 10/26/24.
 //
 
 import SwiftUI

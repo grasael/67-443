@@ -3,10 +3,7 @@ This is an iOS mobile application written in Swift as part of our project for co
 
 **Contributors:**
 
-Sara Riyad
-Grace Liao
-Tishyaa Chaudry
-Abby Chen
+Sara Riyad, Grace Liao, Tishyaa Chaudry, and Abby Chen
 
 ## Overview
 Rently is designed for users who value sustainable fashion and wish to participate in the circular economy. It facilitates clothing rentals within college campuses, enabling users to share items conveniently and securely. By renting instead of buying, users can reduce their contribution to fast fashion’s environmental impact, including:

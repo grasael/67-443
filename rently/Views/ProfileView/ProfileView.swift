@@ -103,6 +103,8 @@ struct ProfileView: View {
                             .environmentObject(userViewModel)  
                     } else {
                         LikesView()
+                            .environmentObject(userViewModel)
+                            .environmentObject(listingsViewModel)
                     }
 
                     Spacer()

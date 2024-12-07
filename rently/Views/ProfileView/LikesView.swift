@@ -8,14 +8,41 @@
 import SwiftUI
 
 struct LikesView: View {
-    var body: some View {
-        VStack {
-            Text("This is the likes page.")
-        }
-        .padding()
-    }
-}
+    @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var listingsViewModel: ListingsViewModel
 
-#Preview {
-    LikesView()
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                if userViewModel.user.likedItems.isEmpty {
+                    Text("You haven't liked any items yet.")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                        .padding()
+                } else {
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(userViewModel.user.likedItems, id: \.self) { likedListingID in
+                            if let listing = listingsViewModel.listings.first(where: { $0.id == likedListingID }) {
+                                NavigationLink(destination: ListingView(listing: listing)
+                                                .environmentObject(userViewModel)) {
+                                    CardView(listing: listing)
+                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
+            .navigationTitle("Likes")
+            .onAppear {
+                // Fetch liked listings if needed
+                listingsViewModel.fetchListings() // Assuming this fetches all listings
+            }
+        }
+    }
 }

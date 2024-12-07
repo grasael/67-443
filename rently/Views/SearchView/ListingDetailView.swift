@@ -20,6 +20,7 @@ struct ListingDetailView: View {
     @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var listingsViewModel: ListingsViewModel
     @Environment(\.dismiss) var dismiss
+    @State private var isLiked: Bool = false
 
     var body: some View {
         VStack {
@@ -140,6 +141,14 @@ struct ListingDetailView: View {
                         }
                     }
                     .padding()
+                        
+                    Button(action: {
+                        toggleLike(for: listing)
+                    }) {
+                        Image(systemName: isLiked ? "heart.fill" : "heart")
+                            .font(.system(size: 24))
+                            .foregroundColor(isLiked ? .red : .gray)
+                    }
                     }
                 }
             } else {
@@ -148,6 +157,7 @@ struct ListingDetailView: View {
       }
         .onAppear {
             viewModel.fetchListing(by: listingID)
+            checkIfLiked()
         }
         .navigationTitle("Listing Details")
         .navigationBarTitleDisplayMode(.inline)
@@ -196,6 +206,24 @@ struct ListingDetailView: View {
                 ReportListingView()
             }
         }
+    }
+    
+    private func checkIfLiked() {
+            if let listingID = viewModel.listing?.id {
+                isLiked = userViewModel.user.likedItems.contains(listingID)
+            }
+        }
+    
+    private func toggleLike(for listing: Listing) {
+        guard let listingID = listing.id else { return }
+        
+        if isLiked {
+            userViewModel.user.likedItems.removeAll { $0 == listingID }
+        } else {
+            userViewModel.user.likedItems.append(listingID)
+        }
+        isLiked.toggle()
+        userViewModel.updateUser()
     }
 }
 

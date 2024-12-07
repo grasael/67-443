@@ -102,6 +102,10 @@
 		CA96ED212CD670DF00E6D750 /* SuggestedItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED202CD670DF00E6D750 /* SuggestedItemsView.swift */; };
 		CA96ED232CD670EC00E6D750 /* TrendingSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED222CD670EC00E6D750 /* TrendingSearchesView.swift */; };
 		CA96ED252CD6A05E00E6D750 /* ActiveRentalCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA96ED242CD6A05E00E6D750 /* ActiveRentalCardView.swift */; };
+		CAC321DC2D03EF0F00BC0059 /* RentAnItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC321DB2D03EF0F00BC0059 /* RentAnItemView.swift */; };
+		CAC321DD2D03EF0F00BC0059 /* RentalCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC321DA2D03EF0F00BC0059 /* RentalCompleteView.swift */; };
+		CAC321DE2D03EF0F00BC0059 /* MailComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC321D92D03EF0F00BC0059 /* MailComposeView.swift */; };
+		CAC321E02D03EF1C00BC0059 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC321DF2D03EF1C00BC0059 /* ConfirmationView.swift */; };
 		CAFA5B352CDAE41100D92C14 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFA5B342CDAE41100D92C14 /* Listing.swift */; };
 /* End PBXBuildFile section */
 
@@ -205,6 +209,10 @@
 		CA96ED202CD670DF00E6D750 /* SuggestedItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedItemsView.swift; sourceTree = "<group>"; };
 		CA96ED222CD670EC00E6D750 /* TrendingSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingSearchesView.swift; sourceTree = "<group>"; };
 		CA96ED242CD6A05E00E6D750 /* ActiveRentalCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRentalCardView.swift; sourceTree = "<group>"; };
+		CAC321D92D03EF0F00BC0059 /* MailComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposeView.swift; sourceTree = "<group>"; };
+		CAC321DA2D03EF0F00BC0059 /* RentalCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalCompleteView.swift; sourceTree = "<group>"; };
+		CAC321DB2D03EF0F00BC0059 /* RentAnItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentAnItemView.swift; sourceTree = "<group>"; };
+		CAC321DF2D03EF1C00BC0059 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		CAFA5B342CDAE41100D92C14 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -327,6 +335,7 @@
 		7F46DB6F2CCEDB4700181DB6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CAC321D82D03EEB400BC0059 /* StartARental */,
 				6F7CC5D12D02A58200575DCC /* EditListingView */,
 				7F2B6F042CFD3EC70006C4AE /* Follow */,
 				7FE838C52CF8355E00CCCBF1 /* ShareListingView */,
@@ -488,6 +497,17 @@
 				CA96ED242CD6A05E00E6D750 /* ActiveRentalCardView.swift */,
 			);
 			path = HomeView;
+			sourceTree = "<group>";
+		};
+		CAC321D82D03EEB400BC0059 /* StartARental */ = {
+			isa = PBXGroup;
+			children = (
+				CAC321DF2D03EF1C00BC0059 /* ConfirmationView.swift */,
+				CAC321D92D03EF0F00BC0059 /* MailComposeView.swift */,
+				CAC321DA2D03EF0F00BC0059 /* RentalCompleteView.swift */,
+				CAC321DB2D03EF0F00BC0059 /* RentAnItemView.swift */,
+			);
+			path = StartARental;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -667,11 +687,15 @@
 				7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */,
 				CA7CD1872CDE5AC70009DF72 /* SearchViewModel.swift in Sources */,
 				7FE838B92CF78AF700CCCBF1 /* WelcomeView.swift in Sources */,
+				CAC321DC2D03EF0F00BC0059 /* RentAnItemView.swift in Sources */,
+				CAC321DD2D03EF0F00BC0059 /* RentalCompleteView.swift in Sources */,
+				CAC321DE2D03EF0F00BC0059 /* MailComposeView.swift in Sources */,
 				7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */,
 				6FFD9D132CEAAC9300499F0E /* CheckboxView.swift in Sources */,
 				CA7CD17F2CDE5A430009DF72 /* UserProfileRow.swift in Sources */,
 				CA127FA82CD958F2006330DC /* Rental.swift in Sources */,
 				CA2F2E162CE85ECC008D3021 /* ListingRepository.swift in Sources */,
+				CAC321E02D03EF1C00BC0059 /* ConfirmationView.swift in Sources */,
 				7FE838C92CF8368700CCCBF1 /* ReportListingView.swift in Sources */,
 				CA2F2E0B2CE85B4F008D3021 /* MakeListingTwoView.swift in Sources */,
 				7F2B6F022CFA1E430006C4AE /* LocationTestView.swift in Sources */,

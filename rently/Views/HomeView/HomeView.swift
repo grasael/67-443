@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-      ScrollView {
     @StateObject private var searchViewModel = SearchViewModel() // Initialize SearchViewModel
     @State private var searchText: String = "" // Track search input
     @State private var isSearching = false // Track if search is active

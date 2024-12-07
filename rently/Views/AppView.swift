@@ -8,45 +8,49 @@
 import SwiftUI
 
 struct AppView: View {
-  let user: User
-  @State private var searchText: String = "" // Track search text for the search view
-  
-  var body: some View {
-    TabView {
-      // Home View
-      HomeView()
-        .tabItem {
-          Image(systemName: "house")
-          Text("home")
-        }
-      
-      // Search View with Binding to searchText
-      SearchView(searchText: $searchText)
-        .tabItem {
-          Image(systemName: "magnifyingglass")
-          Text("search")
-        }
-      
-      // Make Listing View
-      MakeListingView()
-        .tabItem {
-          Image(systemName: "plus")
-          Text("list")
-        }
-      
-      // Rentals View
-      RentalsView()
-        .tabItem {
-          Image(systemName: "hanger")
-          Text("rentals")
-        }
-      
-      // Profile View
-      ProfileView(user: user)
-        .tabItem {
-          Image(systemName: "person")
-          Text("profile")
+    @StateObject var viewModel: UserViewModel
+    @State private var searchText: String = ""
+    @StateObject var listingsViewModel = ListingsViewModel()
+    @State private var selectedTab: Int = 0
+    
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            HomeView()
+                .tabItem {
+                    Image(systemName: "house")
+                    Text("home")
+                }
+                .tag(0)
+            
+            SearchView(searchText: $searchText)
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                    Text("search")
+                }
+                .tag(1)
+            
+            MakeListingView(selectedTab: $selectedTab)
+                .environmentObject(listingsViewModel)
+                .environmentObject(viewModel)
+                .tabItem {
+                    Image(systemName: "plus")
+                    Text("list")
+                }
+                .tag(2)
+            
+            RentalsView()
+                .tabItem {
+                    Image(systemName: "hanger")
+                    Text("rentals")
+                }
+                .tag(3)
+            
+            ProfileView(userViewModel: viewModel)
+                .tabItem {
+                    Image(systemName: "person")
+                    Text("profile")
+                }
+                .tag(4)
         }
     }
-  }
 }

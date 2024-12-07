@@ -23,37 +23,37 @@ class UserViewModel: ObservableObject, Identifiable {
             .store(in: &cancellables)
     }
 
-    func addUser() {
-        userRepository.create(user) { [weak self] documentID in
-            guard let self = self else { return }
-            if let documentID = documentID {
-                print("🔥 User ID set to: \(documentID)")
-                self.user.id = documentID // Set the user's ID
-                self.updateUser() // Save the updated user with the ID to Firestore
-            } else {
-                print("❌ Failed to create user in Firestore.")
-            }
-        }
-    }
+  func addUser() {
+          userRepository.create(user) { [weak self] documentID in
+              guard let self = self else { return }
+              if let documentID = documentID {
+                  print("🔥 User ID set to: \(documentID)")
+                  self.user.id = documentID // Set the user's ID
+                  self.updateUser() // Save the updated user with the ID to Firestore
+              } else {
+                  print("❌ Failed to create user in Firestore.")
+              }
+          }
+      }
 
-    func updateUser() {
-        print("Updating user with ID: \(user.id ?? "no ID")")
-        print("Current user data: \(user)")
-        userRepository.update(user)
-    }
-
-    func deleteUser() {
-        userRepository.delete(user)
-    }
+  func updateUser() {
+          print("Updating user with ID: \(user.id ?? "no ID")")
+          print("Current user data: \(user)")
+          userRepository.update(user)
+      }
+  
+  func deleteUser() {
+          userRepository.delete(user)
+      }
     
-    func followUser(userID: String) {
-           guard let currentUserID = user.id else { return }
-           userRepository.addFollowing(for: currentUserID, followingID: userID)
-           userRepository.addFollower(to: userID, followerID: currentUserID)
-           if !user.following.contains(userID) {
-               user.following.append(userID)
-           }
-       }
+  func followUser(userID: String) {
+             guard let currentUserID = user.id else { return }
+             userRepository.addFollowing(for: currentUserID, followingID: userID)
+             userRepository.addFollower(to: userID, followerID: currentUserID)
+             if !user.following.contains(userID) {
+                 user.following.append(userID)
+             }
+         }
 
        func unfollowUser(userID: String) {
            guard let currentUserID = user.id else { return }

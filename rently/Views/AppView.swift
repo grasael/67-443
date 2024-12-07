@@ -8,35 +8,44 @@
 import SwiftUI
 
 struct AppView: View {
-    @StateObject var userViewModel: UserViewModel
+  @State private var selectedTab: Int = 0
+  @StateObject var listingsViewModel = ListingsViewModel()
+  @StateObject var viewModel: UserViewModel
 
-    var body: some View {
-        TabView {
-            HomeView()
-                .tabItem {
-                    Image(systemName: "house")
-                    Text("home")
-                }
-            SearchView(userViewModel: userViewModel)
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
-                    Text("search")
-                }
-            MakeListingView()
-                .tabItem {
-                    Image(systemName: "plus")
-                    Text("list")
-                }
-            RentalsView()
-                .tabItem {
-                    Image(systemName: "hanger")
-                    Text("rentals")
-                }
-            ProfileView(userViewModel: userViewModel)
-                .tabItem {
-                    Image(systemName: "person")
-                    Text("profile")
-                }
-        }
+  var body: some View {
+        TabView(selection: $selectedTab) {
+         HomeView()
+           .tabItem {
+             Image(systemName: "house")
+             Text("home")
+           }
+           .tag(0)
+         SearchView(userViewModel: viewModel)
+           .tabItem {
+             Image(systemName: "magnifyingglass")
+             Text("search")
+           }
+           .tag(1)
+          MakeListingView(selectedTab: $selectedTab)
+            .environmentObject(listingsViewModel)
+            .environmentObject(viewModel)
+             .tabItem {
+               Image(systemName: "plus")
+               Text("list")
+             }
+             .tag(2)
+         RentalsView()
+            .tabItem {
+               Image(systemName: "hanger")
+               Text("rentals")
+            }
+            .tag(3)
+         ProfileView(userViewModel: viewModel)
+            .tabItem {
+               Image(systemName: "person")
+               Text("profile")
+            }
+            .tag(4)
+         }
     }
 }

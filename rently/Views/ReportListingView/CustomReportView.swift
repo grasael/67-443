@@ -93,4 +93,3 @@ struct CustomReportView_Previews: PreviewProvider {
         }
     }
 }
-

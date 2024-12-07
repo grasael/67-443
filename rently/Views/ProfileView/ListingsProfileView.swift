@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ListingsProfileView: View {
-    @StateObject private var viewModel = ListingsViewModel()
+    @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var listingsViewModel: ListingsViewModel
 
     let columns = [
         GridItem(.flexible()),
@@ -19,8 +20,10 @@ struct ListingsProfileView: View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(viewModel.listings) { listing in
-                        NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")) {
+                    ForEach(listingsViewModel.listings) { listing in
+                      NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")
+                        .environmentObject(userViewModel)
+                        .environmentObject(listingsViewModel)) {
                             CardView(listing: listing)
                         }
 
@@ -29,7 +32,10 @@ struct ListingsProfileView: View {
                 .padding(.horizontal)
             }
             .onAppear {
-                viewModel.fetchListings()
+              // fetch listings specific to the current user
+              if let userID = userViewModel.user.id {
+                listingsViewModel.fetchListings(for: userID)
+              }
             }
         }
         .navigationTitle("Profile")

@@ -1,37 +1,56 @@
+//
+//  ListingsViewModel.swift
+//  rently
+//
+//  Created by Abby Chen on 11/2/24.
+//
+
 import Foundation
+import SwiftUI
 import Combine
 
 class ListingsViewModel: ObservableObject {
-    @Published var listings: [Listing] = []
-    private var repository = ListingRepository()
-    private var cancellables: Set<AnyCancellable> = []
+  @Published var listings: [Listing] = []
+  private var repository = ListingRepository()
+  private var cancellables: Set<AnyCancellable> = []
 
-    init() {
-        repository.$listings
-            .assign(to: \.listings, on: self)
-            .store(in: &cancellables)
-    }
+  var listingsCount: Int {
+    listings.count
+  }
 
-    func fetchListings() {
-        repository.fetchListings()
-    }
-    
-    func fetchListings(for userID: String) {
-        repository.fetchListings(for: userID)
-            .sink(receiveCompletion: { completion in
-                if case .failure(let error) = completion {
-                    print("Error fetching listings for user: \(error)")
-                }
-            }, receiveValue: { [weak self] listings in
-                self?.listings = listings
-            })
-            .store(in: &cancellables)
-    }
-    
-    var listingsCount: Int {
-        return listings.count
-    }
-    
-    //CRUD will go here later
+  init() {
+    repository.$listings
+      .assign(to: \.listings, on: self)
+      .store(in: &cancellables)
+  }
+  
+  // fetch listings
+  func fetchListings() {
+    repository.fetchListings()
+  }
+  
+  // fetch listings for a specific user
+  func fetchListings(for userID: String) {
+      repository.fetchListings(for: userID)
+  }
+
+  // add listing from draft
+  func addListingFromDraft(_ draft: ListingDraft, userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    repository.saveListingFromDraft(draft, userID: userID, completion: completion)
+  }
+  
+  // edit existing listing
+  func editListing(_ listingID: String, draft: ListingDraft, userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    repository.updateListing(listingID: listingID, with: draft, userID: userID, completion: completion)
+  }
+
+  // upload images via repository
+  func uploadImages(_ images: [UIImage], completion: @escaping ([String]) -> Void) {
+      repository.uploadImages(images, completion: completion)
+  }
+
+  // delete listing
+  func deleteListing(_ id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    repository.deleteListing(id, completion: completion)
+  }
 }
-

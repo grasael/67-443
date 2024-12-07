@@ -24,7 +24,6 @@
 		7F46DB6E2CCEDAF700181DB6 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB6D2CCEDAF700181DB6 /* AppView.swift */; };
 		7F46DB732CCEDBA700181DB6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB722CCEDBA700181DB6 /* HomeView.swift */; };
 		7F46DB772CCEDBBD00181DB6 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB762CCEDBBD00181DB6 /* ListView.swift */; };
-		7F46DB792CCEDBC900181DB6 /* RentalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB782CCEDBC900181DB6 /* RentalsView.swift */; };
 		7F46DB912CD454D600181DB6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F46DB902CD454D600181DB6 /* User.swift */; };
 		7F46DB942CD560B000181DB6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7F46DB932CD560B000181DB6 /* FirebaseAnalytics */; };
 		7F46DB962CD560B000181DB6 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 7F46DB952CD560B000181DB6 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -108,6 +107,8 @@
 		CAC321E02D03EF1C00BC0059 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC321DF2D03EF1C00BC0059 /* ConfirmationView.swift */; };
 		CAC322062D03F05200BC0059 /* RentalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC322052D03F05200BC0059 /* RentalViewModel.swift */; };
 		CAC322402D03F1E300BC0059 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC3223F2D03F1E300BC0059 /* UserManager.swift */; };
+		CAC322682D03FFF100BC0059 /* RentalRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC322672D03FFF100BC0059 /* RentalRowView.swift */; };
+		CAC3226A2D04000700BC0059 /* RentalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC322692D04000700BC0059 /* RentalsView.swift */; };
 		CAFA5B352CDAE41100D92C14 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFA5B342CDAE41100D92C14 /* Listing.swift */; };
 /* End PBXBuildFile section */
 
@@ -155,7 +156,6 @@
 		7F46DB6D2CCEDAF700181DB6 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		7F46DB722CCEDBA700181DB6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7F46DB762CCEDBBD00181DB6 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
-		7F46DB782CCEDBC900181DB6 /* RentalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalsView.swift; sourceTree = "<group>"; };
 		7F46DB902CD454D600181DB6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7F46DBC32CD5612600181DB6 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		7F4A50E12D0206EC00D0EFF5 /* SearchUserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserDetailView.swift; sourceTree = "<group>"; };
@@ -217,6 +217,8 @@
 		CAC321DF2D03EF1C00BC0059 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		CAC322052D03F05200BC0059 /* RentalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalViewModel.swift; sourceTree = "<group>"; };
 		CAC3223F2D03F1E300BC0059 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		CAC322672D03FFF100BC0059 /* RentalRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalRowView.swift; sourceTree = "<group>"; };
+		CAC322692D04000700BC0059 /* RentalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalsView.swift; sourceTree = "<group>"; };
 		CAFA5B342CDAE41100D92C14 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -353,7 +355,6 @@
 				CA96ED192CD6708F00E6D750 /* HomeView */,
 				7F46DB6D2CCEDAF700181DB6 /* AppView.swift */,
 				7F46DB762CCEDBBD00181DB6 /* ListView.swift */,
-				7F46DB782CCEDBC900181DB6 /* RentalsView.swift */,
 				7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */,
 			);
 			path = Views;
@@ -447,6 +448,7 @@
 		CA127FA42CD94DB4006330DC /* RentalView */ = {
 			isa = PBXGroup;
 			children = (
+				CAC3226B2D04000C00BC0059 /* AllRentalsView */,
 				CA127FA52CD94DCF006330DC /* RentalDetailView.swift */,
 				CA127FAB2CD9761D006330DC /* RentalHeaderView.swift */,
 				CA127FAD2CD97632006330DC /* RentalItemDetailsView.swift */,
@@ -514,6 +516,15 @@
 				CAC321DB2D03EF0F00BC0059 /* RentAnItemView.swift */,
 			);
 			path = StartARental;
+			sourceTree = "<group>";
+		};
+		CAC3226B2D04000C00BC0059 /* AllRentalsView */ = {
+			isa = PBXGroup;
+			children = (
+				CAC322692D04000700BC0059 /* RentalsView.swift */,
+				CAC322672D03FFF100BC0059 /* RentalRowView.swift */,
+			);
+			path = AllRentalsView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -663,14 +674,15 @@
 				7FE838CF2CF839B500CCCBF1 /* NVHReportView.swift in Sources */,
 				CA96ED1D2CD670CA00E6D750 /* ActiveRentalsView.swift in Sources */,
 				7FE838D12CF839CB00CCCBF1 /* DislikeReportView.swift in Sources */,
-				7F46DB792CCEDBC900181DB6 /* RentalsView.swift in Sources */,
 				7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */,
 				7F2B6F082CFD3F850006C4AE /* FollowerView.swift in Sources */,
+				CAC322682D03FFF100BC0059 /* RentalRowView.swift in Sources */,
 				7FE838D32CF839DC00CCCBF1 /* CustomReportView.swift in Sources */,
 				CA127FB42CD9765A006330DC /* RentalPriceView.swift in Sources */,
 				7FE838BD2CF8052200CCCBF1 /* VerifiedView.swift in Sources */,
 				7F4A50E22D0206EC00D0EFF5 /* SearchUserDetailView.swift in Sources */,
 				CA7CD18B2CDE5C290009DF72 /* ListingRow.swift in Sources */,
+				CAC3226A2D04000700BC0059 /* RentalsView.swift in Sources */,
 				CAFA5B352CDAE41100D92C14 /* Listing.swift in Sources */,
 				CA2F2E182CE85F11008D3021 /* Review.swift in Sources */,
 				7FE838C72CF8356E00CCCBF1 /* ShareListingView.swift in Sources */,

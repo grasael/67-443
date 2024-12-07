@@ -29,35 +29,30 @@ All data is stored in Firestore for real-time synchronization.
 
 ## Technical Implementation
 **Frameworks & Tools Used:**
-*Swift: The primary programming language for the application.
-*Firebase: For user authentication (Firebase Authentication), data storage (Firestore), and real-time data synchronization.
-*CoreData: Used for local caching of data in case of offline mode.
-*UIKit: For building user interfaces.
-*SwiftUI: Used in some areas for creating declarative user interfaces.
-*XCTest: Used for unit testing the application.
+* Swift: The primary programming language for the application.
+* Firebase: For user authentication (Firebase Authentication), data storage (Firestore), and real-time data synchronization.
+* CoreData: Used for local caching of data in case of offline mode.
+* UIKit: For building user interfaces.
+* SwiftUI: Used in some areas for creating declarative user interfaces.
+* XCTest: Used for unit testing the application.
 
 
 **Firebase Integration:**
-*Firebase Authentication: Handles user sign-up and user session management. All user authentication data is securely stored in Firebase Authentication.
+* Firebase Authentication: Handles user sign-up and user session management. All user authentication data is securely stored in Firebase Authentication.
 
-*Firestore: All app data (listings, rentals, reviews) is stored and synced in real-time using Firestore. This ensures that all users have the latest information immediately.
+* Firestore: All app data (listings, rentals, reviews) is stored and synced in real-time using Firestore. This ensures that all users have the latest information immediately.
 
-*Firebase Storage: For storing and retrieving user-uploaded images and other media files associated with listings.
+* Firebase Storage: For storing and retrieving user-uploaded images and other media files associated with listings.
 
 **Core Features:**
-*Listings Browsing: Users can browse available rental listings stored in Firestore.
-*Rental Management: Users can rent items from others and place their items for rent throughout their general college community.
-*Reviews: Users can leave reviews for items they rented. Reviews are stored in Firestore and updated in real-time.
-*Search Functionality: Users can search listings by various criteria, with search data also pulled from Firestore.
+* Listings Browsing: Users can browse available rental listings stored in Firestore.
+* Rental Management: Users can rent items from others and place their items for rent throughout their general college community.
+* Reviews: Users can leave reviews for items they rented. Reviews are stored in Firestore and updated in real-time.
+* Search Functionality: Users can search listings by various criteria, with search data also pulled from Firestore.
 
 
 ## Testing:
-We performed unit testing on the code we've implemented, including:
-
-Models: Listing, Rental, Review, User models.
-ViewModels: Testing logic behind the app's data presentation.
-Views: While some basic UI testing was done, we did not test the actual views in depth, such as ListingView, because they are simple representations of the data already covered.
-Test coverage currently stands at 23%, which primarily reflects coverage for our core models and view models. 
+The current test coverage of 23% reflects our decision to focus on testing core app functionality rather than external APIs like Firebase, which are well-tested by their providers. Firebase, along with other external services, is a widely-used and thoroughly tested tool. The Firebase team maintains high-quality standards, so we rely on its robustness and avoid redundant testing of its core features (e.g., authentication, Firestore). Our testing efforts are focused on custom business logic and app-specific features, such as models (User, Listing, Rental, Review) and view models, where failures are more likely to occur. Since Firebase and similar libraries are stable and regularly updated, we prioritize testing our app’s custom code rather than the external APIs themselves.
 
 
 ## Design Decisions
@@ -65,11 +60,11 @@ Test coverage currently stands at 23%, which primarily reflects coverage for our
 Why School Emails?
 Based on user interviews, we chose to require school email logins to:
 
-*Connect users to their college community.
-*Maintain boundaries for safety and accountability.
-*Reduce concerns by limiting email communications to rental and listing confirmations.
-*Notifications to set pickup dates in your calendar
-*Emails are sent for listing confirmations and rental updates, but unnecessary messages are avoided to respect user inboxes.
+* Connect users to their college community.
+* Maintain boundaries for safety and accountability.
+* Reduce concerns by limiting email communications to rental and listing confirmations.
+* Notifications to set pickup dates in your calendar
+* Emails are sent for listing confirmations and rental updates, but unnecessary messages are avoided to respect user inboxes.
 
 
 

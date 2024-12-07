@@ -470,7 +470,9 @@ struct EditListingView_Previews: PreviewProvider {
             styleChoices: ["Casual", "Formal"],
             events: [],
             followers: [],
-            following: []
+            following: [],
+            renting: [],
+            myItems: []
         )
         let mockUserViewModel = UserViewModel(user: mockUser)
         

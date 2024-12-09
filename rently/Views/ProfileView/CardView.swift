@@ -18,20 +18,23 @@ struct CardView: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 150, height: 200)
+                        .frame(height: 200)
+                        .frame(maxWidth: .infinity)
                         .clipped()
                         .cornerRadius(10)
                 } placeholder: {
                     Rectangle()
                         .fill(Color.gray.opacity(0.3))
-                        .frame(width: 150, height: 200)
+                        .frame(height: 200)
+                        .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                 }
             }
 
             Text(listing.title)
                 .font(.headline)
-                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .foregroundColor(.black)
 
             Text("$\(listing.price, specifier: "%.2f")/day")
                 .font(.subheadline)
@@ -41,15 +44,17 @@ struct CardView: View {
                 ForEach(listing.tags, id: \.self) { tag in
                     Text(tag.rawValue)
                         .font(.caption)
+                        .foregroundColor(.white)
                         .padding(4)
-                        .background(Color.gray.opacity(0.2))
+                        .background(Color("MediumBlue"))
                         .cornerRadius(5)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                 }
             }
         }
         .padding()
         .background(Color.white)
         .cornerRadius(12)
-        .shadow(radius: 4)
     }
 }

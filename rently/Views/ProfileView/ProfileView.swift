@@ -22,24 +22,9 @@ struct ProfileView: View {
                 Image("profile-gradient")
                     .resizable()
                     .scaledToFill()
-                    .ignoresSafeArea(edges: .horizontal)
+                    .ignoresSafeArea(edges: .top)
 
                 VStack(spacing: 8) {
-                    // Title and Settings Icon
-                    HStack {
-                        Text("my profile")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                        Spacer()
-                      Image(systemName: "gearshape")
-                            .font(.title2)
-                            .foregroundColor(.black)
-                            .padding(.trailing)
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 5)
-
                     // Profile Picture and Name
                     HStack(spacing: 16) {
                         Image(systemName: "person.circle.fill")
@@ -63,6 +48,10 @@ struct ProfileView: View {
                             }
                         }
                         Spacer()
+                        Image(systemName: "gearshape")
+                            .font(.title2)
+                            .foregroundColor(.black)
+                            .padding(.trailing)
                     }
                     .padding(.horizontal)
 
@@ -118,6 +107,8 @@ struct ProfileView: View {
                             HStack {
                                 Image(systemName: "pencil")
                                 Text("edit profile")
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
                             }
                             .font(.subheadline)
                             .foregroundColor(.white)
@@ -165,8 +156,7 @@ struct ProfileView: View {
           }
           .padding()
       }
-      .navigationTitle("")
-      .navigationBarHidden(true) // Hide default navigation bar
+      .navigationBarTitleDisplayMode(.inline)
       .onAppear {
           listingsViewModel.fetchListings()
       }

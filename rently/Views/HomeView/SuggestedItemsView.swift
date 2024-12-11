@@ -27,7 +27,7 @@ struct SuggestedItemsView: View {
       ScrollView(.horizontal, showsIndicators: false) {
         HStack(spacing: 15) {
           ForEach(viewModel.listings.prefix(5)) { listing in
-            NavigationLink(destination: ListingView(listing: listing)) {
+            NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")) {
               VStack {
                 // Image carousel for the listing
                 if let imageUrl = URL(string: listing.photoURLs.first ?? "sampleItemImage") {

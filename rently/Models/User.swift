@@ -26,6 +26,8 @@ struct User: Codable, Identifiable {
     //var busySlots: [BusySlot]
     var followers: [String]
     var following: [String]
+    var renting: [String] // IDs of rentals the user is renting
+    var myItems: [String] // IDs of rentals the user has listed for rent
     
     // MARK: Codable
     enum CodingKeys: String, CodingKey {
@@ -44,5 +46,7 @@ struct User: Codable, Identifiable {
         case events
         case followers
         case following
+        case renting
+        case myItems
     }
 }

@@ -57,6 +57,12 @@ class UserRepository: ObservableObject {
               let documentReference = try store.collection(path).addDocument(from: user)
               let documentID = documentReference.documentID
               print("✅ User added to Firestore with ID: \(documentID)")
+              var newUser = user
+              newUser.id = documentID
+                    
+              // Save the user to UserManager
+              UserManager.shared.saveUser(newUser)
+              
               completion(documentID)
           } catch {
               print("❌ Error adding user to Firestore: \(error)")
@@ -74,6 +80,7 @@ class UserRepository: ObservableObject {
           }
           do {
               try store.collection(path).document(userId).setData(from: user)
+              UserManager.shared.saveUser(user)
               print("✅ User successfully updated.")
           } catch {
               print("Unable to update user: \(error.localizedDescription).")

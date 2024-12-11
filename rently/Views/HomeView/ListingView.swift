@@ -11,6 +11,9 @@ import SwiftUI
 
 struct ListingView: View {
     var listing: Listing
+    @EnvironmentObject var userViewModel: UserViewModel
+    @State private var isLiked: Bool = false
+
 
     var body: some View {
         ScrollView {
@@ -107,12 +110,36 @@ struct ListingView: View {
                 }
                 
                 Spacer()
+                
+                // Heart Icon
+                Button(action: toggleLike) {
+                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                        .foregroundColor(isLiked ? .red : .gray)
+                        .font(.title2)
+                }
+                .onAppear {
+                    isLiked = userViewModel.user.likedItems.contains(listing.id ?? "")
+                }
             }
             .padding()
         }
         .navigationBarTitle("Listing Details", displayMode: .inline)
         .navigationBarBackButtonHidden(false) // Ensure back button is visible
     }
+    
+    private func toggleLike() {
+            guard let listingID = listing.id else { return }
+            if isLiked {
+                // Unlike
+                userViewModel.user.likedItems.removeAll { $0 == listingID }
+            } else {
+                // Like
+                userViewModel.user.likedItems.append(listingID)
+            }
+            isLiked.toggle()
+            // Update Firebase
+            userViewModel.updateUser()
+        }
 }
 
 struct ListingView_Previews: PreviewProvider {

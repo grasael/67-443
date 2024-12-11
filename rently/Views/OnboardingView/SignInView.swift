@@ -7,7 +7,6 @@
 
 import SwiftUI
 import FirebaseAuth
-import FirebaseFirestore
 
 struct SignInView: View {
     @State private var email = ""
@@ -15,10 +14,9 @@ struct SignInView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var navigateToProfile = false
-    @State private var user: User? = nil
-
+    @State private var userViewModel: UserViewModel? = nil
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 20) {
                 Text("welcome back")
                     .font(.largeTitle)
@@ -27,39 +25,8 @@ struct SignInView: View {
                 
                 Divider()
                 
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("email:")
-                        .foregroundColor(.black)
-                        .font(.system(size: 14))
-                        .fontWeight(.semibold)
-
-                    TextField("", text: $email)
-                        .padding(8)
-                        .font(.system(size: 14))
-                        .background(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray, lineWidth: 1)
-                        )
-                }
-                .padding(.horizontal)
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("password:")
-                        .foregroundColor(.black)
-                        .font(.system(size: 14))
-                        .fontWeight(.semibold)
-
-                    SecureField("", text: $password)
-                        .padding(8)
-                        .font(.system(size: 14))
-                        .background(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray, lineWidth: 1)
-                        )
-                }
-                .padding(.horizontal)
+                EmailField(email: $email)
+                PasswordField(password: $password)
                 
                 // Sign In Button
                 Button(action: signIn) {
@@ -77,79 +44,136 @@ struct SignInView: View {
                 
                 Spacer()
                 
-                // Navigation link to ProfileView (to be triggered after successful login)
-//                if let user = user {
-//                    //NavigationLink(destination: ProfileView(userViewModel: userViewModel), isActive: $navigateToProfile)
-//                    {
-//                        EmptyView()
-//                    }
-//                }
+                // Navigation link to ProfileView
+                if navigateToProfile, let userViewModel = userViewModel {
+                    NavigationLink(value: userViewModel) {
+                        EmptyView()
+                    }
+                }
+            }
+            .navigationDestination(for: UserViewModel.self) { viewModel in
+                ProfileView(userViewModel: viewModel)
             }
             .padding()
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text(""),
                     message: Text(alertMessage),
-                    dismissButton: .default(Text("OK")) {
-                        if alertMessage == "You have successfully signed in!" {
-                            // Attempt to navigate to ProfileView after fetching user data
-                            fetchUserData()
-                        }
-                    }
+                    dismissButton: .default(Text("OK"))
                 )
             }
         }
     }
     
-    // Sign In Method using Firebase Authentication
     private func signIn() {
-        guard !email.isEmpty, !password.isEmpty else {
-            alertMessage = "Please enter both email and password."
-            showAlert = true
-            return
-        }
-        
+        print("Email: \(email), Password: \(password)")
+        print("Attempting to sign in with email: \(email)") // Debug
+
+        // Sign in with Firebase Authentication
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                self.alertMessage = error.localizedDescription
+            if let error = error as NSError? {
+                // Handle Firebase Auth errors
+                print("❌ Firebase Auth Error Details: \(error), \(error.userInfo)") // Debug
+
+                // Map common error codes to user-friendly messages
+                switch AuthErrorCode(rawValue: error.code) {
+                case .wrongPassword:
+                    self.alertMessage = "Incorrect password. Please try again."
+                case .userNotFound:
+                    self.alertMessage = "No account found with this email."
+                case .invalidEmail:
+                    self.alertMessage = "Invalid email format. Please check your email."
+                default:
+                    self.alertMessage = error.localizedDescription
+                }
                 self.showAlert = true
             } else {
-                // Sign-in was successful
-                self.alertMessage = "You have successfully signed in!"
-                self.showAlert = true
+                print("✅ Firebase Auth Success for user: \(authResult?.user.email ?? "unknown email")") // Debug
+                
+                // Fetch user details from Firestore
+                UserRepository().fetchUser(byEmail: email) { fetchedUser in
+                    if let user = fetchedUser {
+                        print("✅ Fetched user from Firestore: \(user)") // Debug
+
+                        // Initialize the UserViewModel with the fetched user
+                        DispatchQueue.main.async {
+                            let viewModel = UserViewModel(user: user)
+                            self.userViewModel = viewModel
+                            self.navigateToProfile = true
+                        }
+                    } else {
+                        print("❌ Failed to fetch user data from Firestore for email: \(email)") // Debug
+                        self.alertMessage = "Failed to retrieve user data. Please try again."
+                        self.showAlert = true
+                    }
+                }
             }
         }
     }
-    
-    // Fetch user data from Firestore after sign-in
-    private func fetchUserData() {
-        guard let userID = Auth.auth().currentUser?.uid else {
-            self.alertMessage = "Unable to retrieve user data."
-            self.showAlert = true
-            return
+
+}
+private struct EmailField: View {
+    @Binding var email: String
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("email:")
+                .foregroundColor(.black)
+                .font(.system(size: 14))
+                .fontWeight(.semibold)
+            
+            TextField("", text: $email)
+                .padding(8)
+                .font(.system(size: 14))
+                .background(Color.white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray, lineWidth: 1)
+                )
+                .autocapitalization(.none)
         }
-        
-        let db = Firestore.firestore()
-        db.collection("Users").document(userID).getDocument { (document, error) in
-            if let document = document, document.exists {
-                do {
-                    let userData = try document.data(as: User.self)
-                    self.user = userData
-                    self.navigateToProfile = true // Trigger navigation
-                } catch {
-                    self.alertMessage = "Failed to decode user data."
-                    self.showAlert = true
-                }
-            } else {
-                self.alertMessage = "User data does not exist."
-                self.showAlert = true
-            }
-        }
+        .padding(.horizontal)
     }
 }
-
-struct SignInView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignInView()
+private struct PasswordField: View {
+    @Binding var password: String
+    @State private var isSecure: Bool = true // Tracks visibility state of the password
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("password:")
+                .foregroundColor(.black)
+                .font(.system(size: 14))
+                .fontWeight(.semibold)
+            HStack {
+                if isSecure {
+                    SecureField("Enter your password", text: $password)
+                        .autocapitalization(.none) // Disable autocapitalization
+                        .padding(8)
+                        .font(.system(size: 14))
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                } else {
+                    TextField("Enter your password", text: $password)
+                        .autocapitalization(.none) // Disable autocapitalization
+                        .padding(8)
+                        .font(.system(size: 14))
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
+                }
+                // Eye icon to toggle visibility
+                Button(action: {
+                    isSecure.toggle() // Toggle visibility state
+                }) {
+                    Image(systemName: isSecure ? "eye.slash" : "eye")
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+        .padding(.horizontal)
     }
 }

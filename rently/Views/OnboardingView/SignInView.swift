@@ -13,104 +13,80 @@ struct SignInView: View {
     @State private var password = ""
     @State private var showAlert = false
     @State private var alertMessage = ""
-    @State private var navigateToAppView = false
-    @State private var userViewModel: UserViewModel? = nil
-    
+    @ObservedObject var userViewModel: UserViewModel
+    @Binding var navigateToAppView: Bool
+
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                Text("welcome back")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.top)
-                
-                Divider()
-                
-                EmailField(email: $email)
-                PasswordField(password: $password)
-                
-                // Sign In Button
-                Button(action: signIn) {
-                    Text("sign in")
-                        .foregroundColor(.white)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 40)
-                        .frame(maxWidth: .infinity)
-                }
-                .background(
-                    LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]), startPoint: .leading, endPoint: .trailing)
-                )
-                .cornerRadius(8)
-                .padding(.horizontal)
-                
-                Spacer()
+        VStack(spacing: 20) {
+            Text("welcome back")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding(.top)
+
+            Divider()
+
+            EmailField(email: $email)
+            PasswordField(password: $password)
+
+            // Sign In Button
+            Button(action: signIn) {
+                Text("sign in")
+                    .foregroundColor(.white)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 40)
+                    .frame(maxWidth: .infinity)
             }
-            .fullScreenCover(isPresented: $navigateToAppView) {
-                if let userViewModel = userViewModel {
-                    AppView(viewModel: userViewModel)
-                        .onAppear {
-                            print("✅ AppView appeared with UserViewModel: \(userViewModel)") // Debug
-                        }
-                        .onDisappear {
-                            print("🟢 AppView dismissed, resetting navigation state") // Debug
-                            navigateToAppView = false
-                        }
-                } else {
-                    Text("Failed to load user data.")
-                        .font(.title)
-                }
-            }
-            .padding()
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("Error"),
-                    message: Text(alertMessage),
-                    dismissButton: .default(Text("OK"))
-                )
-            }
+            .background(
+                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]), startPoint: .leading, endPoint: .trailing)
+            )
+            .cornerRadius(8)
+            .padding(.horizontal)
+
+            Spacer()
+        }
+        .padding()
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(alertMessage),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
-    
-    private func signIn() {
-        print("🔵 Sign In Button Clicked") // Debug
-        print("Email: \(email), Password: \(password)") // Debug
-        print("Attempting to sign in with email: \(email)") // Debug
 
-        // Sign in with Firebase Authentication
+    private func signIn() {
+        print("🔵 Sign In Button Clicked")
+        guard !email.isEmpty, !password.isEmpty else {
+            alertMessage = "Email and password cannot be empty."
+            showAlert = true
+            return
+        }
+
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error as NSError? {
-                // Handle Firebase Auth errors
-                print("❌ Firebase Auth Error: \(error.localizedDescription), Code: \(error.code)") // Debug
-
-                switch AuthErrorCode(rawValue: error.code) {
-                case .wrongPassword:
-                    self.alertMessage = "Incorrect password. Please try again."
-                case .userNotFound:
-                    self.alertMessage = "No account found with this email."
-                case .invalidEmail:
-                    self.alertMessage = "Invalid email format. Please check your email."
-                default:
-                    self.alertMessage = error.localizedDescription
+                print("❌ Firebase Auth Error: \(error.localizedDescription), Code: \(error.code)")
+                DispatchQueue.main.async {
+                    alertMessage = error.localizedDescription
+                    showAlert = true
                 }
-                self.showAlert = true
-            } else {
-                print("✅ Sign In Success for user: \(authResult?.user.email ?? "unknown email")") // Debug
+                return
+            }
 
-                // Fetch user details from Firestore
-                UserRepository().fetchUser(byEmail: email) { fetchedUser in
-                    if let user = fetchedUser {
-                        print("✅ Fetched User from Firestore: \(user)") // Debug
+            print("✅ Firebase Auth Success for user: \(authResult?.user.email ?? "unknown email")")
 
-                        DispatchQueue.main.async {
-                            self.userViewModel = UserViewModel(user: user)
-                            //print("✅ Initializing UserViewModel with user ID: \(user._id)")
-                            self.navigateToAppView = true
-                            print("🟢 Navigate to AppView triggered") // Debug
-                        }
-                    } else {
-                        print("❌ Failed to fetch user data from Firestore") // Debug
-                        self.alertMessage = "Failed to retrieve user data. Please try again."
-                        self.showAlert = true
+            // Fetch the user data
+            UserRepository().fetchUser(byEmail: email) { fetchedUser in
+                if let user = fetchedUser {
+                    DispatchQueue.main.async {
+                        userViewModel.user = user // Update the userViewModel
+                        print("✅ UserViewModel is set: \(userViewModel.user)")
+                        navigateToAppView = true // Trigger navigation to AppView
+                    }
+                } else {
+                    print("❌ Failed to fetch user data from Firestore")
+                    DispatchQueue.main.async {
+                        alertMessage = "Failed to retrieve user data."
+                        showAlert = true
                     }
                 }
             }
@@ -140,6 +116,7 @@ private struct EmailField: View {
         .padding(.horizontal)
     }
 }
+
 private struct PasswordField: View {
     @Binding var password: String
     @State private var isSecure: Bool = true // Tracks visibility state of the password

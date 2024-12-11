@@ -10,6 +10,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     @ObservedObject var userViewModel: UserViewModel
+    @State private var navigateToAppView = false
 
     var body: some View {
         NavigationView {
@@ -42,7 +43,7 @@ struct WelcomeView: View {
                 }
                 .padding(.bottom, 10)
 
-                NavigationLink(destination: SignInView()) {
+                NavigationLink(destination: SignInView(userViewModel: userViewModel, navigateToAppView: $navigateToAppView)) {
                     Text("I already have an account")
                         .font(.subheadline)
                         .foregroundColor(.black)
@@ -60,6 +61,9 @@ struct WelcomeView: View {
                 )
                 .ignoresSafeArea()
             )
+            .fullScreenCover(isPresented: $navigateToAppView) {
+                AppView(viewModel: userViewModel)
+            }
         }
         .navigationBarHidden(true)
     }

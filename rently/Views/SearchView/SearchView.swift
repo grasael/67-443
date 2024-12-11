@@ -5,7 +5,7 @@
 //  Created by Grace Liao on 10/27/24.
 //
 
-
+import Foundation
 import SwiftUI
 
 struct SearchView: View {
@@ -16,37 +16,57 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
-                // Header with Logo and Filter Icon
-                HStack {
-                    Text("rently")
-                        .font(.largeTitle)
-                        .foregroundColor(Color.blue.opacity(0.7))
-                        .bold()
-                    Spacer()
-                    Image(systemName: "slider.horizontal.3")
-                        .font(.title2)
-                        .foregroundColor(.black)
-                }
-                .padding(.horizontal)
+              ZStack {
+                // Gradient Background Rectangle
+                LinearGradient(
+                  gradient: Gradient(colors: [Color("MediumBlue"), .white]),
+                  startPoint: .top,
+                  endPoint: .bottom
+                )
+                .frame(width: 800, height: 150)
+                .edgesIgnoringSafeArea(.all)
                 
+                // Logo
+                HStack {
+                  Image("rently_logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200, height: 60)
+                    .layoutPriority(1)
+                    .clipped()
+                    .shadow(color: .gray.opacity(0.4), radius: 4, x: 6, y: 0)
+                }
+              }
+
                 // Search Bar
                 HStack {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 6)
                     TextField("search for anything...", text: $searchText)
                         .padding(8)
                         .onChange(of: searchText) { newValue in
                             viewModel.filterListingsAndUsers(query: newValue)
                         }
+                  Spacer()
+                  
+                  Image(systemName: "slider.horizontal.3")
+                      .font(.title2)
+                      .foregroundColor(.black)
+                      .padding(.horizontal, 6)
                 }
-                .background(Color(UIColor.systemGray5))
-                .cornerRadius(16)
-                .padding(.horizontal)
+                .background(.white)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.black, lineWidth: 1)
+                )
+                .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 10))
                 
                 // Show relevant results based on search query
                 if !searchText.isEmpty {
                     List {
-                        Section(header: Text("Listings")) {
+                        Section(header: Text("listings")) {
                             ForEach(viewModel.listings) { listing in
                                 NavigationLink(destination: ListingView(listing: listing).environmentObject(userViewModel)) {
                                     HStack {
@@ -72,6 +92,7 @@ struct SearchView: View {
                                         }
                                     }
                                 }
+                                .listRowBackground(Color.white)
                             }
                         }
                         Section(header: Text("Users")) {
@@ -81,9 +102,12 @@ struct SearchView: View {
                                 ) {
                                     UserProfileRow(user: user)
                                 }
+                                .listRowBackground(Color.white)
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
+                    .background(Color.white)
                 } else {
                     // Default view with categories and seasonal sections
                     Text("shop by category")
@@ -92,28 +116,29 @@ struct SearchView: View {
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 20) {
-                            CategoryIcon(name: "tops", iconURL: URL(string: "https://cdn-icons-png.flaticon.com/512/4267/4267723.png")!) {
+                            CategoryIcon(name: "tops", iconImage: Image("tops")) {
                                 searchForCategory("tops")
                             }
-                            CategoryIcon(name: "bottoms", iconURL: URL(string: "https://cdn-icons-png.flaticon.com/512/808/808726.png")!) {
+                            CategoryIcon(name: "bottoms", iconImage: Image("bottoms")) {
                                 searchForCategory("bottoms")
                             }
-                            CategoryIcon(name: "outerwear", iconURL: URL(string: "https://images.vexels.com/media/users/3/142974/isolated/preview/804b58e4b241aec0a4fa8a9b6fe22e41-stroke-striped-jacket-clothing.png")!) {
+                            CategoryIcon(name: "outerwear", iconImage: Image("outerwear")) {
                                 searchForCategory("outerwear")
                             }
-                            CategoryIcon(name: "dresses", iconURL: URL(string: "https://icons.veryicon.com/png/o/internet--web/website-common-icons/dress-122.png")!) {
+                          CategoryIcon(name: "dresses", iconImage: Image("dresses")) {
                                 searchForCategory("dresses")
                             }
                         }
-                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 10))
                     }
                     
                     // Seasonal Sections
                     ScrollView {
                         VStack(spacing: 12) {
-                            SeasonalSection(imageURL: URL(string: "https://sc-cms-prod103-cdn-dsb5cvath4adbgd0.z01.azurefd.net/-/media/images/astoncarter/insights/articles/gettyimages1443303360-jpg.jpg?rev=78cdd90832394584b7570407c585f1e8")!, title: "interview season")
-                            SeasonalSection(imageURL: URL(string: "https://media.istockphoto.com/id/1388581317/photo/figure-skating-lady-is-wearing-black-sportswear-is-skating-on-ice-rink-training-at-night-in.jpg?s=612x612&w=0&k=20&c=KFjeMcUvYbaYvcYEUBgz5rzpjMBfCtKvgdV57Dv_pMs=")!, title: "winter break")
-                            SeasonalSection(imageURL: URL(string: "https://assets.editorial.aetnd.com/uploads/2009/11/halloween-gettyimages-1424736925.jpg")!, title: "halloween")
+                            SeasonalSection(sectionImage: Image("interview_season"), title: "interview season")
+                            SeasonalSection(sectionImage: Image("winter_break"), title: "winter break")
+                            SeasonalSection(sectionImage: Image("halloween"), title: "halloween")
                         }
                     }
                     .padding(.horizontal)
@@ -126,6 +151,7 @@ struct SearchView: View {
                 viewModel.fetchUsers()
             }
         }
+        
     }
     
     // Helper method to handle category search
@@ -138,47 +164,152 @@ struct SearchView: View {
 // Updated CategoryIcon to include an action
 struct CategoryIcon: View {
     let name: String
-    let iconURL: URL
+    let iconImage: Image
     let action: () -> Void
     
     var body: some View {
         Button(action: action) {
             VStack {
-                AsyncImage(url: iconURL) { image in
-                    image.resizable()
-                        .scaledToFit()
-                        .frame(width: 60, height: 60)
-                } placeholder: {
-                    ProgressView()
-                        .frame(width: 60, height: 60)
-                }
-                Text(name)
-                    .font(.caption)
-                    .foregroundColor(.primary)
-            }
+              ZStack {
+                Circle()
+                  .fill(Color("LightestBlue"))
+                  .frame(width: 74, height: 74)
+                iconImage
+                  .resizable()
+                  .scaledToFit()
+                  .frame(width: 50, height: 40)
+              }
+              Text(name)
+                .font(.caption)
+                .foregroundColor(.primary)
+          }
         }
     }
 }
 
 // Placeholder for SeasonalSection View
 struct SeasonalSection: View {
-    let imageURL: URL
+    let sectionImage: Image
     let title: String
     
     var body: some View {
-        VStack(alignment: .leading) {
-            AsyncImage(url: imageURL) { image in
-                image.resizable()
-                    .scaledToFill()
-                    .frame(height: 150)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-            } placeholder: {
-                ProgressView()
-                    .frame(height: 150)
-            }
+      ZStack(alignment: .bottom) {
+          sectionImage
+            .resizable()
+            .scaledToFill()
+            .frame(height: 150)
+            .clipShape(RoundedRectangle(cornerRadius: 50))
+            .overlay(
+              RoundedRectangle(cornerRadius: 50)
+                  .fill(Color.black.opacity(0.1))
+            )
+            
             Text(title)
-                .font(.headline)
-                .padding(.top, 5)
+              .font(.title3)
+              .bold()
+              .foregroundColor(.white)
+              .shadow(color: .black.opacity(0.6), radius: 2, x: 0, y: 1)
+              .padding(.bottom, 10)
+        }
+        .padding(.horizontal, 10)
+    }
+}
+
+// MARK: - Preview Data
+struct SearchPreviewData {
+    static let mockUser = User(
+        id: "123",
+        firstName: "John",
+        lastName: "Doe",
+        username: "johndoe",
+        pronouns: "he/him",
+        email: "johndoe@example.com",
+        password: "password123",
+        university: "Sample University",
+        rating: 4.8,
+        listings: [],
+        likedItems: [],
+        styleChoices: ["casual", "formal"],
+        events: ["party", "interview"],
+        followers: ["user1", "user2"],
+        following: ["user3", "user4"],
+        renting: [],
+        myItems: []
+    )
+    
+    static let mockListings = [
+        Listing(
+            id: "1",
+            title: "Sample Dress",
+            creationTime: Date(),
+            description: "A beautiful dress for formal occasions.",
+            category: .dresses,
+            userID: "123",
+            size: .medium,
+            price: 20.0,
+            color: .red,
+            condition: .veryGood,
+            photoURLs: ["https://via.placeholder.com/150"],
+            tags: [.formal, .classy],
+            brand: "Zara",
+            maxRentalDuration: .oneWeek,
+            pickupLocations: [.uc, .tepper],
+            available: true
+        ),
+        Listing(
+            id: "2",
+            title: "Winter Jacket",
+            creationTime: Date(),
+            description: "Stay warm with this cozy winter jacket.",
+            category: .womensOuterwear,
+            userID: "123",
+            size: .large,
+            price: 15.0,
+            color: .blue,
+            condition: .good,
+            photoURLs: ["https://via.placeholder.com/150"],
+            tags: [.vintage, .casual],
+            brand: "North Face",
+            maxRentalDuration: .oneMonth,
+            pickupLocations: [.gates],
+            available: true
+        )
+    ]
+}
+
+// MARK: - Preview Provider
+struct SearchView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchView(
+            userViewModel: UserViewModel(user: SearchPreviewData.mockUser),
+            viewModel: SearchViewModel()
+        )
+        .onAppear {
+            // Inject mock data for previews
+            let viewModel = SearchViewModel()
+            viewModel.listings = SearchPreviewData.mockListings
+            viewModel.users = [
+                User(
+                    id: "456",
+                    firstName: "Jane",
+                    lastName: "Smith",
+                    username: "janesmith",
+                    pronouns: "she/her",
+                    email: "janesmith@example.com",
+                    password: "password456",
+                    university: "Sample University",
+                    rating: 4.5,
+                    listings: [],
+                    likedItems: [],
+                    styleChoices: ["formal"],
+                    events: ["graduation"],
+                    followers: ["user3", "user4"],
+                    following: ["user5"],
+                    renting: [],
+                    myItems: []
+                )
+            ]
         }
     }
 }
+

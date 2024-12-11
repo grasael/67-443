@@ -15,10 +15,18 @@ struct VerifiedView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Student identity verified!")
+            Text("student identity verified!")
                 .font(.title)
                 .padding()
 
+            Spacer()
+          
+            Image("student_identity")
+              .resizable()
+              .scaledToFit()
+              .frame(width: 350, height: 350)
+              .padding()
+          
             Spacer()
 
             NavigationLink(
@@ -28,18 +36,32 @@ struct VerifiedView: View {
                     userViewModel: userViewModel
                 )
             ) {
-                Text("Continue to Onboarding")
+                Text("continue to onboarding")
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
-                    .cornerRadius(8)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .cornerRadius(20)
                     .padding(.horizontal)
             }
 
             Spacer()
         }
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color("LightBlue"), Color("Yellow")]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+        )
         .navigationBarHidden(true)
     }
 }

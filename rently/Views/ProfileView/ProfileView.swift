@@ -22,7 +22,7 @@ struct ProfileView: View {
                 Image("profile-gradient")
                     .resizable()
                     .scaledToFill()
-                    .ignoresSafeArea(edges: .top)
+                    .ignoresSafeArea()
 
                 VStack(spacing: 8) {
                     // Profile Picture and Name

@@ -31,6 +31,8 @@ struct OnboardingView: View {
                     .font(.title2)
                     .fontWeight(.medium)
                     .padding(.top, 20)
+              
+              Divider()
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("username: *")
@@ -48,7 +50,7 @@ struct OnboardingView: View {
                         )
                         .autocapitalization(.none)
 
-                    Text("No special characters or spaces")
+                    Text("no special characters or spaces")
                         .font(.system(size: 12))
                         .foregroundColor(.gray)
 
@@ -115,12 +117,13 @@ struct OnboardingView: View {
                     .font(.system(size: 12))
                     .foregroundColor(.gray)
                 }
+                .ignoresSafeArea(edges: .top)
                 .padding(.horizontal)
 
                 HStack {
                     Toggle(isOn: $agreeToTerms) {
                         HStack(spacing: 4) {
-                            Text("I agree with")
+                            Text("i agree with")
                             Button("terms of use") {
                                 // Add action for showing terms of use here
                             }
@@ -128,35 +131,35 @@ struct OnboardingView: View {
                             .fontWeight(.semibold)
                         }
                     }
-                    .toggleStyle(SwitchToggleStyle(tint: .blue))
+                    .toggleStyle(SwitchToggleStyle(tint: Color("LightBlue")))
                 }
                 .padding(.horizontal)
                 .font(.system(size: 12))
 
                 Button(action: signUp) {
-                                Text("Sign Up")
-                                    .foregroundColor(.white)
-                                    .padding(.vertical, 10)
-                                    .padding(.horizontal, 40)
-                                    .font(.system(size: 16, weight: .semibold))
-                            }
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [Color.blue, Color.green]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .cornerRadius(8)
-                            .padding(.horizontal)
-                        }
-                        .padding()
-                        .fullScreenCover(isPresented: $navigateToAppView) {
-                          AppView(viewModel: userViewModel)
-                                .onDisappear {
-                                    navigateToAppView = false
-                                }
-                        }
+                  Text("sign up!")
+                      .foregroundColor(.white)
+                      .padding(.vertical, 10)
+                      .padding(.horizontal, 40)
+                      .font(.system(size: 16, weight: .semibold))
+                }
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color("MediumBlue"), Color("MediumGreen")]),
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .cornerRadius(20)
+                .padding(.horizontal)
+            }
+            .padding()
+            .fullScreenCover(isPresented: $navigateToAppView) {
+              AppView(viewModel: userViewModel)
+                    .onDisappear {
+                        navigateToAppView = false
+                    }
+            }
             .padding()
             .alert(isPresented: $showSuccessAlert) {
                 Alert(
@@ -172,7 +175,6 @@ struct OnboardingView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
-        
     }
     
     private func signUp() {

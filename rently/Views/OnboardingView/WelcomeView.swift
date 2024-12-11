@@ -16,11 +16,11 @@ struct WelcomeView: View {
             VStack {
                 Spacer()
 
-                Text("rently")
-                    .font(.system(size: 60, weight: .bold))
-                    .foregroundColor(Color.blue.opacity(0.8))
-                    .shadow(radius: 2)
-                    .padding()
+                Image("rently_logo")
+                  .resizable()
+                  .scaledToFit()
+                  .frame(width: 300, height: 200)
+                  .padding()
 
                 Spacer()
 
@@ -32,7 +32,7 @@ struct WelcomeView: View {
                         .padding()
                         .background(
                             LinearGradient(
-                                gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
+                                gradient: Gradient(colors: [Color("Yellow"), Color("MediumBlue")]),
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )

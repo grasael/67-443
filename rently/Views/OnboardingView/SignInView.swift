@@ -13,8 +13,9 @@ struct SignInView: View {
     @State private var password = ""
     @State private var showAlert = false
     @State private var alertMessage = ""
-    @State private var navigateToProfile = false
+    @State private var navigateToAppView = false
     @State private var userViewModel: UserViewModel? = nil
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -43,21 +44,26 @@ struct SignInView: View {
                 .padding(.horizontal)
                 
                 Spacer()
-                
-                // Navigation link to ProfileView
-                if navigateToProfile, let userViewModel = userViewModel {
-                    NavigationLink(value: userViewModel) {
-                        EmptyView()
-                    }
-                }
             }
-            .navigationDestination(for: UserViewModel.self) { viewModel in
-                ProfileView(userViewModel: viewModel)
+            .fullScreenCover(isPresented: $navigateToAppView) {
+                if let userViewModel = userViewModel {
+                    AppView(viewModel: userViewModel)
+                        .onAppear {
+                            print("✅ AppView appeared with UserViewModel: \(userViewModel)") // Debug
+                        }
+                        .onDisappear {
+                            print("🟢 AppView dismissed, resetting navigation state") // Debug
+                            navigateToAppView = false
+                        }
+                } else {
+                    Text("Failed to load user data.")
+                        .font(.title)
+                }
             }
             .padding()
             .alert(isPresented: $showAlert) {
                 Alert(
-                    title: Text(""),
+                    title: Text("Error"),
                     message: Text(alertMessage),
                     dismissButton: .default(Text("OK"))
                 )
@@ -66,16 +72,16 @@ struct SignInView: View {
     }
     
     private func signIn() {
-        print("Email: \(email), Password: \(password)")
+        print("🔵 Sign In Button Clicked") // Debug
+        print("Email: \(email), Password: \(password)") // Debug
         print("Attempting to sign in with email: \(email)") // Debug
 
         // Sign in with Firebase Authentication
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error as NSError? {
                 // Handle Firebase Auth errors
-                print("❌ Firebase Auth Error Details: \(error), \(error.userInfo)") // Debug
+                print("❌ Firebase Auth Error: \(error.localizedDescription), Code: \(error.code)") // Debug
 
-                // Map common error codes to user-friendly messages
                 switch AuthErrorCode(rawValue: error.code) {
                 case .wrongPassword:
                     self.alertMessage = "Incorrect password. Please try again."
@@ -88,21 +94,21 @@ struct SignInView: View {
                 }
                 self.showAlert = true
             } else {
-                print("✅ Firebase Auth Success for user: \(authResult?.user.email ?? "unknown email")") // Debug
-                
+                print("✅ Sign In Success for user: \(authResult?.user.email ?? "unknown email")") // Debug
+
                 // Fetch user details from Firestore
                 UserRepository().fetchUser(byEmail: email) { fetchedUser in
                     if let user = fetchedUser {
-                        print("✅ Fetched user from Firestore: \(user)") // Debug
+                        print("✅ Fetched User from Firestore: \(user)") // Debug
 
-                        // Initialize the UserViewModel with the fetched user
                         DispatchQueue.main.async {
-                            let viewModel = UserViewModel(user: user)
-                            self.userViewModel = viewModel
-                            self.navigateToProfile = true
+                            self.userViewModel = UserViewModel(user: user)
+                            //print("✅ Initializing UserViewModel with user ID: \(user._id)")
+                            self.navigateToAppView = true
+                            print("🟢 Navigate to AppView triggered") // Debug
                         }
                     } else {
-                        print("❌ Failed to fetch user data from Firestore for email: \(email)") // Debug
+                        print("❌ Failed to fetch user data from Firestore") // Debug
                         self.alertMessage = "Failed to retrieve user data. Please try again."
                         self.showAlert = true
                     }
@@ -110,8 +116,8 @@ struct SignInView: View {
             }
         }
     }
-
 }
+
 private struct EmailField: View {
     @Binding var email: String
     var body: some View {

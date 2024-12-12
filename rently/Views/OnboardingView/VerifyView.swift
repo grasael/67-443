@@ -11,9 +11,9 @@ import SwiftUI
 struct VerifyView: View {
     @ObservedObject var userViewModel: UserViewModel
 
-    @State private var selectedInstitution = "University of Pittsburgh"
+    @State private var selectedInstitution = "Carnegie Mellon University"
     @State private var studentEmail = ""
-    @State private var institutions = ["University of Pittsburgh", "Carnegie Mellon University"]
+    @State private var institutions = ["University of Pittsburgh", "Carnegie Mellon University", "Carlow University", "Duquesne University", "Chatham University"]
 
     var body: some View {
         VStack(spacing: 10) {
@@ -38,7 +38,6 @@ struct VerifyView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .foregroundColor(.black)
             
-                
                 Text("select your institution:")
                     .font(.system(size: 14))
                     .fontWeight(.semibold)
@@ -98,10 +97,10 @@ struct VerifyView: View {
                         )
                 }
                 NavigationLink(
-                    destination: VerifiedView(
-                        userViewModel: userViewModel,
+                    destination: LoadingView(
                         email: studentEmail,
-                        university: selectedInstitution
+                        university: selectedInstitution,
+                        userViewModel: userViewModel
                     )
                 ) {
                     Text("next")
@@ -123,7 +122,6 @@ struct VerifyView: View {
             }
             .padding(.horizontal)
 
-
             Spacer()
         }
         .background(
@@ -137,4 +135,3 @@ struct VerifyView: View {
         .navigationBarHidden(true)
     }
 }
-

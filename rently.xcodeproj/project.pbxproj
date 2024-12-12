@@ -70,6 +70,7 @@
 		7FE838D12CF839CB00CCCBF1 /* DislikeReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838D02CF839CB00CCCBF1 /* DislikeReportView.swift */; };
 		7FE838D32CF839DC00CCCBF1 /* CustomReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838D22CF839DC00CCCBF1 /* CustomReportView.swift */; };
 		7FE838E52CF8B8E500CCCBF1 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838E42CF8B8E500CCCBF1 /* LocationManager.swift */; };
+		7FE9CB152D0B5A6B00A948F7 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE9CB142D0B5A6900A948F7 /* LoadingView.swift */; };
 		CA127FA62CD94DCF006330DC /* RentalDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA52CD94DCF006330DC /* RentalDetailView.swift */; };
 		CA127FA82CD958F2006330DC /* Rental.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA72CD958F2006330DC /* Rental.swift */; };
 		CA127FAA2CD95954006330DC /* ActiveRentalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA127FA92CD95954006330DC /* ActiveRentalsViewModel.swift */; };
@@ -184,6 +185,7 @@
 		7FE838DA2CF8B7EA00CCCBF1 /* LocationPushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPushService.swift; sourceTree = "<group>"; };
 		7FE838DC2CF8B7EA00CCCBF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FE838E42CF8B8E500CCCBF1 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		7FE9CB142D0B5A6900A948F7 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		CA127FA52CD94DCF006330DC /* RentalDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalDetailView.swift; sourceTree = "<group>"; };
 		CA127FA72CD958F2006330DC /* Rental.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rental.swift; sourceTree = "<group>"; };
 		CA127FA92CD95954006330DC /* ActiveRentalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveRentalsViewModel.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 			children = (
 				CA2F2DFD2CE85B4E008D3021 /* OnboardingView.swift */,
 				7FE838BC2CF8052200CCCBF1 /* VerifiedView.swift */,
+				7FE9CB142D0B5A6900A948F7 /* LoadingView.swift */,
 				7FE838BE2CF8054100CCCBF1 /* QuizView.swift */,
 				7F1AF9A92D0B0C0F00ADCF6D /* PopupView.swift */,
 				7FE838C02CF8055F00CCCBF1 /* AllowLocationView.swift */,
@@ -744,6 +747,7 @@
 				CA96ED232CD670EC00E6D750 /* TrendingSearchesView.swift in Sources */,
 				7F2B6F062CFD3EDB0006C4AE /* FollowingView.swift in Sources */,
 				CA2F2E092CE85B4F008D3021 /* MakeListingView.swift in Sources */,
+				7FE9CB152D0B5A6B00A948F7 /* LoadingView.swift in Sources */,
 				CA2F2E1C2CE86187008D3021 /* ListingsViewModel.swift in Sources */,
 				CA96ED252CD6A05E00E6D750 /* ActiveRentalCardView.swift in Sources */,
 				7FE838BB2CF78F2A00CCCBF1 /* VerifyView.swift in Sources */,

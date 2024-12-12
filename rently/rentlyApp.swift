@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         // Run user migration
-        migrateUsers()
+        //migrateUsers()
         return true
     }
     
@@ -91,7 +91,7 @@ struct rentlyApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView() // Use ContentView as the main view
+                QuizView() // Use ContentView as the main view
             }
         }
     }

@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 import FirebaseAuth
+import FirebaseStorage
+import UIKit
 
 class UserViewModel: ObservableObject, Identifiable, Hashable {
     private let userRepository = UserRepository()
@@ -100,6 +102,38 @@ class UserViewModel: ObservableObject, Identifiable, Hashable {
             completion() // Notify the caller to navigate back to the WelcomeView
         } catch let error {
             print("❌ Error signing out: \(error.localizedDescription)")
+        }
+    }
+    
+    func saveProfileImageToStorage(profileImage: UIImage, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let userId = user.id else { return }
+        let storageRef = Storage.storage().reference().child("profileImages/\(userId).png")
+
+        // Compress image
+        if let imageData = profileImage.jpegData(compressionQuality: 0.3) {
+            storageRef.putData(imageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                print("Profile image uploaded successfully.")
+                completion(.success(()))
+            }
+        }
+    }
+    
+    func fetchProfileImageFromStorage(completion: @escaping (Result<UIImage, Error>) -> Void) {
+        guard let userId = user.id else { return }
+        let storageRef = Storage.storage().reference().child("profileImages/\(userId).png")
+
+        storageRef.getData(maxSize: 2 * 1024 * 1024) { data, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            if let data = data, let image = UIImage(data: data) {
+                completion(.success(image))
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ struct OnboardingView: View {
     @State private var username = ""
     @State private var pronouns = ""
     @State private var password = ""
+    @State private var confirmPassword = ""
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @State private var showSuccessAlert = false
@@ -107,6 +108,21 @@ struct OnboardingView: View {
                 }
                 .font(.system(size: 12))
                 .foregroundColor(.gray)
+                
+                Text("confirm password: *")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+                    .fontWeight(.semibold)
+
+                SecureField("", text: $confirmPassword)
+                    .padding(8)
+                    .font(.system(size: 14))
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+
             }
             .padding(.horizontal)
 
@@ -168,6 +184,12 @@ struct OnboardingView: View {
     private func proceedToQuizView() {
         guard !name.isEmpty, !username.isEmpty, !pronouns.isEmpty, !password.isEmpty else {
             errorMessage = "Please fill out all fields."
+            showErrorAlert = true
+            return
+        }
+        
+        guard password == confirmPassword else {
+            errorMessage = "Passwords do not match. Please try again."
             showErrorAlert = true
             return
         }

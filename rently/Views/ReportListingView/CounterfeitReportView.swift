@@ -10,7 +10,8 @@ import SwiftUI
 
 struct CounterfeitReportView: View {
     @State private var additionalDetails: String = ""
-    @Environment(\.presentationMode) var presentationMode // For dismissing the current view
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showAcknowledgmentPopup = false
 
     var body: some View {
         VStack(spacing: 20) {
@@ -67,6 +68,7 @@ struct CounterfeitReportView: View {
 
             Button(action: {
                 print("Send button tapped with details: \(additionalDetails)")
+                showAcknowledgmentPopup = true // Show the acknowledgment popup
             }) {
                 Text("send")
                     .font(.system(size: 16, weight: .semibold))
@@ -85,6 +87,15 @@ struct CounterfeitReportView: View {
         }
         .navigationBarHidden(true)
         .background(Color(UIColor.systemBackground))
+        .alert(isPresented: $showAcknowledgmentPopup) {
+            Alert(
+                title: Text("Report Submitted"),
+                message: Text("Thank you! Our team will review your report soon."),
+                dismissButton: .default(Text("OK"), action: {
+                    presentationMode.wrappedValue.dismiss()
+                })
+            )
+        }
     }
 }
 

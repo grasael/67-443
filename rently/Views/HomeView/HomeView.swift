@@ -52,10 +52,6 @@ struct HomeView: View {
                         }
                     Spacer()
                     
-                    Image(systemName: "slider.horizontal.3")
-                        .font(.title2)
-                        .foregroundColor(.black)
-                        .padding(.horizontal, 6)
                 }
                 .background(.white)
                 .cornerRadius(8)

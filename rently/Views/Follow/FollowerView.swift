@@ -18,58 +18,68 @@ struct FollowerView: View {
     }
 
     var body: some View {
-        List(followerIDs, id: \.self) { id in
-            HStack {
-                NavigationLink(destination: Text("User Profile for \(id)")) { // Replace with actual user profile view
+        VStack {
+            if followerIDs.isEmpty {
+                Text("You don't have any followers yet.")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                    .padding()
+            } else {
+                List(followerIDs, id: \ .self) { id in
                     HStack {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(.gray)
+                        NavigationLink(destination: Text("User Profile for \(id)")) { // Replace with actual user profile view
+                            HStack {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .foregroundColor(.gray)
 
-                        VStack(alignment: .leading) {
-                            Text("User ID: \(id)")
-                                .font(.headline)
-                            Text("@username_placeholder")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+                                VStack(alignment: .leading) {
+                                    Text("User ID: \(id)")
+                                        .font(.headline)
+                                    Text("@username_placeholder")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                        }
+
+                        Spacer()
+
+                        if followingIDs.contains(id) {
+                            Button(action: {
+                                unfollow(userID: id)
+                            }) {
+                                Text("following")
+                                    .font(.system(size: 14))
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .background(Color.blue)
+                                    .cornerRadius(20)
+                            }
+                        } else {
+                            Button(action: {
+                                follow(userID: id)
+                            }) {
+                                Text("follow")
+                                    .font(.system(size: 14))
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.blue)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(Color.blue, lineWidth: 1)
+                                    )
+                            }
                         }
                     }
+                    .padding(.vertical, 8)
                 }
-
-                Spacer()
-
-                if followingIDs.contains(id) {
-                    Button(action: {
-                        unfollow(userID: id)
-                    }) {
-                        Text("following")
-                            .font(.system(size: 14))
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(Color.blue)
-                            .cornerRadius(20)
-                    }
-                } else {
-                    Button(action: {
-                        follow(userID: id)
-                    }) {
-                        Text("follow")
-                            .font(.system(size: 14))
-                            .fontWeight(.semibold)
-                            .foregroundColor(.blue)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.blue, lineWidth: 1)
-                            )
-                    }
-                }
+                .listStyle(PlainListStyle())
             }
-            .padding(.vertical, 8)
         }
         .navigationTitle("Followers")
     }

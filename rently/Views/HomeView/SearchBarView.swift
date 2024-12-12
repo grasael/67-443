@@ -10,6 +10,8 @@ import SwiftUI
 
 // MARK: - SearchBarView
 struct SearchBarView: View {
+    @EnvironmentObject var userViewModel: UserViewModel // Access user data
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
         
@@ -31,11 +33,11 @@ struct SearchBarView: View {
                         .background(Color.white)
                         .cornerRadius(8)
                 }
-              
             }
-          Text("hi, Grace!")
-              .font(.largeTitle)
-              .foregroundColor(.green)
+            // Display "Hi, {firstName}" dynamically
+          Text("Hi, \(userViewModel.user.firstName)!")
+                .font(.largeTitle)
+                .foregroundColor(.green)
         }
     }
 }

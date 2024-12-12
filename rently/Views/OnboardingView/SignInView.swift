@@ -66,7 +66,7 @@ struct SignInView: View {
             if let error = error as NSError? {
                 print("❌ Firebase Auth Error: \(error.localizedDescription), Code: \(error.code)")
                 DispatchQueue.main.async {
-                    alertMessage = error.localizedDescription
+                    alertMessage = "Invalid email or password. Please try again."
                     showAlert = true
                 }
                 return
@@ -83,9 +83,9 @@ struct SignInView: View {
                         navigateToAppView = true // Trigger navigation to AppView
                     }
                 } else {
-                    print("❌ Failed to fetch user data from Firestore")
+                    print("❌ Email not found in database")
                     DispatchQueue.main.async {
-                        alertMessage = "Failed to retrieve user data."
+                        alertMessage = "We could not find an account associated with this email. Please check your credentials and try again."
                         showAlert = true
                     }
                 }

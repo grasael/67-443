@@ -13,6 +13,7 @@
 		6F7CC5D32D02A58B00575DCC /* EditListingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7CC5D22D02A58800575DCC /* EditListingView.swift */; };
 		6FFD9D112CEAAC8A00499F0E /* CalendarWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD9D102CEAAC8A00499F0E /* CalendarWrapperView.swift */; };
 		6FFD9D132CEAAC9300499F0E /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD9D122CEAAC9300499F0E /* CheckboxView.swift */; };
+		7F1AF9AA2D0B0C1300ADCF6D /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1AF9A92D0B0C0F00ADCF6D /* PopupView.swift */; };
 		7F1FD56F2CCD757400C7A788 /* rentlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */; };
 		7F1FD5732CCD757500C7A788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5722CCD757500C7A788 /* Assets.xcassets */; };
 		7F1FD5762CCD757500C7A788 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F1FD5752CCD757500C7A788 /* Preview Assets.xcassets */; };
@@ -146,6 +147,7 @@
 		6F7CC5D22D02A58800575DCC /* EditListingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListingView.swift; sourceTree = "<group>"; };
 		6FFD9D102CEAAC8A00499F0E /* CalendarWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWrapperView.swift; sourceTree = "<group>"; };
 		6FFD9D122CEAAC9300499F0E /* CheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
+		7F1AF9A92D0B0C0F00ADCF6D /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		7F1FD56B2CCD757400C7A788 /* rently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rently.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F1FD56E2CCD757400C7A788 /* rentlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rentlyApp.swift; sourceTree = "<group>"; };
 		7F1FD5722CCD757500C7A788 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				CA2F2DFD2CE85B4E008D3021 /* OnboardingView.swift */,
 				7FE838BC2CF8052200CCCBF1 /* VerifiedView.swift */,
 				7FE838BE2CF8054100CCCBF1 /* QuizView.swift */,
+				7F1AF9A92D0B0C0F00ADCF6D /* PopupView.swift */,
 				7FE838C02CF8055F00CCCBF1 /* AllowLocationView.swift */,
 				7FE838C22CF8057800CCCBF1 /* AllowPushView.swift */,
 				7F2B6F012CFA1E430006C4AE /* LocationTestView.swift */,
@@ -752,6 +755,7 @@
 				7F46DB912CD454D600181DB6 /* User.swift in Sources */,
 				CA127FAE2CD97632006330DC /* RentalItemDetailsView.swift in Sources */,
 				CA127FBF2CDACA81006330DC /* PopulateListings.swift in Sources */,
+				7F1AF9AA2D0B0C1300ADCF6D /* PopupView.swift in Sources */,
 				CA7CD1892CDE5B080009DF72 /* ListingDetailViewModel.swift in Sources */,
 				CA127FAC2CD9761D006330DC /* RentalHeaderView.swift in Sources */,
 				CA2F2DFA2CE85B20008D3021 /* UserRepository.swift in Sources */,

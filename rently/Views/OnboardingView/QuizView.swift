@@ -14,13 +14,13 @@ struct QuizView: View {
     @State private var selectedEvents: [String] = []
     @ObservedObject var userViewModel: UserViewModel
     @Environment(\.presentationMode) var presentationMode
-    
+    @State private var showWelcomePopup = false
+
     private let styles = ["vintage", "sportswear", "edgy", "preppy", "boho chic", "grunge", "classy", "casual", "streetwear", "y2k", "trendy"]
     private let events = ["formal events", "business casual", "party", "athleisure", "vacation", "rave", "concert", "costume", "graduation", "job interview"]
-    
+
     @State private var navigateToAppView = false
-    @State private var cancellables = Set<AnyCancellable>()
-    
+
     var body: some View {
         VStack(spacing: 20) {
             Text("let’s get you set up")
@@ -28,12 +28,12 @@ struct QuizView: View {
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .padding(.top, 20)
-            
+
             Divider()
                 .frame(height: 2)
                 .overlay(LinearGradient(colors: [.blue, .green], startPoint: .leading, endPoint: .trailing))
                 .padding(.horizontal)
-            
+
             VStack(alignment: .leading, spacing: 16) {
                 // Style Question
                 Text("how would you describe your style? (select at least 2)")
@@ -56,7 +56,7 @@ struct QuizView: View {
                 Button(action: {
                     presentationMode.wrappedValue.dismiss() // Go back to OnboardingView
                 }) {
-                    Text("Back")
+                    Text("back")
                         .foregroundColor(.white)
                         .padding(.vertical, 10)
                         .padding(.horizontal, 40)
@@ -64,7 +64,7 @@ struct QuizView: View {
                 .background(Color.gray.opacity(0.7).cornerRadius(10))
                 
                 Button(action: finishOnboarding) {
-                    Text("Next")
+                    Text("next")
                         .foregroundColor(.white)
                         .padding(.vertical, 10)
                         .padding(.horizontal, 40)
@@ -80,39 +80,43 @@ struct QuizView: View {
             
             .fullScreenCover(isPresented: $navigateToAppView) {
                 AppView(viewModel: userViewModel)
+                    .onAppear {
+                        // Set showWelcomePopup to true when QuizView appears
+                        self.showWelcomePopup = true
+                    }
+                    .overlay(
+                        Group {
+                            if showWelcomePopup {
+                                GeometryReader { geometry in
+                                    PopupView(userFirstName: userViewModel.user.firstName, showPopup: $showWelcomePopup)
+                                        .frame(width: 300, height: 200) // You can adjust the size as needed
+                                        .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+                                }
+                            }
+                        }
+                    )
+
             }
         }
         .padding()
     }
-    
-    private func finishOnboarding() {
-            guard selectedStyles.count >= 2, selectedEvents.count >= 2 else {
-                print("Please select at least 2 styles and 2 events")
-                return
-            }
-            
-            // Add the style and event selections to the user object
-            userViewModel.user.styleChoices = selectedStyles
-            userViewModel.user.events = selectedEvents
-            
-            // Save the user to the backend
-            userViewModel.addUser()
 
-            userViewModel.$user
-                .handleEvents(receiveOutput: { user in
-                    print("🔍 User emitted from $user: \(user)")
-                })
-                .compactMap { $0.id }
-                .first()
-                .sink { id in
-                    print("🌟 User ID available: \(id)")
-                    print("🔗 Navigating to AppView...")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        self.navigateToAppView = true
-                    }
-                }
-                .store(in: &cancellables)
+    private func finishOnboarding() {
+        guard selectedStyles.count >= 2, selectedEvents.count >= 2 else {
+            print("Please select at least 2 styles and 2 events")
+            return
         }
+        
+        // Add the style and event selections to the user object
+        userViewModel.user.styleChoices = selectedStyles
+        userViewModel.user.events = selectedEvents
+        
+        // Save the user to the backend
+        userViewModel.addUser()
+        
+        // Trigger navigation and popup appearance
+        navigateToAppView = true
+    }
 }
 
 

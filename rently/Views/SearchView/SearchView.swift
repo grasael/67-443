@@ -16,27 +16,27 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
-              ZStack {
-                // Gradient Background Rectangle
-                LinearGradient(
-                  gradient: Gradient(colors: [Color("MediumBlue"), .white]),
-                  startPoint: .top,
-                  endPoint: .bottom
-                )
-                .frame(width: 800, height: 150)
-                .edgesIgnoringSafeArea(.all)
-                
-                // Logo
-                HStack {
-                  Image("rently_logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 60)
-                    .layoutPriority(1)
-                    .clipped()
-                    .shadow(color: .gray.opacity(0.4), radius: 4, x: 6, y: 0)
+                ZStack {
+                    // Gradient Background Rectangle
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color("MediumBlue"), .white]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .frame(width: 800, height: 150)
+                    .edgesIgnoringSafeArea(.all)
+                    
+                    // Logo
+                    HStack {
+                        Image("rently_logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 60)
+                            .layoutPriority(1)
+                            .clipped()
+                            .shadow(color: .gray.opacity(0.4), radius: 4, x: 6, y: 0)
+                    }
                 }
-              }
 
                 // Search Bar
                 HStack {
@@ -48,12 +48,12 @@ struct SearchView: View {
                         .onChange(of: searchText) { newValue in
                             viewModel.filterListingsAndUsers(query: newValue)
                         }
-                  Spacer()
-                  
-                  Image(systemName: "slider.horizontal.3")
-                      .font(.title2)
-                      .foregroundColor(.black)
-                      .padding(.horizontal, 6)
+                    Spacer()
+                    
+                    Image(systemName: "slider.horizontal.3")
+                        .font(.title2)
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 6)
                 }
                 .background(.white)
                 .cornerRadius(8)
@@ -70,7 +70,7 @@ struct SearchView: View {
                             ForEach(viewModel.listings) { listing in
                                 NavigationLink(destination: ListingView(listing: listing).environmentObject(userViewModel)) {
                                     HStack {
-                                        AsyncImage(url: URL(string: listing.photoURLs.first ?? "")) { phase in
+                                        AsyncImage(url: URL(string: listing.photoURLs.first ?? ""), content: { phase in
                                             if let image = phase.image {
                                                 image.resizable()
                                                     .scaledToFill()
@@ -83,7 +83,7 @@ struct SearchView: View {
                                                 ProgressView()
                                                     .frame(width: 50, height: 50)
                                             }
-                                        }
+                                        })
                                         VStack(alignment: .leading) {
                                             Text(listing.title)
                                                 .font(.headline)
@@ -108,7 +108,8 @@ struct SearchView: View {
                     }
                     .scrollContentBackground(.hidden)
                     .background(Color.white)
-                } else {
+                }
+                else {
                     // Default view with categories and seasonal sections
                     Text("shop by category")
                         .font(.headline)
@@ -125,7 +126,7 @@ struct SearchView: View {
                             CategoryIcon(name: "outerwear", iconImage: Image("outerwear")) {
                                 searchForCategory("outerwear")
                             }
-                          CategoryIcon(name: "dresses", iconImage: Image("dresses")) {
+                            CategoryIcon(name: "dresses", iconImage: Image("dresses")) {
                                 searchForCategory("dresses")
                             }
                         }
@@ -136,14 +137,19 @@ struct SearchView: View {
                     // Seasonal Sections
                     ScrollView {
                         VStack(spacing: 12) {
-                            SeasonalSection(sectionImage: Image("interview_season"), title: "interview season")
-                            SeasonalSection(sectionImage: Image("winter_break"), title: "winter break")
-                            SeasonalSection(sectionImage: Image("halloween"), title: "halloween")
+                            SeasonalSection(sectionImage: Image("interview_season"), title: "interview season") {
+                                performSearchWithTag("interview")
+                            }
+                            SeasonalSection(sectionImage: Image("winter_break"), title: "winter break") {
+                                performSearchWithTag("jacket")
+                            }
+                            SeasonalSection(sectionImage: Image("halloween"), title: "halloween") {
+                                performSearchWithTag("costume")
+                            }
                         }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                 }
-                
                 Spacer()
             }
             .onAppear {
@@ -151,13 +157,17 @@ struct SearchView: View {
                 viewModel.fetchUsers()
             }
         }
-        
     }
     
     // Helper method to handle category search
     private func searchForCategory(_ category: String) {
         searchText = category
         viewModel.filterListingsAndUsers(query: searchText)
+    }
+    
+    private func performSearchWithTag(_ tag: String) {
+        searchText = tag
+        viewModel.filterListingsAndUsers(query: tag)
     }
 }
 
@@ -170,47 +180,49 @@ struct CategoryIcon: View {
     var body: some View {
         Button(action: action) {
             VStack {
-              ZStack {
-                Circle()
-                  .fill(Color("LightestBlue"))
-                  .frame(width: 74, height: 74)
-                iconImage
-                  .resizable()
-                  .scaledToFit()
-                  .frame(width: 50, height: 40)
-              }
-              Text(name)
-                .font(.caption)
-                .foregroundColor(.primary)
-          }
+                ZStack {
+                    Circle()
+                        .fill(Color("LightestBlue"))
+                        .frame(width: 74, height: 74)
+                    iconImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 40)
+                }
+                Text(name)
+                    .font(.caption)
+                    .foregroundColor(.primary)
+            }
         }
     }
 }
 
-// Placeholder for SeasonalSection View
+// SeasonalSection updated to accept action
 struct SeasonalSection: View {
     let sectionImage: Image
     let title: String
+    let action: () -> Void
     
     var body: some View {
-      ZStack(alignment: .bottom) {
-          sectionImage
-            .resizable()
-            .scaledToFill()
-            .frame(height: 150)
-            .clipShape(RoundedRectangle(cornerRadius: 50))
-            .overlay(
-              RoundedRectangle(cornerRadius: 50)
-                  .fill(Color.black.opacity(0.1))
-            )
-            
-            Text(title)
-              .font(.title3)
-              .bold()
-              .foregroundColor(.white)
-              .shadow(color: .black.opacity(0.6), radius: 2, x: 0, y: 1)
-              .padding(.bottom, 10)
+        Button(action: action) {
+            ZStack(alignment: .bottom) {
+                sectionImage
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 150)
+                    .clipShape(RoundedRectangle(cornerRadius: 50))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 50)
+                            .fill(Color.black.opacity(0.1))
+                    )
+                Text(title)
+                    .font(.title3)
+                    .bold()
+                    .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.6), radius: 2, x: 0, y: 1)
+                    .padding(.bottom, 10)
+            }
+            .padding(.horizontal, 10)
         }
-        .padding(.horizontal, 10)
     }
 }

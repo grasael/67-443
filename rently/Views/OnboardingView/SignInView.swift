@@ -37,9 +37,9 @@ struct SignInView: View {
                     .frame(maxWidth: .infinity)
             }
             .background(
-                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]), startPoint: .leading, endPoint: .trailing)
+                LinearGradient(gradient: Gradient(colors: [Color("LightBlue"), Color("Yellow")]), startPoint: .leading, endPoint: .trailing)
             )
-            .cornerRadius(8)
+            .cornerRadius(20)
             .padding(.horizontal)
 
             Spacer()

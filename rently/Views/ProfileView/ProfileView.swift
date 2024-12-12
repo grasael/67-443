@@ -26,6 +26,8 @@ struct ProfileView: View {
 
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("\(userViewModel.user.firstName) \(userViewModel.user.lastName)")
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.6)
                                     .font(.title2)
                                     .fontWeight(.bold)
                                     .foregroundColor(.black)

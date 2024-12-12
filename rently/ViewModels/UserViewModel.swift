@@ -8,21 +8,23 @@
 import Foundation
 import Combine
 
-class UserViewModel: ObservableObject, Identifiable {
+class UserViewModel: ObservableObject, Identifiable, Hashable {
     private let userRepository = UserRepository()
     @Published var user: User
     private var cancellables: Set<AnyCancellable> = []
     var id = ""
-
     init(user: User) {
         self.user = user
-        print("❌ Initializing UserViewModel with user ID: \(user.id ?? "nil") at \(Date())")
+        if let userId = user.id {
+            print("✅ Initializing UserViewModel with user ID: \(userId) at \(Date())") // Debug
+        } else {
+            print("❌ Initializing UserViewModel with user ID: nil at \(Date())") // Debug
+        }
         $user
             .compactMap { $0.id }
             .assign(to: \.id, on: self)
             .store(in: &cancellables)
     }
-
   func addUser() {
           userRepository.create(user) { [weak self] documentID in
               guard let self = self else { return }
@@ -35,7 +37,6 @@ class UserViewModel: ObservableObject, Identifiable {
               }
           }
       }
-
   func updateUser() {
           print("Updating user with ID: \(user.id ?? "no ID")")
           print("Current user data: \(user)")
@@ -54,7 +55,6 @@ class UserViewModel: ObservableObject, Identifiable {
                  user.following.append(userID)
              }
          }
-
        func unfollowUser(userID: String) {
            guard let currentUserID = user.id else { return }
            userRepository.removeFollowing(for: currentUserID, followingID: userID)
@@ -71,5 +71,24 @@ class UserViewModel: ObservableObject, Identifiable {
             }
         }
     }
-
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    static func == (lhs: UserViewModel, rhs: UserViewModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func fetchCurrentUser(email: String, completion: @escaping (Bool) -> Void) {
+        userRepository.fetchUser(byEmail: email) { [weak self] fetchedUser in
+            guard let self = self, let user = fetchedUser else {
+                print("❌ fetchCurrentUser says ... Failed to fetch user")
+                completion(false)
+                return
+            }
+            
+            self.user = user
+            completion(true)
+        }
+    }
 }

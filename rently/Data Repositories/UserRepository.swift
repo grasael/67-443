@@ -1,3 +1,4 @@
+
 //
 //  UserRepository.swift
 //  rently
@@ -9,31 +10,14 @@ import Foundation
 import Combine
 import FirebaseFirestore
 
-
 class UserRepository: ObservableObject {
   private let path: String = "Users"
   private let store = Firestore.firestore()
-
   @Published var users: [User] = []
   private var cancellables: Set<AnyCancellable> = []
-
   init() {
     self.get()
   }
-
-//  func get() {
-//    store.collection(path)
-//      .addSnapshotListener { querySnapshot, error in
-//        if let error = error {
-//          print("Error getting users: \(error.localizedDescription)")
-//          return
-//        }
-//
-//        self.users = querySnapshot?.documents.compactMap { document in
-//          try? document.data(as: User.self)
-//        } ?? []
-//      }
-//  }
     
     func get() {
         store.collection(path)
@@ -42,7 +26,6 @@ class UserRepository: ObservableObject {
                     print("Error getting users: \(error.localizedDescription)")
                     return
                 }
-
                 self.users = querySnapshot?.documents.compactMap { document in
                     var user = try? document.data(as: User.self)
                     user?.id = document.documentID // Explicitly set the document ID
@@ -50,7 +33,6 @@ class UserRepository: ObservableObject {
                 } ?? []
             }
     }
-
   // MARK: CRUD methods
   func create(_ user: User, completion: @escaping (String?) -> Void) {
           do {
@@ -69,9 +51,6 @@ class UserRepository: ObservableObject {
               completion(nil)
           }
       }
-
-
-
   func update(_ user: User) {
           print("USER ID is \(user.id)")
           guard let userId = user.id else {
@@ -110,7 +89,6 @@ class UserRepository: ObservableObject {
             }
         }
     }
-
     // Remove a follower
     func removeFollower(from userID: String, followerID: String) {
         let userRef = store.collection(path).document(userID)
@@ -124,7 +102,6 @@ class UserRepository: ObservableObject {
             }
         }
     }
-
     // Add to following
     func addFollowing(for userID: String, followingID: String) {
         let userRef = store.collection(path).document(userID)
@@ -138,7 +115,6 @@ class UserRepository: ObservableObject {
             }
         }
     }
-
     // Remove from following
     func removeFollowing(for userID: String, followingID: String) {
         let userRef = store.collection(path).document(userID)
@@ -153,42 +129,66 @@ class UserRepository: ObservableObject {
         }
     }
     
-        func fetchUsers(withIDs userIDs: [String], completion: @escaping ([User]) -> Void) {
-            var fetchedUsers: [User] = []
-            let dispatchGroup = DispatchGroup()
-
-            for userID in userIDs {
-                dispatchGroup.enter()
-                store.collection(path).document(userID).getDocument { documentSnapshot, error in
-                    if let error = error {
-                        print("Error fetching user with ID \(userID): \(error.localizedDescription)")
-                        dispatchGroup.leave()
-                        return
-                    }
-
-                    guard let document = documentSnapshot, document.exists else {
-                        print("No document found for user with ID \(userID)")
-                        dispatchGroup.leave()
-                        return
-                    }
-
-                    do {
-                        // Decode the document into a User
-                        var user = try document.data(as: User.self)
-                        // Assign the document ID explicitly to the user's ID
-                        user.id = document.documentID
-                        // Append the user to the fetchedUsers array
-                        fetchedUsers.append(user)
-                    } catch {
-                        print("Error decoding user with ID \(userID): \(error.localizedDescription)")
-                    }
-
+    func fetchUsers(withIDs userIDs: [String], completion: @escaping ([User]) -> Void) {
+        var fetchedUsers: [User] = []
+        let dispatchGroup = DispatchGroup()
+        for userID in userIDs {
+            dispatchGroup.enter()
+            store.collection(path).document(userID).getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("Error fetching user with ID \(userID): \(error.localizedDescription)")
                     dispatchGroup.leave()
+                    return
                 }
+                guard let document = documentSnapshot, document.exists else {
+                    print("No document found for user with ID \(userID)")
+                    dispatchGroup.leave()
+                    return
+                }
+                do {
+                    // Decode the document into a User
+                    var user = try document.data(as: User.self)
+                    // Assign the document ID explicitly to the user's ID
+                    user.id = document.documentID
+                    // Append the user to the fetchedUsers array
+                    fetchedUsers.append(user)
+                } catch {
+                    print("Error decoding user with ID \(userID): \(error.localizedDescription)")
+                }
+                dispatchGroup.leave()
             }
-
-            dispatchGroup.notify(queue: .main) {
-                completion(fetchedUsers)
+        }
+        dispatchGroup.notify(queue: .main) {
+            completion(fetchedUsers)
+        }
+    }
+    
+    func fetchUser(byEmail email: String, completion: @escaping (User?) -> Void) {
+        print("🔍 Fetching user by email: \(email)") // Debug
+        store.collection(path)
+            .whereField("email", isEqualTo: email)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("❌ Firestore fetch error: \(error.localizedDescription)") // Debug
+                    completion(nil)
+                    return
+                }
+                
+                guard let document = querySnapshot?.documents.first else {
+                    print("❌ No document found for email: \(email)") // Debug
+                    completion(nil)
+                    return
+                }
+                
+                do {
+                    var user = try document.data(as: User.self)
+                    user.id = document.documentID // Explicitly set the ID
+                    print("✅ Fetched user document: \(user)") // Debug
+                    completion(user)
+                } catch {
+                    print("❌ Error decoding user document: \(error.localizedDescription)") // Debug
+                    completion(nil)
+                }
             }
     }
 }

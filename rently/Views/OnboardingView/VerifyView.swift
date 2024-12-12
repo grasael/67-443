@@ -72,6 +72,10 @@ struct VerifyView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray, lineWidth: 1)
                     )
+                    .autocapitalization(.none) // Prevent automatic capitalization on the keyboard
+                    .onChange(of: studentEmail) { newValue in
+                        studentEmail = newValue.lowercased() // Convert to lowercase
+                    }
             }
             .padding(.horizontal)
 

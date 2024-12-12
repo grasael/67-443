@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 class RentalViewModel: ObservableObject {
     private let db = Firestore.firestore()
+    @Published var activeRentals: [Rental] = []
     
     // Direct reference to the shared UserManager instance
     private let userManager = UserManager.shared
@@ -101,4 +102,26 @@ class RentalViewModel: ObservableObject {
         let total = Double(totalDays) * listing.price
         return String(format: "%.2f", total)
     }
+    
+    func fetchActiveRentals() {
+            guard let userID = UserManager.shared.user?.id else { return }
+
+            db.collection("Rentals")
+                .whereField("renteeID", isEqualTo: userID)
+                .getDocuments { snapshot, error in
+                    if let error = error {
+                        print("Error fetching rentals: \(error)")
+                        return
+                    }
+
+                    let rentals = snapshot?.documents.compactMap { document in
+                        try? document.data(as: Rental.self)
+                    } ?? []
+
+                    DispatchQueue.main.async {
+                        self.activeRentals = rentals.filter { $0.isActiveOrUpcoming }
+                        print("Fetched \(self.activeRentals.count) active rentals")
+                    }
+                }
+        }
 }

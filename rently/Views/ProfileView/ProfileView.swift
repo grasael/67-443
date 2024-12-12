@@ -166,7 +166,7 @@ struct ProfileView: View {
       }
     }
   }
-}
+
 
 // MARK: - Preview Data
 struct ProfilePreviewData {

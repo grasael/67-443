@@ -224,32 +224,3 @@ struct ListingDetailView: View {
         userViewModel.updateUser()
     }
 }
-
-// MARK: - Preview Provider
-struct ListingDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockUser = User(
-            id: "123",
-            username: "johndoe",
-            rating: 4.8,
-            likedItems: [],
-            listings: []
-        )
-
-        let mockListing = Listing(
-            id: "1",
-            title: "Stylish Jacket",
-            description: "A beautiful jacket for every occasion.",
-            price: 15.0,
-            size: .medium,
-            condition: .good,
-            brand: "Zara",
-            photoURLs: ["https://via.placeholder.com/150"],
-            userID: "123"
-        )
-
-        return ListingDetailView(listingID: "1")
-            .environmentObject(UserViewModel(user: mockUser))
-            .environmentObject(ListingsViewModel(listings: [mockListing]))
-    }
-}

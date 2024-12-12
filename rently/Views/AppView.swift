@@ -51,5 +51,6 @@ struct AppView: View {
             }
             .tag(4)
          }
+        .accentColor(Color("LightBlue"))
     }
 }

@@ -47,6 +47,16 @@ class ListingsViewModel: ObservableObject {
         repository.fetchListings(for: matchedTags)
     }
 
+  // Filter listings for a specific user
+  func listings(for userID: String) -> [Listing] {
+      return listings.filter { $0.userID == userID }
+  }
+
+  // Count listings for a specific user
+  func listingsCount(for userID: String) -> Int {
+      return listings(for: userID).count
+  }
+  
   // add listing from draft
   func addListingFromDraft(_ draft: ListingDraft, userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
     repository.saveListingFromDraft(draft, userID: userID, completion: completion)

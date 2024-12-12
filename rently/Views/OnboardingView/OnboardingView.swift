@@ -1,10 +1,3 @@
-//
-//  OnboardingView.swift
-//  rently
-//
-//  Created by Grace Liao on 11/4/24.
-//
-
 import SwiftUI
 import Combine
 
@@ -12,7 +5,7 @@ struct OnboardingView: View {
     var email: String
     var university: String
     @ObservedObject var userViewModel: UserViewModel
-    
+
     @State private var name = ""
     @State private var lastName = ""
     @State private var username = ""
@@ -24,20 +17,20 @@ struct OnboardingView: View {
     @State private var agreeToTerms = false
     @State private var cancellables = Set<AnyCancellable>()
     @State private var navigateToQuizView = false
-    
+
     var body: some View {
         VStack(spacing: 20) {
             Text("let's get you set up")
                 .font(.title2)
                 .fontWeight(.medium)
                 .padding(.top, 20)
-            
+
             VStack(alignment: .leading, spacing: 4) {
                 Text("username: *")
                     .foregroundColor(.black)
                     .font(.system(size: 14))
                     .fontWeight(.semibold)
-                
+
                 TextField("", text: $username)
                     .padding(8)
                     .font(.system(size: 14))
@@ -47,16 +40,16 @@ struct OnboardingView: View {
                             .stroke(Color.gray, lineWidth: 1)
                     )
                     .autocapitalization(.none)
-                
-                Text("No special characters or spaces")
+
+                Text("no special characters or spaces")
                     .font(.system(size: 12))
                     .foregroundColor(.gray)
-                
+
                 Text("first name: *")
                     .foregroundColor(.black)
                     .font(.system(size: 14))
                     .fontWeight(.semibold)
-                
+
                 TextField("", text: $name)
                     .padding(8)
                     .font(.system(size: 14))
@@ -65,12 +58,12 @@ struct OnboardingView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-                
+
                 Text("last name:")
                     .foregroundColor(.black)
                     .font(.system(size: 14))
                     .fontWeight(.semibold)
-                
+
                 TextField("", text: $lastName)
                     .padding(8)
                     .font(.system(size: 14))
@@ -79,12 +72,12 @@ struct OnboardingView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-                
+
                 Text("pronouns: *")
                     .foregroundColor(.black)
                     .font(.system(size: 14))
                     .fontWeight(.semibold)
-                
+
                 TextField("", text: $pronouns)
                     .padding(8)
                     .font(.system(size: 14))
@@ -93,12 +86,12 @@ struct OnboardingView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-                
+
                 Text("password: *")
                     .foregroundColor(.black)
                     .font(.system(size: 14))
                     .fontWeight(.semibold)
-                
+
                 SecureField("", text: $password)
                     .padding(8)
                     .font(.system(size: 14))
@@ -109,18 +102,20 @@ struct OnboardingView: View {
                     )
                 VStack(alignment: .leading, spacing: 4) {
                     Text("• 8 characters or more")
-                    Text("• At least 1 number")
-                    Text("• At least 1 letter")
+                    Text("• at least 1 number")
+                    Text("• at least 1 letter")
                 }
                 .font(.system(size: 12))
                 .foregroundColor(.gray)
             }
             .padding(.horizontal)
-            
+
             HStack {
                 Toggle(isOn: $agreeToTerms) {
                     HStack(spacing: 4) {
-                        Text("I agree with")
+                        Text("i agree with")
+                            .foregroundColor(.black)
+                            .fontWeight(.regular)
                         Button("terms of use") {
                             // Add action for showing terms of use here
                         }
@@ -132,7 +127,7 @@ struct OnboardingView: View {
             }
             .padding(.horizontal)
             .font(.system(size: 12))
-            
+
             // NavigationLink triggered by `navigateToQuizView`
             NavigationLink(
                 destination: QuizView(userViewModel: userViewModel),
@@ -140,10 +135,10 @@ struct OnboardingView: View {
             ) {
                 EmptyView() // NavigationLink is triggered programmatically
             }
-            
+
             // Next Button
             Button(action: proceedToQuizView) {
-                Text("Next")
+                Text("next")
                     .foregroundColor(.white)
                     .padding(.vertical, 10)
                     .padding(.horizontal, 40)
@@ -168,16 +163,15 @@ struct OnboardingView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-        
     }
-    
+
     private func proceedToQuizView() {
         guard !name.isEmpty, !username.isEmpty, !pronouns.isEmpty, !password.isEmpty else {
             errorMessage = "Please fill out all fields."
             showErrorAlert = true
             return
         }
-        
+
         userViewModel.user.firstName = name
         userViewModel.user.lastName = lastName
         userViewModel.user.username = username
@@ -185,25 +179,7 @@ struct OnboardingView: View {
         userViewModel.user.password = password
         userViewModel.user.email = email
         userViewModel.user.university = university
-        
+
         navigateToQuizView = true
-        
-        //        userViewModel.addUser()
-        //
-        //        userViewModel.$user
-        //            .handleEvents(receiveOutput: { user in
-        //                print("🔍 User emitted from $user: \(user)")
-        //            })
-        //            .compactMap { $0.id }
-        //            .first()
-        //            .sink { id in
-        //                print("🌟 User ID available: \(id)")
-        //                print("🔗 Navigating to AppView...")
-        //                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-        //                    self.navigateToAppView = true
-        //                }
-        //            }
-        //            .store(in: &cancellables)
-        //    }
     }
 }

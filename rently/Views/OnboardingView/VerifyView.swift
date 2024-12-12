@@ -16,16 +16,18 @@ struct VerifyView: View {
     @State private var institutions = ["University of Pittsburgh", "Carnegie Mellon University"]
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
             Text("rently is for college campuses!")
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
-                .padding(.top, 40)
-            
-            Spacer()
-            Spacer()
-            Spacer()
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 20)
+          
+            Image("college_campuses")
+              .resizable()
+              .scaledToFit()
+              .frame(width: 250, height: 250)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text("to join your school's community, please verify your student status.")
@@ -33,6 +35,7 @@ struct VerifyView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                     .padding(.vertical, 20)
+                    .fixedSize(horizontal: false, vertical: true)
                     .foregroundColor(.black)
             
                 
@@ -91,7 +94,7 @@ struct VerifyView: View {
                         .foregroundColor(Color.black)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.gray, lineWidth: 1)
+                                .stroke(Color.white, lineWidth: 1)
                         )
                 }
                 NavigationLink(
@@ -109,12 +112,13 @@ struct VerifyView: View {
                         .foregroundColor(Color.white)
                         .background(
                             LinearGradient(
-                                gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.green.opacity(0.6)]),
+                              gradient: Gradient(colors: [Color("LightBlue"), Color("LightGreen")]),
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
                         )
                         .cornerRadius(20)
+                        .shadow(radius: 2)
                 }
             }
             .padding(.horizontal)
@@ -124,7 +128,7 @@ struct VerifyView: View {
         }
         .background(
             LinearGradient(
-                gradient: Gradient(colors: [Color(red: 0.9, green: 0.95, blue: 1), Color.white]),
+                gradient: Gradient(colors: [Color("Yellow"), Color("MediumBlue")]),
                 startPoint: .top,
                 endPoint: .bottom
             )

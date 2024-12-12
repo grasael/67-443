@@ -5,12 +5,12 @@
 //  Created by Grace Liao on 10/27/24.
 //
 import SwiftUI
-
+import UIKit
 struct ProfileView: View {
     @ObservedObject var userViewModel: UserViewModel
-
     @StateObject private var listingsViewModel = ListingsViewModel()
     @State private var selectedTab = 0 // 0 for Listings, 1 for Likes
+    @State private var profileImage: UIImage?
 
     var body: some View {
         NavigationView {
@@ -19,10 +19,17 @@ struct ProfileView: View {
                     VStack(spacing: 8) {
                         // Profile Picture and Name
                         HStack(spacing: 16) {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .frame(width: 80, height: 80)
-                                .foregroundColor(.black)
+                            if let profileImage = profileImage {
+                                Image(uiImage: profileImage)
+                                    .resizable()
+                                    .frame(width: 80, height: 80)
+                                    .clipShape(Circle())
+                            } else {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .frame(width: 80, height: 80)
+                                    .foregroundColor(.black)
+                            }
 
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("\(userViewModel.user.firstName) \(userViewModel.user.lastName)")
@@ -55,37 +62,37 @@ struct ProfileView: View {
                         HStack(spacing: 16) {
                             NavigationLink(destination: FollowerView(followerIDs: userViewModel.user.followers, followingIDs: userViewModel.user.following)) {
                                 Text("\(userViewModel.user.followers.count) followers")
-                                  .font(.subheadline)
-                                  .padding(.horizontal, 12)
-                                  .padding(.vertical, 6)
-                                  .background(
-                                      RoundedRectangle(cornerRadius: 15)
-                                        .stroke(Color("MediumBlue"), lineWidth: 1)
-                                  )
-                                  .foregroundColor(.black)
+                                    .font(.subheadline)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .stroke(Color("MediumBlue"), lineWidth: 1)
+                                    )
+                                    .foregroundColor(.black)
                             }
 
                             NavigationLink(destination: FollowingView(userViewModel: userViewModel)) {
                                 Text("\(userViewModel.user.following.count) following")
-                                  .font(.subheadline)
-                                  .padding(.horizontal, 12)
-                                  .padding(.vertical, 6)
-                                  .background(
-                                      RoundedRectangle(cornerRadius: 15)
-                                        .stroke(Color("MediumBlue"), lineWidth: 1)
-                                  )
-                                  .foregroundColor(.black)
+                                    .font(.subheadline)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 15)
+                                            .stroke(Color("MediumBlue"), lineWidth: 1)
+                                    )
+                                    .foregroundColor(.black)
                             }
-                          
+
                             Text("0 rented")
-                            .font(.subheadline)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(
-                                RoundedRectangle(cornerRadius: 15)
-                                  .stroke(Color("MediumBlue"), lineWidth: 1)
-                            )
-                            .foregroundColor(.black)
+                                .font(.subheadline)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .stroke(Color("MediumBlue"), lineWidth: 1)
+                                )
+                                .foregroundColor(.black)
                         }
                         .padding(.top, 8)
 
@@ -103,8 +110,8 @@ struct ProfileView: View {
                                 HStack {
                                     Image(systemName: "pencil")
                                     Text("edit profile")
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.8)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.8)
                                 }
                                 .font(.subheadline)
                                 .foregroundColor(.white)
@@ -125,67 +132,46 @@ struct ProfileView: View {
                         .padding(.top, 8)
                     }
                     .padding(.top, 40)
+
+                    Divider()
+
+                    // Picker for Listings and Likes
+                    Picker("", selection: $selectedTab) {
+                        Text("Listings (\(listingsViewModel.listingsCount(for: userViewModel.user.id ?? "")))").tag(0)
+                        Text("Likes").tag(1)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.horizontal)
+
+                    // Tab Content
+                    if selectedTab == 0 {
+                        ListingsProfileView()
+                            .environmentObject(listingsViewModel)
+                            .environmentObject(userViewModel)
+                    } else {
+                        LikesView()
+                            .environmentObject(userViewModel)
+                            .environmentObject(listingsViewModel)
+                    }
                 }
-
-                Divider()
-
-                // Picker for Listings and Likes
-                Picker("", selection: $selectedTab) {
-                    Text("Listings (\(listingsViewModel.listingsCount(for: userViewModel.user.id ?? "")))").tag(0)
-                    Text("Likes").tag(1)
+                .padding()
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                userViewModel.fetchProfileImageFromStorage { result in
+                    switch result {
+                    case .success(let image):
+                        DispatchQueue.main.async {
+                            self.profileImage = image
+                        }
+                    case .failure(let error):
+                        print("Error fetching profile image: \(error)")
+                    }
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-
-                // Tab Content
-                if selectedTab == 0 {
-                    ListingsProfileView()
-                        .environmentObject(listingsViewModel)
-                        .environmentObject(userViewModel)
-                } else {
-                    LikesView()
-                        .environmentObject(userViewModel)
-                        .environmentObject(listingsViewModel)
-                }
-
-                Spacer()
-              }
-              .padding()
-          }
-          .navigationBarTitleDisplayMode(.inline)
-          .onAppear {
-              listingsViewModel.fetchListings()
-          }
+                listingsViewModel.fetchListings()
+            }
         }
     }
-
-// MARK: - Preview Data
-struct ProfilePreviewData {
-    static let mockUser = User(
-        id: "12345",
-        firstName: "Amelia",
-        lastName: "Bose",
-        username: "amelia123",
-        pronouns: "she/her",
-        email: "amelia@example.com",
-        password: "password123", // Use a placeholder for security
-        university: "Carnegie Mellon University",
-        rating: 5.0,
-        listings: [],
-        likedItems: [],
-        styleChoices: ["formal", "casual"],
-        events: ["party", "conference"],
-        followers: ["user1", "user2"],
-        following: ["user3", "user4"],
-        renting: ["item1", "item2"],
-        myItems: ["item3", "item4"]
-    )
 }
 
-// MARK: - Preview Provider
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView(userViewModel: UserViewModel(user: ProfilePreviewData.mockUser))
-    }
-}
-
+ 

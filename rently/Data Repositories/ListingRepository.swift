@@ -37,6 +37,26 @@ class ListingRepository: ObservableObject {
             }
     }
     
+    // fetch listings based on tags/prefs
+    func fetchListings(for tags: [String]) {
+        print("Fetching listings with tags: \(tags)")
+        store.collection(path)
+            .whereField("tags", arrayContainsAny: tags) // Query for listings with matching tags
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching listings: \(error.localizedDescription)")
+                    return
+                }
+
+                self.listings = querySnapshot?.documents.compactMap { document in
+                    try? document.data(as: Listing.self)
+                } ?? []
+
+                print("Fetched \(self.listings.count) filtered listings from Firestore.")
+            }
+    }
+
+    
   // fetch listings for a specific user or all listings if `userID` is nil
   func fetchListings(for userID: String? = nil) {
       let query: Query

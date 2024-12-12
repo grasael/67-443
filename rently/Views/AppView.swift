@@ -14,12 +14,13 @@ struct AppView: View {
 
   var body: some View {
         TabView(selection: $selectedTab) {
-         HomeView()
-           .tabItem {
-             Image(systemName: "house")
-             Text("home")
-           }
-           .tag(0)
+            HomeView()
+                .environmentObject(viewModel) // Provide UserViewModel as an environment object
+                .tabItem {
+                    Image(systemName: "house")
+                    Text("home")
+                }
+                .tag(0)
          SearchView(userViewModel: viewModel)
            .tabItem {
              Image(systemName: "magnifyingglass")

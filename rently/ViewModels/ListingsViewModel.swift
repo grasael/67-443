@@ -33,6 +33,19 @@ class ListingsViewModel: ObservableObject {
   func fetchListings(for userID: String) {
       repository.fetchListings(for: userID)
   }
+    
+  // fetch listings based on user's preferences
+    func fetchListings(for preferences: [String]) {
+        // Debugging: Print user preferences
+        print("🔍 User Preferences: \(preferences)")
+
+        // Map user preferences to tags as plain strings
+        let matchedTags = mapPreferencesToTags(preferences: preferences)
+        print("🔗 Mapped Tags: \(matchedTags)")
+
+        // Fetch listings from the repository based on matched tags
+        repository.fetchListings(for: matchedTags)
+    }
 
   // add listing from draft
   func addListingFromDraft(_ draft: ListingDraft, userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -53,4 +66,46 @@ class ListingsViewModel: ObservableObject {
   func deleteListing(_ id: String, completion: @escaping (Result<Void, Error>) -> Void) {
     repository.deleteListing(id, completion: completion)
   }
+    
+    private func mapPreferencesToTags(preferences: [String]) -> [String] {
+        // Define the mapping between user preferences and tag strings
+        let mapping: [String: [String]] = [
+            "vintage": ["vintage"],
+            "sportswear": ["sportswear"],
+            "edgy": ["edgy"],
+            "preppy": ["classy", "casual"],
+            "boho chic": ["casual", "vintage"],
+            "grunge": ["edgy", "streetwear"],
+            "classy": ["classy"],
+            "casual": ["casual"],
+            "streetwear": ["streetwear"],
+            "y2k": ["y2k", "trendy"],
+            "trendy": ["y2k", "classy"],
+            
+            "formal events": ["formal"],
+            "business casual": ["business"],
+            "party": ["party"],
+            "athleisure": ["sportswear", "casual"],
+            "vacation": ["casual", "streetwear"],
+            "rave": ["party", "y2k"],
+            "concert": ["concert", "streetwear"],
+            "costume": ["costume"],
+            "graduation": ["graduation"],
+            "job interview": ["formal", "business"]
+        ]
+
+        var tags: [String] = []
+        for preference in preferences {
+            if let matchedTags = mapping[preference] {
+                print("✅ Preference '\(preference)' mapped to tags: \(matchedTags)")
+                tags.append(contentsOf: matchedTags)
+            } else {
+                print("⚠️ Preference '\(preference)' not found in mapping")
+            }
+        }
+
+        let uniqueTags = Array(Set(tags)) // Remove duplicates
+        print("📋 Unique Tags: \(uniqueTags)")
+        return uniqueTags
+    }
 }

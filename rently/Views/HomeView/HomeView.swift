@@ -5,11 +5,11 @@
 //  Created by Grace Liao on 10/27/24.
 //
 
-
 import SwiftUI
 import Foundation
 
 struct HomeView: View {
+    @EnvironmentObject var userViewModel: UserViewModel
   var body: some View {
     NavigationView {
       ScrollView {
@@ -17,7 +17,7 @@ struct HomeView: View {
           SearchBarView()
           ActiveRentalsView()
 //          KeepSearchingView() to be uncommented later
-          SuggestedItemsView()
+            SuggestedItemsView()
           TrendingSearchesView()
           
           Spacer()
@@ -27,10 +27,4 @@ struct HomeView: View {
       }
     }
   }
-  
-  
-}
-
-#Preview {
-    HomeView()
 }

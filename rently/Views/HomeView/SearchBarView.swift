@@ -5,17 +5,15 @@
 //  Created by Tishyaa Chaudhry on 11/2/24.
 //
 
-import Foundation
 import SwiftUI
 
-// MARK: - SearchBarView
 struct SearchBarView: View {
+    @Binding var searchText: String
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-        
-            
             HStack {
-                TextField("search for an item...", text: .constant(""))
+                TextField("Search for an item...", text: $searchText)
                     .padding(10)
                     .background(Color.white)
                     .cornerRadius(8)
@@ -31,11 +29,7 @@ struct SearchBarView: View {
                         .background(Color.white)
                         .cornerRadius(8)
                 }
-              
             }
-          Text("hi, Grace!")
-              .font(.largeTitle)
-              .foregroundColor(.green)
         }
     }
 }

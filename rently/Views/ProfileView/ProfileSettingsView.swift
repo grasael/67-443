@@ -1,5 +1,4 @@
-//
-//  ProfileSettingsView.swift
+// ProfileSettingsView.swift
 //  rently
 //
 //  Created by Grace Liao on 12/12/24.
@@ -19,17 +18,8 @@ struct ProfileSettingsView: View {
                     SectionHeader(title: "my account")
                     
                     VStack(spacing: 15) {
-                        NavigationLink(destination: Text("Profile View")) {
+                        NavigationLink(destination: EditProfileView(userViewModel: userViewModel)) {
                             SettingsRow(title: "profile")
-                        }
-                        NavigationLink(destination: Text("Sizes View")) {
-                            SettingsRow(title: "sizes")
-                        }
-                        NavigationLink(destination: Text("Calendar View")) {
-                            SettingsRow(title: "calendar")
-                        }
-                        NavigationLink(destination: Text("Interests View")) {
-                            SettingsRow(title: "interests")
                         }
                     }
                     
@@ -37,11 +27,9 @@ struct ProfileSettingsView: View {
                     SectionHeader(title: "renting")
                     
                     VStack(spacing: 15) {
-                        NavigationLink(destination: Text("Renting History View")) {
+                        // Navigate to RentalsView for Renting History
+                        NavigationLink(destination: RentalsView()) {
                             SettingsRow(title: "renting history")
-                        }
-                        NavigationLink(destination: Text("Renting Issues View")) {
-                            SettingsRow(title: "renting issues")
                         }
                     }
                     
@@ -49,10 +37,7 @@ struct ProfileSettingsView: View {
                     SectionHeader(title: "support")
                     
                     VStack(spacing: 15) {
-                        NavigationLink(destination: Text("Tutorial View")) {
-                            SettingsRow(title: "tutorial")
-                        }
-                        NavigationLink(destination: Text("Help View")) {
+                        NavigationLink(destination: HelpView()) {
                             SettingsRow(title: "help")
                         }
                     }

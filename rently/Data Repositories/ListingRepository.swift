@@ -59,7 +59,7 @@ class ListingRepository: ObservableObject {
           } ?? []
       }
   }
-
+  
     // create new listing
     func createListing(_ listing: Listing, completion: @escaping (Result<Void, Error>) -> Void) {
         do {

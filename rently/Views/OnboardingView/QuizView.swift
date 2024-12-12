@@ -7,13 +7,19 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 struct QuizView: View {
     @State private var selectedStyles: [String] = []
     @State private var selectedEvents: [String] = []
+    @ObservedObject var userViewModel: UserViewModel
+    @Environment(\.presentationMode) var presentationMode
     
     private let styles = ["vintage", "sportswear", "edgy", "preppy", "boho chic", "grunge", "classy", "casual", "streetwear", "y2k", "trendy"]
     private let events = ["formal events", "business casual", "party", "athleisure", "vacation", "rave", "concert", "costume", "graduation", "job interview"]
+    
+    @State private var navigateToAppView = false
+    @State private var cancellables = Set<AnyCancellable>()
     
     var body: some View {
         VStack(spacing: 20) {
@@ -48,30 +54,20 @@ struct QuizView: View {
             // Navigation Buttons
             HStack {
                 Button(action: {
-                    // Handle Back Action
+                    presentationMode.wrappedValue.dismiss() // Go back to OnboardingView
                 }) {
-                    Text("back")
-                        .foregroundColor(.black)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                }
-                .background(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
-                
-                Button(action: {
-                    // Handle Next Action
-                    if selectedStyles.count >= 2 && selectedEvents.count >= 2 {
-                        print("Proceed to the next screen")
-                    } else {
-                        print("Please select at least 2 styles and 2 events")
-                    }
-                }) {
-                    Text("next")
+                    Text("Back")
                         .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 40)
+                }
+                .background(Color.gray.opacity(0.7).cornerRadius(10))
+                
+                Button(action: finishOnboarding) {
+                    Text("Next")
+                        .foregroundColor(.white)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 40)
                 }
                 .background(
                     LinearGradient(colors: [.blue, .green], startPoint: .leading, endPoint: .trailing)
@@ -81,17 +77,50 @@ struct QuizView: View {
                 .opacity((selectedStyles.count < 2 || selectedEvents.count < 2) ? 0.6 : 1.0)
             }
             .padding(.horizontal)
+            
+            .fullScreenCover(isPresented: $navigateToAppView) {
+                AppView(viewModel: userViewModel)
+            }
         }
         .padding()
     }
+    
+    private func finishOnboarding() {
+            guard selectedStyles.count >= 2, selectedEvents.count >= 2 else {
+                print("Please select at least 2 styles and 2 events")
+                return
+            }
+            
+            // Add the style and event selections to the user object
+            userViewModel.user.styleChoices = selectedStyles
+            userViewModel.user.events = selectedEvents
+            
+            // Save the user to the backend
+            userViewModel.addUser()
+
+            userViewModel.$user
+                .handleEvents(receiveOutput: { user in
+                    print("🔍 User emitted from $user: \(user)")
+                })
+                .compactMap { $0.id }
+                .first()
+                .sink { id in
+                    print("🌟 User ID available: \(id)")
+                    print("🔗 Navigating to AppView...")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.navigateToAppView = true
+                    }
+                }
+                .store(in: &cancellables)
+        }
 }
 
-// Reusable Chip Layout
+
 // Reusable Chip Layout
 struct WrapHStack: View {
     let items: [String]
     @Binding var selectedItems: [String]
-    var selectedColor: Color // Add this parameter to define the color for selected items
+    var selectedColor: Color
     
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 12)], spacing: 12) {
@@ -99,9 +128,12 @@ struct WrapHStack: View {
                 Button(action: {
                     if selectedItems.contains(item) {
                         selectedItems.removeAll { $0 == item }
+                        print("Deselected: \(item)") // Debugging: Print deselection
                     } else {
                         selectedItems.append(item)
+                        print("Selected: \(item)") // Debugging: Print selection
                     }
+                    print("Current selections: \(selectedItems)") // Debugging: Print current selections
                 }) {
                     Text(item)
                         .font(.system(size: 14))
@@ -114,14 +146,4 @@ struct WrapHStack: View {
             }
         }
     }
-}
-
-// Preview
-//struct QuizView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        QuizView()
-//    }
-//}
-#Preview {
-    QuizView()
 }

@@ -16,26 +16,15 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
-                ZStack {
-                    // Gradient Background Rectangle
-                    LinearGradient(
-                        gradient: Gradient(colors: [Color("MediumBlue"), .white]),
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                    .frame(width: 800, height: 150)
-                    .edgesIgnoringSafeArea(.all)
-                    
-                    // Logo
-                    HStack {
-                        Image("rently_logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 60)
-                            .layoutPriority(1)
-                            .clipped()
-                            .shadow(color: .gray.opacity(0.4), radius: 4, x: 6, y: 0)
-                    }
+                // Logo
+                HStack {
+                    Image("rently_logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 60)
+                        .layoutPriority(1)
+                        .clipped()
+                        .shadow(color: .gray.opacity(0.4), radius: 4, x: 6, y: 0)
                 }
 
                 // Search Bar

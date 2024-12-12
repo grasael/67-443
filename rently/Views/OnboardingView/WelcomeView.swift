@@ -15,7 +15,6 @@ struct WelcomeView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
 
                 Image("rently_logo")
                   .resizable()

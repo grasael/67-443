@@ -21,7 +21,7 @@ struct ActiveRentalsView: View {
         } else {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
-                    Text("Your Active Rentals")
+                    Text("your active rentals")
                         .font(.headline)
                     Spacer()
                     NavigationLink(destination: AllActiveRentalsView()

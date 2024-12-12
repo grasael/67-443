@@ -138,7 +138,8 @@ struct ListingDetailView: View {
                                 .font(.subheadline)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
-                                .background(Color.blue.opacity(0.2))
+                                .background(Color("MediumBlue"))
+                                .foregroundColor(.white)
                                 .cornerRadius(20)
 
                             Text(listing.condition.rawValue)
@@ -168,9 +169,10 @@ struct ListingDetailView: View {
                                 ForEach(listing.tags.prefix(3), id: \.self) { tag in
                                     Text(tag.rawValue)
                                         .font(.caption)
+                                        .foregroundColor(.white)
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 4)
-                                        .background(Color.blue.opacity(0.1))
+                                        .background(Color("MediumGreen"))
                                         .cornerRadius(20)
                                 }
                             }
@@ -178,32 +180,31 @@ struct ListingDetailView: View {
                         }
 
                         // Price and Rent Button
-                      HStack {
-                                                  Text("$\(String(format: "%.2f", listing.price))/day")
-                                                      .font(.headline)
-                                                      .foregroundColor(.primary)
-                                                  Spacer()
-                                                  
-                                                  // Rent Button with NavigationLink
-                                                  NavigationLink(destination: RentAnItemView(listing: listing)) {
-                                                      Text("rent")
-                                                          .font(.headline)
-                                                          .padding()
-                                                          .frame(maxWidth: .infinity)
-                                                          .background(
-                                                              LinearGradient(
-                                                                  gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
-                                                                  startPoint: .leading,
-                                                                  endPoint: .trailing
-                                                              )
-                                                          )
-                                                          .cornerRadius(40)
-                                                          .foregroundColor(.white)
-                                                  }
-                                                  .padding(.top, 16)
-                                              }
-                                              .padding(.horizontal)
-                                          }
+                        HStack {
+                            Text("$\(String(format: "%.2f", listing.price))/day")
+                                .font(.headline)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Button(action: {
+                                // Rent button
+                            }) {
+                                Text("rent")
+                                    .font(.headline)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(
+                                        LinearGradient(
+                                            gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                    )
+                                    .cornerRadius(40)
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
                 }
             } else {
                 ProgressView("Loading...")

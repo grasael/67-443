@@ -15,7 +15,8 @@ struct AppView: View {
   var body: some View {
         TabView(selection: $selectedTab) {
             HomeView()
-                .environmentObject(viewModel) // Provide UserViewModel as an environment object
+                .environmentObject(viewModel) // Provide UserViewModel
+                .environmentObject(listingsViewModel) // Provide ListingsViewModel
                 .tabItem {
                     Image(systemName: "house")
                     Text("home")

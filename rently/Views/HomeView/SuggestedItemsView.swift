@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct SuggestedItemsView: View {
-    @StateObject private var viewModel = ListingsViewModel()
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var listingsViewModel: ListingsViewModel // Use the shared instance
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -18,17 +18,20 @@ struct SuggestedItemsView: View {
                 Text("we thought you would like")
                     .font(.headline)
                 Spacer()
-                Text("see all")
-                    .foregroundColor(.blue)
-                    .onTapGesture {
-                        // Action for see all
-                    }
+                NavigationLink(destination: AllListingsView()
+                    .environmentObject(userViewModel)
+                    .environmentObject(listingsViewModel)) {
+                    Text("see all")
+                        .foregroundColor(.blue)
+                }
             }
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
-                    ForEach(viewModel.listings.prefix(5)) { listing in
-                        NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")) {
+                    ForEach(listingsViewModel.listings.prefix(5)) { listing in
+                        NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")
+                            .environmentObject(userViewModel)
+                            .environmentObject(listingsViewModel)) {
                             VStack {
                                 // Image carousel for the listing
                                 if let imageUrl = URL(string: listing.photoURLs.first ?? "sampleItemImage") {
@@ -63,9 +66,9 @@ struct SuggestedItemsView: View {
                 }
             }
             .onAppear {
-                // Fetch listings using user preferences from UserViewModel
+                // Fetch listings using user preferences
                 let userPreferences = userViewModel.user.styleChoices + userViewModel.user.events
-                viewModel.fetchListings(for: userPreferences)
+                listingsViewModel.fetchListings(for: userPreferences) // Use the shared instance
             }
         }
     }

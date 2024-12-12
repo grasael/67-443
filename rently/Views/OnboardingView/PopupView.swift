@@ -38,12 +38,12 @@ struct PopupView: View {
                             .frame(maxWidth: .infinity)
                             .background(
                                 LinearGradient(
-                                    gradient: Gradient(colors: [Color.blue, Color.green]),
+                                    gradient: Gradient(colors: [Color("MediumBlue"), Color("MediumGreen")]),
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
                             )
-                            .cornerRadius(10)
+                            .cornerRadius(20)
                             .padding(.horizontal)
                     }
                 }

@@ -33,7 +33,8 @@ struct CardView: View {
           // listing title
             Text(listing.title)
                 .font(.headline)
-                .minimumScaleFactor(0.7)
+                .minimumScaleFactor(0.5)
+                .lineLimit(1)
                 .foregroundColor(.black)
 
           // listing price
@@ -52,7 +53,7 @@ struct CardView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(Color("MediumBlue"))
-                    .cornerRadius(5)
+                    .cornerRadius(20)
                     .foregroundColor(.white)
             }
         }

@@ -11,15 +11,19 @@ struct AppView: View {
   @State private var selectedTab: Int = 0
   @StateObject var listingsViewModel = ListingsViewModel()
   @StateObject var viewModel: UserViewModel
+  @StateObject var rentalViewModel = RentalViewModel()
 
   var body: some View {
         TabView(selection: $selectedTab) {
-         HomeView()
-           .tabItem {
-             Image(systemName: "house")
-             Text("home")
-           }
-           .tag(0)
+            HomeView()
+                .environmentObject(viewModel) // Provide UserViewModel
+                .environmentObject(listingsViewModel) // Provide ListingsViewModel
+                .environmentObject(rentalViewModel)
+                .tabItem {
+                    Image(systemName: "house")
+                    Text("home")
+                }
+                .tag(0)
          SearchView(userViewModel: viewModel)
            .tabItem {
              Image(systemName: "magnifyingglass")

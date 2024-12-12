@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct FollowingView: View {
     @ObservedObject var userViewModel: UserViewModel
     @State private var followingUsers: [User] = []
@@ -26,18 +28,23 @@ struct FollowingView: View {
                 List {
                     ForEach(followingUsers) { user in
                         HStack {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .foregroundColor(.gray)
+                            NavigationLink(destination: SearchUserDetailView(user: user, userViewModel: userViewModel)) {
+                                HStack {
+                                    Image(systemName: "person.circle.fill")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .foregroundColor(.gray)
 
-                            VStack(alignment: .leading) {
-                                Text(user.firstName + " " + user.lastName)
-                                    .font(.headline)
-                                Text("@\(user.username)")
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                                    VStack(alignment: .leading) {
+                                        Text(user.firstName + " " + user.lastName)
+                                            .font(.headline)
+                                        Text("@\(user.username)")
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                    }
+                                }
                             }
+                            .buttonStyle(PlainButtonStyle()) // Prevent NavigationLink from interfering with the button
 
                             Spacer()
 
@@ -53,6 +60,7 @@ struct FollowingView: View {
                                     .background(Color.blue)
                                     .cornerRadius(20)
                             }
+                            .buttonStyle(BorderlessButtonStyle()) // Ensure the button handles its own tap
                         }
                         .padding(.vertical, 8)
                     }

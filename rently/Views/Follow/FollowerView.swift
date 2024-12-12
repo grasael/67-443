@@ -20,17 +20,21 @@ struct FollowerView: View {
     var body: some View {
         List(followerIDs, id: \.self) { id in
             HStack {
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .foregroundColor(.gray)
+                NavigationLink(destination: Text("User Profile for \(id)")) { // Replace with actual user profile view
+                    HStack {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.gray)
 
-                VStack(alignment: .leading) {
-                    Text("User ID: \(id)")
-                        .font(.headline)
-                    Text("@username_placeholder")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                        VStack(alignment: .leading) {
+                            Text("User ID: \(id)")
+                                .font(.headline)
+                            Text("@username_placeholder")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                    }
                 }
 
                 Spacer()
@@ -67,7 +71,7 @@ struct FollowerView: View {
             }
             .padding(.vertical, 8)
         }
-        .navigationTitle("followers")
+        .navigationTitle("Followers")
     }
 
     private func follow(userID: String) {
@@ -80,6 +84,7 @@ struct FollowerView: View {
         followingIDs.removeAll { $0 == userID }
     }
 }
+
 
 struct FollowerView_Previews: PreviewProvider {
     static var previews: some View {

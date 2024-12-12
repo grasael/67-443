@@ -9,61 +9,67 @@ import Foundation
 import SwiftUI
 
 struct SuggestedItemsView: View {
-  @StateObject private var viewModel = ListingsViewModel()
+    @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var listingsViewModel: ListingsViewModel // Use the shared instance
 
-  var body: some View {
-    VStack(alignment: .leading, spacing: 10) {
-      HStack {
-        Text("we thought you would like")
-          .font(.headline)
-        Spacer()
-        Text("see all")
-          .foregroundColor(.blue)
-          .onTapGesture {
-            // Action for see all
-          }
-      }
-      
-      ScrollView(.horizontal, showsIndicators: false) {
-        HStack(spacing: 15) {
-          ForEach(viewModel.listings.prefix(5)) { listing in
-            NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")) {
-              VStack {
-                // Image carousel for the listing
-                if let imageUrl = URL(string: listing.photoURLs.first ?? "sampleItemImage") {
-                  AsyncImage(url: imageUrl) { phase in
-                    switch phase {
-                    case .empty:
-                      ProgressView()
-                        .frame(width: 80, height: 80)
-                    case .success(let image):
-                      image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 80, height: 80)
-                        .clipped()
-                        .cornerRadius(8)
-                    case .failure:
-                      Image("sampleItemImage")
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .cornerRadius(8)
-                    @unknown default:
-                      EmptyView()
-                    }
-                  }
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("we thought you would like")
+                    .font(.headline)
+                Spacer()
+                NavigationLink(destination: AllListingsView()
+                    .environmentObject(userViewModel)
+                    .environmentObject(listingsViewModel)) {
+                    Text("see all")
+                        .foregroundColor(.blue)
                 }
-                Text(listing.title)
-                Text("$\(listing.price, specifier: "%.2f")/day")
-                Text("size \(listing.size.rawValue)")
-              }
             }
-          }
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 15) {
+                    ForEach(listingsViewModel.listings.prefix(5)) { listing in
+                        NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")
+                            .environmentObject(userViewModel)
+                            .environmentObject(listingsViewModel)) {
+                            VStack {
+                                // Image carousel for the listing
+                                if let imageUrl = URL(string: listing.photoURLs.first ?? "sampleItemImage") {
+                                    AsyncImage(url: imageUrl) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                                .frame(width: 80, height: 80)
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 80, height: 80)
+                                                .clipped()
+                                                .cornerRadius(8)
+                                        case .failure:
+                                            Image("sampleItemImage")
+                                                .resizable()
+                                                .frame(width: 80, height: 80)
+                                                .cornerRadius(8)
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
+                                }
+                                Text(listing.title)
+                                Text("$\(listing.price, specifier: "%.2f")/day")
+                                Text("size \(listing.size.rawValue)")
+                            }
+                        }
+                    }
+                }
+            }
+            .onAppear {
+                // Fetch listings using user preferences
+                let userPreferences = userViewModel.user.styleChoices + userViewModel.user.events
+                listingsViewModel.fetchListings(for: userPreferences) // Use the shared instance
+            }
         }
-      }
-      .onAppear {
-        viewModel.fetchListings()
-      }
     }
-  }
 }

@@ -10,32 +10,33 @@ import SwiftUI
 
 // MARK: - ActiveRentalsView
 struct ActiveRentalsView: View {
-    @StateObject private var rentalViewModel = ActiveRentalsViewModel()
-    
+    @EnvironmentObject var rentalViewModel: RentalViewModel
+    @EnvironmentObject var listingsViewModel: ListingsViewModel
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("your active rentals")
+                Text("Your Active Rentals")
                     .font(.headline)
                 Spacer()
-                NavigationLink(destination: RentalsView()) {
+                NavigationLink(destination: AllActiveRentalsView()
+                    .environmentObject(rentalViewModel)
+                    .environmentObject(listingsViewModel)) {
                     Text("see all")
                         .foregroundColor(.blue)
                 }
             }
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
-                    ForEach(rentalViewModel.rentals) { rental in
-                        ActiveRentalCard(rental: rental)
+                    ForEach(rentalViewModel.activeRentals) { rental in
+                        Text(rental.pickupLocation) // Simplify the content temporarily
                     }
                 }
-                .padding(.vertical)
             }
         }
         .onAppear {
-            rentalViewModel.fetchActiveRentals()
+            rentalViewModel.fetchActiveRentals() // Fetch rentals
         }
     }
 }
-

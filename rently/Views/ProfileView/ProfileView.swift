@@ -12,17 +12,21 @@ struct ProfileView: View {
     @StateObject private var listingsViewModel = ListingsViewModel()
     @State private var selectedTab = 0 // 0 for Listings, 1 for Likes
 
-  var body: some View {
-      NavigationView {
-        ScrollView {
-          VStack(spacing: 16) {
-            // Profile Header
-            ZStack(alignment: .topTrailing) {
-                // Gradient Background Image
-                Image("profile-gradient")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack {
+                    HStack {
+                        Spacer()
+                        NavigationLink(destination: ProfileSettingsView()
+                            .environmentObject(userViewModel)
+                            .environmentObject(listingsViewModel)) {
+                            Image(systemName: "gearshape.fill")
+                                .font(.title2)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    .padding([.top, .trailing])
 
                 VStack(spacing: 8) {
                     // Profile Picture and Name

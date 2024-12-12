@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         // Run user migration
-        migrateUsers()
+        //migrateUsers()
         return true
     }
     

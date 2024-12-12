@@ -88,22 +88,22 @@ struct EditProfileView: View {
                 Button(action: {
                     saveChanges()
                 }) {
-                    Text("Save Changes")
+                    Text("save changes")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
-                        .cornerRadius(8)
+                        .background(Color("MediumBlue"))
+                        .cornerRadius(20)
                 }
                 .alert(isPresented: $showSaveAlert) {
-                    Alert(title: Text("Profile Updated"), message: Text("Your profile information has been saved successfully."), dismissButton: .default(Text("OK")))
+                    Alert(title: Text("profile updated"), message: Text("your profile information has been saved successfully!"), dismissButton: .default(Text("OK")))
                 }
 
                 Spacer()
             }
             .padding()
-            .navigationTitle("Edit Profile")
+            .navigationTitle("edit profile")
         }
         .onAppear {
             fetchProfileImage()

@@ -274,6 +274,7 @@ struct MakeListingView: View {
             path.removeAll() // Clear navigation stack
           }
       }
+      .tint(.black)
   }
   
   private func loadSelectedPhoto(for index: Int, from item: PhotosPickerItem?) {

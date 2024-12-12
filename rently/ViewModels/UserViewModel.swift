@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import FirebaseAuth
 
 class UserViewModel: ObservableObject, Identifiable, Hashable {
     private let userRepository = UserRepository()
@@ -89,6 +90,16 @@ class UserViewModel: ObservableObject, Identifiable, Hashable {
             
             self.user = user
             completion(true)
+        }
+    }
+    
+    func signOut(completion: @escaping () -> Void) {
+        do {
+            try Auth.auth().signOut()
+            print("✅ User signed out successfully")
+            completion() // Notify the caller to navigate back to the WelcomeView
+        } catch let error {
+            print("❌ Error signing out: \(error.localizedDescription)")
         }
     }
 }

@@ -54,6 +54,7 @@
 		7F4B95242CE9C05B00CD7B3E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B95232CE9C05B00CD7B3E /* CardView.swift */; };
 		7FA672842D0AE86A0088F235 /* AllListingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA672832D0AE8650088F235 /* AllListingsView.swift */; };
 		7FA672862D0AEBC30088F235 /* AllActiveRentalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA672852D0AEBBD0088F235 /* AllActiveRentalsView.swift */; };
+		7FA6728A2D0AF5030088F235 /* ProfileSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA672892D0AF4FD0088F235 /* ProfileSettingsView.swift */; };
 		7FDC9B3F2CD6C1DA00CAE839 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */; };
 		7FE838B92CF78AF700CCCBF1 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838B82CF78AF700CCCBF1 /* WelcomeView.swift */; };
 		7FE838BB2CF78F2A00CCCBF1 /* VerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE838BA2CF78F2A00CCCBF1 /* VerifyView.swift */; };
@@ -164,6 +165,7 @@
 		7F4B95232CE9C05B00CD7B3E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		7FA672832D0AE8650088F235 /* AllListingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListingsView.swift; sourceTree = "<group>"; };
 		7FA672852D0AEBBD0088F235 /* AllActiveRentalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllActiveRentalsView.swift; sourceTree = "<group>"; };
+		7FA672892D0AF4FD0088F235 /* ProfileSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsView.swift; sourceTree = "<group>"; };
 		7FDC9B3E2CD6C1DA00CAE839 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7FE838B82CF78AF700CCCBF1 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		7FE838BA2CF78F2A00CCCBF1 /* VerifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyView.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 			children = (
 				6F7CC5CF2D029B7800575DCC /* LikesView.swift */,
 				CA2F2E112CE85DE3008D3021 /* ProfileView.swift */,
+				7FA672892D0AF4FD0088F235 /* ProfileSettingsView.swift */,
 				CA2F2E042CE85B4F008D3021 /* ReviewsView.swift */,
 				CA2F2E002CE85B4F008D3021 /* ListingsProfileView.swift */,
 				7F4B95232CE9C05B00CD7B3E /* CardView.swift */,
@@ -680,6 +683,7 @@
 				7FE838CF2CF839B500CCCBF1 /* NVHReportView.swift in Sources */,
 				CA96ED1D2CD670CA00E6D750 /* ActiveRentalsView.swift in Sources */,
 				7FE838D12CF839CB00CCCBF1 /* DislikeReportView.swift in Sources */,
+				7FA6728A2D0AF5030088F235 /* ProfileSettingsView.swift in Sources */,
 				CAC322842D04054100BC0059 /* RentalsView.swift in Sources */,
 				7F46DBC42CD5612600181DB6 /* UserViewModel.swift in Sources */,
 				7F2B6F082CFD3F850006C4AE /* FollowerView.swift in Sources */,

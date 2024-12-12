@@ -18,9 +18,13 @@ struct ProfileView: View {
                 VStack {
                     HStack {
                         Spacer()
-                        Image(systemName: "gearshape.fill")
-                            .font(.title2)
-                            .foregroundColor(.gray)
+                        NavigationLink(destination: ProfileSettingsView()
+                            .environmentObject(userViewModel)
+                            .environmentObject(listingsViewModel)) {
+                            Image(systemName: "gearshape.fill")
+                                .font(.title2)
+                                .foregroundColor(.gray)
+                        }
                     }
                     .padding([.top, .trailing])
 

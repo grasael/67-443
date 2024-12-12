@@ -138,7 +138,7 @@ struct HomeView: View {
                     List {
                         Section(header: Text("Listings")) {
                             ForEach(searchViewModel.listings) { listing in
-                                NavigationLink(destination: ListingDetailView(listing: listing).environmentObject(userViewModel)) { // Updated
+                                NavigationLink(destination: ListingView(listing: listing).environmentObject(userViewModel)) { // Updated
                                     HStack {
                                         AsyncImage(url: URL(string: listing.photoURLs.first ?? ""), content: { phase in
                                             if let image = phase.image {

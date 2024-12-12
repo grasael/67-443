@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ListingsProfileView: View {
-    @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var listingsViewModel: ListingsViewModel
 
     let columns = [
@@ -21,23 +20,24 @@ struct ListingsProfileView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(listingsViewModel.listings) { listing in
-                      NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")
-                        .environmentObject(userViewModel)
-                        .environmentObject(listingsViewModel)) {
+                        NavigationLink(
+                            destination: ListingDetailView(listingID: listing.id ?? "")
+                                .environmentObject(listingsViewModel)
+                        ) {
                             CardView(listing: listing)
                         }
-
                     }
                 }
                 .padding(.horizontal)
             }
             .onAppear {
-              // fetch listings specific to the current user
-              if let userID = userViewModel.user.id {
-                listingsViewModel.fetchListings(for: userID)
-              }
+                // Fetch listings specific to the current user
+                if let userID = UserManager.shared.user?.id {
+                    listingsViewModel.fetchListings(for: userID)
+                }
             }
         }
         .navigationTitle("Profile")
     }
 }
+

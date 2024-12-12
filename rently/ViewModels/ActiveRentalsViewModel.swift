@@ -1,10 +1,3 @@
-//
-//  RentalViewModel.swift
-//  rently
-//
-//  Created by Tishyaa Chaudhry on 11/4/24.
-//
-
 import Foundation
 import FirebaseFirestore
 
@@ -15,12 +8,17 @@ class ActiveRentalsViewModel: ObservableObject {
     @Published var listing: Listing?
     
     private var db = Firestore.firestore()
-    private let renteeID = "0" // Replace with actual hardcoded ID
+    private let userManager = UserManager.shared // Access UserManager for current user
     
     func fetchActiveRentals() {
+        guard let userID = userManager.user?.id else {
+            print("Error: User ID is nil. Cannot fetch active rentals.")
+            return
+        }
+        
         isLoading = true
         db.collection("Rentals")
-            .whereField("renteeID", isEqualTo: renteeID)
+            .whereField("renteeID", isEqualTo: userID)
             .addSnapshotListener { (querySnapshot, error) in
                 self.isLoading = false
                 
@@ -34,7 +32,7 @@ class ActiveRentalsViewModel: ObservableObject {
                     return
                 }
                 
-                // Map documents to Rental objects and filter by isActive
+                // Map documents to Rental objects and filter by isActiveOrUpcoming
                 self.rentals = documents.compactMap { document in
                     do {
                         let rental = try document.data(as: Rental.self)
@@ -48,52 +46,49 @@ class ActiveRentalsViewModel: ObservableObject {
                 print("Successfully fetched \(self.rentals.count) active rentals.")
             }
     }
-  
-      
-  func loadRenterDetails(rental: Rental) {
-         print("Loading renter details for rental with renter ID: \(rental.renterID)")
-         fetchUser(byID: rental.renterID) { [weak self] user in
-             DispatchQueue.main.async {
-                 self?.renter = user
-                 if let user = user {
-                     print("Successfully set renter: \(user.username)")
-                 } else {
-                     print("Failed to set renter - user is nil")
-                 }
-             }
-         }
-     }
-     
-     func fetchUser(byID userID: String, completion: @escaping (User?) -> Void) {
-         db.collection("Users").document(userID).getDocument { snapshot, error in
-             if let error = error {
-                 print("Error fetching user: \(error.localizedDescription)")
-                 completion(nil)
-                 return
-             }
-             
-             guard let snapshot = snapshot else {
-                 print("No snapshot received for userID: \(userID)")
-                 completion(nil)
-                 return
-             }
-             
-             print("Fetched snapshot for userID \(userID): \(snapshot.data() ?? [:])")
-
-             do {
-                 let user = try snapshot.data(as: User.self)
-                 print("Successfully converted snapshot to User: \(user)")
-                 completion(user)
-             } catch {
-                 print("Error converting snapshot to User: \(error.localizedDescription)")
-                 completion(nil)
-             }
-         }
-     }
-
-
-
-func loadListingDetails(rental: Rental) {
+    
+    func loadRenterDetails(rental: Rental) {
+        print("Loading renter details for rental with renter ID: \(rental.renterID)")
+        fetchUser(byID: rental.renterID) { [weak self] user in
+            DispatchQueue.main.async {
+                self?.renter = user
+                if let user = user {
+                    print("Successfully set renter: \(user.username)")
+                } else {
+                    print("Failed to set renter - user is nil")
+                }
+            }
+        }
+    }
+    
+    func fetchUser(byID userID: String, completion: @escaping (User?) -> Void) {
+        db.collection("Users").document(userID).getDocument { snapshot, error in
+            if let error = error {
+                print("Error fetching user: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                print("No snapshot received for userID: \(userID)")
+                completion(nil)
+                return
+            }
+            
+            print("Fetched snapshot for userID \(userID): \(snapshot.data() ?? [:])")
+            
+            do {
+                let user = try snapshot.data(as: User.self)
+                print("Successfully converted snapshot to User: \(user)")
+                completion(user)
+            } catch {
+                print("Error converting snapshot to User: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
+    }
+    
+    func loadListingDetails(rental: Rental) {
         print("Loading listing details for rental with listing ID: \(rental.listingID)")
         fetchListing(byID: rental.listingID) { [weak self] listing in
             DispatchQueue.main.async {
@@ -122,7 +117,7 @@ func loadListingDetails(rental: Rental) {
             }
             
             print("Fetched snapshot for listingID \(listingID): \(snapshot.data() ?? [:])")
-
+            
             do {
                 let listing = try snapshot.data(as: Listing.self)
                 print("Successfully converted snapshot to Listing: \(listing)")

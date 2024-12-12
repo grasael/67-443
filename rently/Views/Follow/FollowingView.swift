@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct FollowingView: View {
-    @ObservedObject var userViewModel: UserViewModel
+    @ObservedObject var userManager: UserManager = UserManager.shared
     @State private var followingUsers: [User] = []
     @State private var isLoading = true
 
@@ -67,16 +68,38 @@ struct FollowingView: View {
     }
 
     private func fetchFollowingUsers() {
-        isLoading = true
-        userViewModel.fetchFollowingUsers { users in
-            self.followingUsers = users
+        guard let currentUser = userManager.user else {
             self.isLoading = false
+            return
         }
+
+        isLoading = true
+
+        let db = Firestore.firestore()
+        db.collection("Users")
+            .whereField("id", in: currentUser.following)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching following users: \(error.localizedDescription)")
+                    self.isLoading = false
+                    return
+                }
+
+                if let documents = snapshot?.documents {
+                    self.followingUsers = documents.compactMap { try? $0.data(as: User.self) }
+                }
+                self.isLoading = false
+            }
     }
 
     private func unfollow(user: User) {
+        guard let currentUser = userManager.user else { return }
+
         print("Unfollowing \(user.username)")
-        userViewModel.unfollowUser(userID: user.id ?? "")
+
+        userManager.user?.following.removeAll { $0 == user.id }
         followingUsers.removeAll { $0.id == user.id }
+
+        userManager.saveUser(currentUser) // Updates Firestore
     }
 }

@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct EditProfileView: View {
-    @ObservedObject var userViewModel: UserViewModel
+    @StateObject private var userManager = UserManager.shared
     @State private var isShowingImagePicker = false
     @State private var profileImage: UIImage?
     @State private var showSaveAlert = false
     var onSave: (() -> Void)?
-    
+
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
@@ -55,29 +55,41 @@ struct EditProfileView: View {
                     HStack {
                         Text("Name")
                             .frame(width: 100, alignment: .leading)
-                        TextField("Name", text: $userViewModel.user.firstName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        TextField("Name", text: Binding(
+                            get: { userManager.user?.firstName ?? "" },
+                            set: { userManager.user?.firstName = $0 }
+                        ))
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     }
 
                     HStack {
                         Text("Username")
                             .frame(width: 100, alignment: .leading)
-                        TextField("Username", text: $userViewModel.user.username)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        TextField("Username", text: Binding(
+                            get: { userManager.user?.username ?? "" },
+                            set: { userManager.user?.username = $0 }
+                        ))
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     }
 
                     HStack {
                         Text("Pronouns")
                             .frame(width: 100, alignment: .leading)
-                        TextField("Pronouns", text: $userViewModel.user.pronouns)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        TextField("Pronouns", text: Binding(
+                            get: { userManager.user?.pronouns ?? "" },
+                            set: { userManager.user?.pronouns = $0 }
+                        ))
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     }
 
                     HStack {
                         Text("School")
                             .frame(width: 100, alignment: .leading)
-                        TextField("School", text: $userViewModel.user.university)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        TextField("School", text: Binding(
+                            get: { userManager.user?.university ?? "" },
+                            set: { userManager.user?.university = $0 }
+                        ))
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     }
                 }
                 .padding(.horizontal)
@@ -100,7 +112,7 @@ struct EditProfileView: View {
                 }
 
                 Button(action: {
-                    // Add logic for deleting the account
+                    deleteAccount()
                 }) {
                     Text("Delete Account")
                         .font(.headline)
@@ -112,17 +124,22 @@ struct EditProfileView: View {
             }
             .padding()
             .navigationTitle("Edit Profile")
-        }.onAppear {
-            print("❄️ EditProfileView Appeared - User ID: \(userViewModel.user.id ?? "NIL")")
+        }
+        .onAppear {
+            print("❄️ EditProfileView Appeared - User ID: \(userManager.user?.id ?? "NIL")")
         }
     }
 
     private func saveChanges() {
-//        if let profileImage = profileImage {
-//            user.photo = profileImage.pngData() // Save profile image data to the user object
-//        }
-        userViewModel.updateUser()
+        if let updatedUser = userManager.user {
+            userManager.saveUser(updatedUser)
+        }
         showSaveAlert = true
         onSave?() // Notify parent view if needed
+    }
+
+    private func deleteAccount() {
+        // Logic to delete the account goes here
+        print("Account deletion triggered")
     }
 }

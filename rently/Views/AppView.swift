@@ -40,7 +40,7 @@ struct AppView: View {
                Text("rentals")
             }
             .tag(3)
-         ProfileView(userViewModel: viewModel)
+         ProfileView()
             .tabItem {
                Image(systemName: "person")
                Text("profile")

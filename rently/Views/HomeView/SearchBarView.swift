@@ -10,10 +10,11 @@ import SwiftUI
 
 // MARK: - SearchBarView
 struct SearchBarView: View {
+  
+    @ObservedObject var userManager = UserManager.shared
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-        
-            
             HStack {
                 TextField("search for an item...", text: .constant(""))
                     .padding(10)
@@ -31,11 +32,17 @@ struct SearchBarView: View {
                         .background(Color.white)
                         .cornerRadius(8)
                 }
-              
             }
-          Text("hi, Grace!")
-              .font(.largeTitle)
-              .foregroundColor(.green)
+            
+            Text("Hi, \(userManager.user?.firstName ?? "Guest")!")
+                .font(.largeTitle)
+                .foregroundColor(.green)
+        }
+        .onAppear {
+            // Ensure user data is loaded
+            if userManager.user == nil {
+                print("No user loaded; consider handling this case if necessary.")
+            }
         }
     }
 }

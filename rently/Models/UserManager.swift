@@ -21,6 +21,7 @@ class UserManager: ObservableObject {
     func saveUser(_ user: User) {
         print("Saving user: \(user)")
         self.user = user
+        updateUserInDatabase(user) // Save user changes to Firestore
         startListeningToUserChanges(userID: user.id)
     }
 
@@ -60,5 +61,25 @@ class UserManager: ObservableObject {
     private func stopListeningToUserChanges() {
         userListener?.remove()
         userListener = nil
+    }
+
+    private func updateUserInDatabase(_ user: User) {
+        let db = Firestore.firestore()
+        guard let userID = user.id else {
+            print("Error: User ID is nil.")
+            return
+        }
+        
+        do {
+            try db.collection("Users").document(userID).setData(from: user) { error in
+                if let error = error {
+                    print("Error updating user in Firestore: \(error.localizedDescription)")
+                } else {
+                    print("User updated successfully in Firestore.")
+                }
+            }
+        } catch {
+            print("Error encoding user for Firestore: \(error.localizedDescription)")
+        }
     }
 }

@@ -12,8 +12,8 @@ import FirebaseFirestore
 
 class ListingDetailViewModel: ObservableObject {
     @Published var listing: Listing?
+    @Published var user: User?
     private let db = Firestore.firestore()
-    
   
   func fetchListing(by id: String) {
       let docRef = db.collection("Listings").document(id)
@@ -77,6 +77,17 @@ class ListingDetailViewModel: ObservableObject {
             }
         }
     }
+  
+  func fetchUser(by userID: String) {
+         db.collection("Users").document(userID).getDocument { [weak self] snapshot, error in
+             guard let self = self, let data = snapshot?.data() else { return }
+             do {
+                 self.user = try Firestore.Decoder().decode(User.self, from: data)
+             } catch {
+                 print("Error decoding user: \(error)")
+             }
+         }
+     }
 
 
 }

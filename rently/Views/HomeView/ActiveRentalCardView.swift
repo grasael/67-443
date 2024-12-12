@@ -21,7 +21,7 @@ struct ActiveRentalCard: View {
                         Text(rental.rentalStatusText)
                             .font(.subheadline)
                     }
-                    Text("@ \(rental.pickupLocation), 12 pm")
+                    Text("@ \(rental.pickupLocation)")
                         .font(.footnote)
                         .foregroundColor(.gray)
                 }

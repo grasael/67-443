@@ -11,6 +11,7 @@ import SwiftUI
 struct DislikeReportView: View {
     //var username: String
     @Environment(\.presentationMode) var presentationMode
+    @State private var showAcknowledgmentPopup = false
 
     var body: some View {
         VStack(spacing: 20) {

@@ -78,6 +78,7 @@ struct ProfileSettingsView: View {
                 WelcomeView(userViewModel: userViewModel) // Pass the required argument
             }
         }
+        .tint(.black)
     }
     
     // MARK: - Handlers

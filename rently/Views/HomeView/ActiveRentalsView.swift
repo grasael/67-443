@@ -13,29 +13,32 @@ struct ActiveRentalsView: View {
     @StateObject private var rentalViewModel = ActiveRentalsViewModel()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Text("your active rentals")
-                    .font(.headline)
-                Spacer()
-                NavigationLink(destination: RentalsView()) {
-                    Text("see all")
-                        .foregroundColor(.blue)
-                }
+      VStack(alignment: .leading, spacing: 10) {
+        if !rentalViewModel.rentals.isEmpty {
+          HStack {
+            Text("your active rentals")
+              .font(.headline)
+            Spacer()
+            NavigationLink(destination: RentalsView()) {
+              Text("see all")
+                .foregroundColor(.blue)
             }
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 15) {
-                    ForEach(rentalViewModel.rentals) { rental in
-                        ActiveRentalCard(rental: rental)
-                    }
-                }
-                .padding(.vertical)
+          }
+          
+          ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 15) {
+              ForEach(rentalViewModel.rentals) { rental in
+                ActiveRentalCard(rental: rental)
+              }
             }
-        }
-        .onAppear {
+            .padding(.vertical)
+          }
+          
+          .onAppear {
             rentalViewModel.fetchActiveRentals()
+          }
         }
+      }
     }
 }
 

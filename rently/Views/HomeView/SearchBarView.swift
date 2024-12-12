@@ -34,9 +34,21 @@ struct SearchBarView: View {
                 }
             }
             
-            Text("Hi, \(userManager.user?.firstName ?? "Guest")!")
-                .font(.largeTitle)
-                .foregroundColor(.green)
+            ZStack {
+                // Background image
+                Image("cloudBackground")
+                    .resizable()
+                    .scaledToFit() // Keeps the aspect ratio and ensures the entire image is visible
+                    .frame(maxWidth: .infinity, maxHeight: 150) // Adjust maxHeight as needed
+                    .opacity(0.3) // Optional: Make the background more subtle
+                    .edgesIgnoringSafeArea(.horizontal) // Optional: Prevents clipping on edges
+                
+                // Text on top
+                Text("Hi, \(userManager.user?.firstName ?? "Guest")!")
+                    .font(.largeTitle)
+                    .foregroundColor(.green)
+                    .padding()
+            }
         }
         .onAppear {
             // Ensure user data is loaded

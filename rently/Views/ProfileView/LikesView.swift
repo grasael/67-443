@@ -38,7 +38,7 @@ struct LikesView: View {
                     .padding(.horizontal)
                 }
             }
-            .navigationTitle("Likes")
+            .navigationTitle("")
             .onAppear {
                 // Fetch liked listings if needed
                 listingsViewModel.fetchListings() // Assuming this fetches all listings

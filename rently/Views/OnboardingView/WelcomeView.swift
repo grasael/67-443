@@ -10,17 +10,18 @@ import SwiftUI
 
 struct WelcomeView: View {
     @ObservedObject var userViewModel: UserViewModel
+    @State private var navigateToAppView = false
 
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
 
-                Text("rently")
-                    .font(.system(size: 60, weight: .bold))
-                    .foregroundColor(Color.blue.opacity(0.8))
-                    .shadow(radius: 2)
-                    .padding()
+                Image("rently_logo")
+                  .resizable()
+                  .scaledToFit()
+                  .frame(width: 300, height: 200)
+                  .padding()
 
                 Spacer()
 
@@ -32,7 +33,7 @@ struct WelcomeView: View {
                         .padding()
                         .background(
                             LinearGradient(
-                                gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
+                                gradient: Gradient(colors: [Color("Yellow"), Color("MediumBlue")]),
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -42,7 +43,7 @@ struct WelcomeView: View {
                 }
                 .padding(.bottom, 10)
 
-                NavigationLink(destination: SignInView()) {
+                NavigationLink(destination: SignInView(userViewModel: userViewModel, navigateToAppView: $navigateToAppView)) {
                     Text("I already have an account")
                         .font(.subheadline)
                         .foregroundColor(.black)
@@ -60,6 +61,9 @@ struct WelcomeView: View {
                 )
                 .ignoresSafeArea()
             )
+            .fullScreenCover(isPresented: $navigateToAppView) {
+                AppView(viewModel: userViewModel)
+            }
         }
         .navigationBarHidden(true)
     }

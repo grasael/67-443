@@ -17,11 +17,6 @@ struct SuggestedItemsView: View {
         Text("we thought you would like")
           .font(.headline)
         Spacer()
-        Text("see all")
-          .foregroundColor(.blue)
-          .onTapGesture {
-            // Action for see all
-          }
       }
       
       ScrollView(.horizontal, showsIndicators: false) {

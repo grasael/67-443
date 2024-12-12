@@ -10,13 +10,17 @@ import SwiftUI
 
 // MARK: - SearchBarView
 struct SearchBarView: View {
-  
     @ObservedObject var userManager = UserManager.shared
-    
+    @ObservedObject var searchViewModel = SearchViewModel()
+    @State private var searchText = ""
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+            // Search Bar
             HStack {
-                TextField("search for an item...", text: .constant(""))
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
+                TextField("search for an item...", text: $searchText)
                     .padding(10)
                     .background(Color.white)
                     .cornerRadius(8)
@@ -24,37 +28,75 @@ struct SearchBarView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.gray.opacity(0.3), lineWidth: 1)
                     )
-                Button(action: {
-                    // Action for filter
-                }) {
-                    Image(systemName: "slider.horizontal.3")
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(8)
-                }
+                    .onChange(of: searchText) { newValue in
+                        searchViewModel.filterListingsAndUsers(query: newValue)
+                    }
             }
+            .padding(.horizontal)
             
-            ZStack {
-                // Background image
-                Image("cloudBackground")
-                    .resizable()
-                    .scaledToFit() // Keeps the aspect ratio and ensures the entire image is visible
-                    .frame(maxWidth: .infinity, maxHeight: 150) // Adjust maxHeight as needed
-                    .opacity(0.3) // Optional: Make the background more subtle
-                    .edgesIgnoringSafeArea(.horizontal) // Optional: Prevents clipping on edges
-                
-                // Text on top
-                Text("Hi, \(userManager.user?.firstName ?? "Guest")!")
-                    .font(.largeTitle)
-                    .foregroundColor(.green)
-                    .padding()
+            if !searchText.isEmpty {
+                // Display search results
+                List {
+                    Section(header: Text("Listings")) {
+                        ForEach(searchViewModel.listings) { listing in
+                            NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")) {
+                                HStack {
+                                    AsyncImage(url: URL(string: listing.photoURLs.first ?? "")) { phase in
+                                        if let image = phase.image {
+                                            image.resizable()
+                                                .scaledToFill()
+                                                .frame(width: 50, height: 50)
+                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        } else if phase.error != nil {
+                                            Image(systemName: "xmark.circle")
+                                                .frame(width: 50, height: 50)
+                                        } else {
+                                            ProgressView()
+                                                .frame(width: 50, height: 50)
+                                        }
+                                    }
+                                    VStack(alignment: .leading) {
+                                        Text(listing.title)
+                                            .font(.headline)
+                                        Text("$\(listing.price, specifier: "%.2f")")
+                                            .font(.subheadline)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    Section(header: Text("Users")) {
+                        ForEach(searchViewModel.users) { user in
+                            NavigationLink(destination: SearchUserDetailView(user: user)) {
+                                UserProfileRow(user: user)
+                            }
+                        }
+                    }
+                }
+                .scrollContentBackground(.hidden)
+                .background(Color.white)
+            } else {
+                // Default background and greeting message
+                ZStack {
+                    Image("cloudBackground")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity, maxHeight: 150)
+                        .opacity(0.3)
+                        .edgesIgnoringSafeArea(.horizontal)
+                    
+                    Text("Hi, \(userManager.user?.firstName ?? "Guest")!")
+                        .font(.largeTitle)
+                        .foregroundColor(.green)
+                        .padding()
+                }
             }
         }
         .onAppear {
-            // Ensure user data is loaded
-            if userManager.user == nil {
-                print("No user loaded; consider handling this case if necessary.")
-            }
+            // Ensure user data and initial listings are loaded
+            searchViewModel.fetchListings()
+            searchViewModel.fetchUsers()
         }
     }
 }

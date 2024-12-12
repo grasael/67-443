@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SearchUserDetailView: View {
     var user: User
-    @ObservedObject var userViewModel: UserViewModel
+    @ObservedObject var userManager = UserManager.shared
 
     var body: some View {
         VStack {
@@ -26,19 +26,24 @@ struct SearchUserDetailView: View {
                 .foregroundColor(.gray)
 
             Button(action: {
-                if let userID = user.id {
-                    if userViewModel.user.following.contains(userID) {
-                        userViewModel.unfollowUser(userID: userID)
+                guard let userID = user.id else { return }
+                if let currentUser = userManager.user {
+                    if currentUser.following.contains(userID) {
+                        var updatedUser = currentUser
+                        updatedUser.following.removeAll { $0 == userID }
+                        userManager.saveUser(updatedUser)
                     } else {
-                        userViewModel.followUser(userID: userID)
+                        var updatedUser = currentUser
+                        updatedUser.following.append(userID)
+                        userManager.saveUser(updatedUser)
                     }
                 }
             }) {
-                Text(userViewModel.user.following.contains(user.id ?? "") ? "Unfollow" : "Follow")
+                Text(userManager.user?.following.contains(user.id ?? "") == true ? "Unfollow" : "Follow")
                     .font(.headline)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(userViewModel.user.following.contains(user.id ?? "") ? Color.red : Color.blue)
+                    .background(userManager.user?.following.contains(user.id ?? "") == true ? Color.red : Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
@@ -46,7 +51,7 @@ struct SearchUserDetailView: View {
 
             List {
                 Section(header: Text("Listings")) {
-                    ForEach(user.listings, id: \.self) { listingID in
+                    ForEach(user.listings, id: \ .self) { listingID in
                         Text(listingID)
                     }
                 }

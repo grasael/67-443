@@ -178,31 +178,32 @@ struct ListingDetailView: View {
                         }
 
                         // Price and Rent Button
-                        HStack {
-                            Text("$\(String(format: "%.2f", listing.price))/day")
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Button(action: {
-                                // Rent button
-                            }) {
-                                Text("rent")
-                                    .font(.headline)
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
-                                    .background(
-                                        LinearGradient(
-                                            gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
-                                            startPoint: .leading,
-                                            endPoint: .trailing
-                                        )
-                                    )
-                                    .cornerRadius(40)
-                                    .foregroundColor(.white)
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
+                      HStack {
+                                                  Text("$\(String(format: "%.2f", listing.price))/day")
+                                                      .font(.headline)
+                                                      .foregroundColor(.primary)
+                                                  Spacer()
+                                                  
+                                                  // Rent Button with NavigationLink
+                                                  NavigationLink(destination: RentAnItemView(listing: listing)) {
+                                                      Text("rent")
+                                                          .font(.headline)
+                                                          .padding()
+                                                          .frame(maxWidth: .infinity)
+                                                          .background(
+                                                              LinearGradient(
+                                                                  gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
+                                                                  startPoint: .leading,
+                                                                  endPoint: .trailing
+                                                              )
+                                                          )
+                                                          .cornerRadius(40)
+                                                          .foregroundColor(.white)
+                                                  }
+                                                  .padding(.top, 16)
+                                              }
+                                              .padding(.horizontal)
+                                          }
                 }
             } else {
                 ProgressView("Loading...")

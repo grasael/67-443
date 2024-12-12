@@ -97,10 +97,18 @@ struct RentAnItemView: View {
                 ) {
                     Text("Next")
                         .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.green)
                         .foregroundColor(.white)
-                        .cornerRadius(8)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 40)
+                        .font(.system(size: 16, weight: .semibold))
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color("MediumBlue"), Color("MediumGreen")]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .cornerRadius(20)
                 }
                 .disabled(!isValidSelection)
             }

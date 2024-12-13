@@ -45,15 +45,15 @@ struct RentalPriceView: View {
                             .font(.headline)
                         
                         HStack {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
+                            Image(systemName: "circle")
+                                .foregroundColor(.gray)
                             Text("$\(rental.calculateTotalCost(for: listing) / 2, specifier: "%.2f") on \(formattedDate(rental.startDate))")
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
                         HStack {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
+                            Image(systemName: "circle")
+                                .foregroundColor(.gray)
                             Text("$\(rental.calculateTotalCost(for: listing) / 2, specifier: "%.2f") on \(formattedDate(rental.endDate))")
                                 .font(.caption)
                                 .foregroundColor(.gray)

@@ -1,4 +1,3 @@
-//
 //  RentalCompleteView.swift
 //  rently
 //
@@ -18,17 +17,17 @@ struct RentalCompleteView: View {
     @State private var isShowingMailView = false
     @State private var mailError: MailError?
 
-    // State to manage navigation
-    @State private var navigateToHome = false
+    // State to manage the bottom navigation bar
+    @Binding var selectedTab: Int
 
     var body: some View {
         VStack(spacing: 24) {
-            // Cross button in top corner to go to Home view
+            // Cross button in top corner to go back to RentalsView
             HStack {
                 Spacer()
                 Button(action: {
-                    // Set navigation state to true to navigate to home
-                    navigateToHome = true
+                    // Navigate to RentalsView by updating the selectedTab state
+                    selectedTab = 3 // Assuming the RentalsView is at index 1 in TabView
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(.gray)
@@ -41,7 +40,7 @@ struct RentalCompleteView: View {
             Text("Rental Complete!")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(.blue)
+                .foregroundColor(.black)
 
             VStack(alignment: .leading, spacing: 8) {
                 Text("Meet at the")
@@ -54,6 +53,14 @@ struct RentalCompleteView: View {
             }
             .multilineTextAlignment(.leading)
             .padding()
+
+            Spacer()
+
+            // Adding Saly-43 image
+            Image("Saly-43")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 200)
 
             Button(action: {
                 if MFMailComposeViewController.canSendMail() {
@@ -85,19 +92,15 @@ struct RentalCompleteView: View {
 
             Spacer()
 
-            Image(systemName: "rocket.fill")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 150)
-                .foregroundColor(.blue)
-
             Text("Thank you for renting with")
                 .font(.footnote)
                 .foregroundColor(.secondary)
-            Text("Rently")
-                .font(.title3)
-                .fontWeight(.bold)
-                .foregroundColor(.blue)
+
+            // Replace text with the Rently logo
+            Image("rently")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 20)
         }
         .padding()
         .sheet(isPresented: $isShowingMailView) {
@@ -111,11 +114,6 @@ struct RentalCompleteView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
-        .background(
-            NavigationLink(destination: HomeView(), isActive: $navigateToHome) {
-                EmptyView()
-            }
-        )
     }
 
     private func formattedDate(_ date: Date) -> String {
@@ -140,11 +138,24 @@ enum MailError: Identifiable, LocalizedError {
 
 struct RentalCompleteView_Preview: PreviewProvider {
     static var previews: some View {
-        RentalCompleteView(
-            itemName: "Jacket",
-            userEmail: "owner@example.com",
-            pickupLocation: "UC",
-            pickupDate: Date()
-        )
+        TabView {
+            RentalsView()
+                .tabItem {
+                    Label("Rentals", systemImage: "house.fill")
+                }
+                .tag(1)
+            RentalCompleteView(
+                itemName: "Jacket",
+                userEmail: "owner@example.com",
+                pickupLocation: "UC",
+                pickupDate: Date(),
+                selectedTab: .constant(1)
+            )
+            .tabItem {
+                Label("Complete", systemImage: "checkmark")
+            }
+            .tag(2)
+        }
     }
 }
+

@@ -41,9 +41,30 @@ struct RentalsView: View {
                             }
                         }
                     } else {
-                        ForEach(myItems, id: \.0.id) { (rental, listing) in
-                            NavigationLink(destination: RentalDetailView(rental: rental)) {
-                                RentalRowView(rental: rental, listing: listing, isCompleted: true)
+                        if myItems.isEmpty {
+                            // Placeholder View
+                            VStack {
+                                Image("Saly-45") // Use the image asset name
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 200)
+                                    .padding()
+
+                                Text("Rent out your first item!")
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                    .padding(.top)
+
+                                Text("Click on the '+' to make a listing.")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding()
+                        } else {
+                            ForEach(myItems, id: \.0.id) { (rental, listing) in
+                                NavigationLink(destination: RentalDetailView(rental: rental)) {
+                                    RentalRowView(rental: rental, listing: listing, isCompleted: true)
+                                }
                             }
                         }
                     }
@@ -52,6 +73,14 @@ struct RentalsView: View {
             .onAppear {
                 fetchRentals()
             }
+            .background( // Apply background gradient here
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color("LightestBlue"), Color("LightGreen"),Color("Yellow")]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                            .ignoresSafeArea() // Make sure it covers the entire screen
+                        )
         }
     }
 
@@ -193,3 +222,4 @@ struct RentalsView: View {
         }
     }
 }
+

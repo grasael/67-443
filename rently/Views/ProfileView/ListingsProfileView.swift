@@ -21,7 +21,7 @@ struct ListingsProfileView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(listingsViewModel.listings) { listing in
-                      NavigationLink(destination: ListingDetailView(listingID: listing.id ?? "")
+                      NavigationLink(destination: ListingView(listing: listing)
                         .environmentObject(userViewModel)
                         .environmentObject(listingsViewModel)) {
                             CardView(listing: listing)

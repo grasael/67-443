@@ -44,7 +44,7 @@ struct RentalItemDetailsView: View {
                 // Renter information
                 Text("Renter: \(viewModel.renter?.username ?? "Unknown")")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.black)
                 
                 // Listing title
                 Text(viewModel.listing?.title ?? "Loading...")
@@ -54,18 +54,18 @@ struct RentalItemDetailsView: View {
                 // Rental date range
                 Text("\(formattedDate(rental.startDate)) - \(formattedDate(rental.endDate))")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.black)
                 
                 // Listing brand and price (optional)
                 if let brand = viewModel.listing?.brand {
                     Text("Brand: \(brand)")
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.black)
                 }
                 if let price = viewModel.listing?.price {
                     Text(String(format: "$%.2f per day", price))
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.black)
                 }
             }
         }

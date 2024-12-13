@@ -178,9 +178,7 @@ struct ListingView: View {
                         .font(.headline)
                         .foregroundColor(.primary)
                     Spacer()
-                    Button(action: {
-                        // Rent button action
-                    }) {
+                    NavigationLink(destination: RentAnItemView(listing: listing)) {
                         Text("rent")
                             .font(.headline)
                             .padding()

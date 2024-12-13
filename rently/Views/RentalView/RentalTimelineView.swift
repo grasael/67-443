@@ -17,7 +17,7 @@ struct RentalTimelineView: View {
                 // Pickup Section
                 VStack {
                     Image(systemName: isDatePassed(rental.startDate) ? "checkmark.circle.fill" : "circle")
-                        .foregroundColor(isDatePassed(rental.startDate) ? .green : .gray)
+                        .foregroundColor(isDatePassed(rental.startDate) ? Color("MediumGreen") : .gray)
                     Text("Pickup")
                         .font(.caption)
                     Text("\(formattedDate(rental.startDate))")
@@ -33,7 +33,7 @@ struct RentalTimelineView: View {
                 // Dropoff Section
                 VStack {
                     Image(systemName: isDatePassed(rental.endDate) ? "checkmark.circle.fill" : "circle")
-                        .foregroundColor(isDatePassed(rental.endDate) ? .green : .gray)
+                        .foregroundColor(isDatePassed(rental.endDate) ? Color("MediumGreen") : .gray)
                     Text("Dropoff")
                         .font(.caption)
                     Text("\(formattedDate(rental.endDate))")

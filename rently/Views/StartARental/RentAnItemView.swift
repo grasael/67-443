@@ -77,12 +77,27 @@ struct RentAnItemView: View {
 
                 // Location Picker
                 Text("Select Pickup and Dropoff Location:")
+                    .foregroundColor(.black) // Ensure the label is black
+
                 Picker("Location", selection: $location) {
                     ForEach(listing.pickupLocations, id: \.self) { location in
-                        Text(location.rawValue).tag(location.rawValue)
+                        Text(location.rawValue)
+                            .tag(location.rawValue)
+                            .foregroundColor(.black) // Ensure picker options are black
                     }
                 }
-                .pickerStyle(MenuPickerStyle())
+                .pickerStyle(MenuPickerStyle()) // Set the picker style
+                .accentColor(Color("MediumGreen")) // Set the accent color for the Picker options
+                .padding()
+                .background(Color.white)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.black, lineWidth: 1)
+                )
+                .padding(.horizontal, 30)
+                .padding(.bottom, 30)
+
 
                 Spacer()
 

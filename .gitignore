@@ -7,4 +7,5 @@ build/
 DerivedData/
 *.xcuserstate
 *.swp
+.DS_Store
 

@@ -85,7 +85,7 @@ struct LoadingView: View {
     private func startVerificationProcess() {
         // Display each message with a delay
         for (index, message) in verificationMessages.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 2.0) { // Adjust timing as needed
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 5.0) { // Adjust timing as needed
                 currentMessage = message
                 messageIndex = index
 
@@ -98,7 +98,7 @@ struct LoadingView: View {
     }
 
     private func validateEmail() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Add a short delay before finalizing
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { // Add a short delay before finalizing
             if email.hasSuffix(".edu") {
                 isVerified = true // Navigate to VerifiedView
             } else {

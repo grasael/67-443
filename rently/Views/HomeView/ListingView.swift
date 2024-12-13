@@ -5,165 +5,248 @@
 //  Created by Tishyaa Chaudhry on 11/7/24.
 //
 
-import Foundation
 import SwiftUI
 
-
 struct ListingView: View {
-    var listing: Listing
+    let listing: Listing
     @EnvironmentObject var userViewModel: UserViewModel
+    @EnvironmentObject var listingsViewModel: ListingsViewModel
     @State private var isLiked: Bool = false
-
+    @State private var showShareView = false
+    @State private var showReportView = false
+    @State private var showEditView = false
+    @State private var showDeleteAlert = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                
-                // Image Carousel with Adjusted Size
+                // Header with User Info and Icons
+                HStack {
+                    // Profile Icon
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.gray)
+
+                    // Username and Rating
+                    VStack(alignment: .leading) {
+                        Text(userViewModel.user.username)
+                            .font(.headline)
+                            .foregroundColor(.primary)
+
+                        HStack(spacing: 2) {
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                                .font(.caption)
+                            Text(String(format: "%.1f", userViewModel.user.rating))
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    .padding(.leading, 8)
+
+                    Spacer()
+
+                    // Ellipsis Button
+                    Menu {
+                        if userViewModel.user.id == listing.userID {
+                            Button("edit listing") {
+                                showEditView = true
+                            }
+                            Button("share listing") {
+                                showShareView = true
+                            }
+                            Button("delete listing") {
+                                showDeleteAlert = true
+                            }
+                            .foregroundColor(.red)
+                        } else {
+                            Button("share listing") {
+                                showShareView = true
+                            }
+                            Button("report listing") {
+                                showReportView = true
+                            }
+                            .foregroundColor(.red)
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis")
+                    }
+                    .foregroundColor(.primary)
+                }
+                .padding([.horizontal, .top])
+
+                // Image Carousel
                 TabView {
                     ForEach(listing.photoURLs, id: \.self) { photoURL in
                         AsyncImage(url: URL(string: photoURL)) { phase in
                             switch phase {
                             case .empty:
                                 ProgressView()
-                                    .frame(maxWidth: .infinity, maxHeight: 300)
+                                    .frame(maxWidth: .infinity, maxHeight: 340)
                             case .success(let image):
                                 image
                                     .resizable()
-                                    .scaledToFill()
-                                    .frame(maxWidth: .infinity, maxHeight: 300)
-                                    .clipped()
+                                    .scaledToFit()
+                                    .cornerRadius(10)
+                                    .frame(maxWidth: .infinity, maxHeight: 340)
                             case .failure:
-                                Image("sampleItemImage")
+                                Image("sampleItemImage") // Fallback image
                                     .resizable()
-                                    .frame(maxWidth: .infinity, maxHeight: 300)
-                                    .clipped()
+                                    .scaledToFit()
+                                    .cornerRadius(10)
+                                    .frame(maxWidth: .infinity, maxHeight: 340)
                             @unknown default:
                                 EmptyView()
                             }
                         }
                     }
                 }
-                .frame(height: 300) // Set fixed height for the carousel
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic)) // Carousel style
-                
-                // Title and Price
-                Text(listing.title)
-                    .font(.title)
-                    .fontWeight(.bold)
-                
-                Text("$\(String(format: "%.2f", listing.price)) / day")
-                    .font(.headline)
-                    .foregroundColor(.green)
-                
-                // Brand and Condition
+                .frame(height: 340)
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                .padding(.horizontal)
+
+                // Title and Like Button
+                HStack {
+                    Text(listing.title)
+                        .font(.title2)
+                        .bold()
+                        .lineLimit(1)
+                        .foregroundColor(.black)
+                    Spacer()
+                    Button(action: {
+                        toggleLike()
+                    }) {
+                        Image(systemName: isLiked ? "heart.fill" : "heart")
+                            .font(.system(size: 24))
+                            .foregroundColor(isLiked ? .red : .gray)
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 4)
+
+                // Listing Details
                 HStack {
                     Text(listing.brand)
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text(listing.condition.rawValue.capitalized)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color("MediumBlue"))
+                        .foregroundColor(.white)
+                        .cornerRadius(20)
+
+                    Text(listing.condition.rawValue)
                         .font(.subheadline)
-                        .padding(4)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
                         .background(Color.gray.opacity(0.2))
-                        .cornerRadius(4)
+                        .cornerRadius(20)
+
+                    Text("size \(listing.size.rawValue)")
+                        .font(.subheadline)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(20)
                 }
-                
+                .padding(.horizontal)
+              
                 // Description
                 Text(listing.description)
                     .font(.body)
-                    .padding(.top, 8)
-
-                // Size, Color, and Tags
-                HStack {
-                    Text("Size: \(listing.size.rawValue)")
-                    Text("Color: \(listing.color.rawValue.capitalized)")
-                }
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+                    .padding(.horizontal)
 
                 // Tags
                 if !listing.tags.isEmpty {
-                    HStack {
-                        ForEach(listing.tags, id: \.self) { tag in
-                            Text(tag.rawValue.capitalized)
-                                .padding(4)
-                                .background(Color.blue.opacity(0.1))
-                                .cornerRadius(4)
+                    HStack(spacing: 8) {
+                        ForEach(listing.tags.prefix(3), id: \.self) { tag in
+                            Text(tag.rawValue)
+                                .font(.caption)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Color("MediumGreen"))
+                                .cornerRadius(20)
                         }
                     }
+                    .padding(.horizontal)
                 }
 
-                // Rental Duration and Pickup Locations
-                Text("Max Rental Duration: \(listing.maxRentalDuration.rawValue)")
-                    .font(.subheadline)
-                    .padding(.top, 8)
-                
-                Text("Pickup Locations:")
-                    .font(.headline)
-                    .padding(.top, 8)
-                
-                ForEach(listing.pickupLocations, id: \.self) { location in
-                    Text(location.rawValue)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                // Price and Rent Button
+                HStack {
+                    Text("$\(String(format: "%.2f", listing.price))/day")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Button(action: {
+                        // Rent button action
+                    }) {
+                        Text("rent")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [Color("MediumBlue"), Color("LightGreen")]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .cornerRadius(40)
+                            .foregroundColor(.white)
+                    }
                 }
-                
-                Spacer()
-                
-                // Heart Icon
-                Button(action: toggleLike) {
-                    Image(systemName: isLiked ? "heart.fill" : "heart")
-                        .foregroundColor(isLiked ? .red : .gray)
-                        .font(.title2)
-                }
-                .onAppear {
-                    isLiked = userViewModel.user.likedItems.contains(listing.id ?? "")
-                }
+                .padding(.horizontal)
             }
-            .padding()
         }
-        .navigationBarTitle("Listing Details", displayMode: .inline)
-        .navigationBarBackButtonHidden(false) // Ensure back button is visible
+        .onAppear {
+            isLiked = userViewModel.user.likedItems.contains(listing.id ?? "")
+        }
+        .navigationBarTitle("listing details", displayMode: .inline)
+        // Edit Listing Sheet
+        .sheet(isPresented: $showEditView) {
+            EditListingView(listing: listing)
+                .environmentObject(listingsViewModel)
+        }
+        // Delete Alert
+        .alert(isPresented: $showDeleteAlert) {
+            Alert(
+                title: Text("are you sure you want to delete this listing?"),
+                message: Text("this action cannot be undone."),
+                primaryButton: .destructive(Text("delete")) {
+                    listingsViewModel.deleteListing(listing.id ?? "") { result in
+                        switch result {
+                        case .success:
+                            print("Listing deleted successfully")
+                        case .failure(let error):
+                            print("Error deleting listing: \(error.localizedDescription)")
+                        }
+                    }
+                },
+                secondaryButton: .cancel()
+            )
+        }
+        // Share Listing Sheet
+        .sheet(isPresented: $showShareView) {
+            ShareListingView()
+        }
+        // Report Listing Sheet
+        .sheet(isPresented: $showReportView) {
+            ReportListingView()
+        }
     }
-    
+
     private func toggleLike() {
-            guard let listingID = listing.id else { return }
-            if isLiked {
-                // Unlike
-                userViewModel.user.likedItems.removeAll { $0 == listingID }
-            } else {
-                // Like
-                userViewModel.user.likedItems.append(listingID)
-            }
-            isLiked.toggle()
-            // Update Firebase
-            userViewModel.updateUser()
+        guard let listingID = listing.id else { return }
+        if isLiked {
+            // Unlike
+            userViewModel.user.likedItems.removeAll { $0 == listingID }
+        } else {
+            // Like
+            userViewModel.user.likedItems.append(listingID)
         }
-}
-
-struct ListingView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleListing = Listing(
-            id: "1",
-            title: "Princess Polly Romper",
-            creationTime: Date(),
-            description: "Gorgeous Princess Polly romper, perfect for a picnic or a casual day out. Worn a few times and rented twice, still in very good condition. Please cold wash and air dry.",
-            category: .dresses,
-            userID: "user123",
-            size: .small,
-            price: 5.0,
-            color: .black,
-            condition: .veryGood,
-            photoURLs: ["https://example.com/sample-image.jpg", "https://example.com/sample-image2.jpg"],
-            tags: [.casual, .vintage],
-            brand: "Princess Polly",
-            maxRentalDuration: .oneWeek,
-            pickupLocations: [.uc, .fifthClyde],
-            available: true
-        )
-
-        ListingView(listing: sampleListing)
-            .previewDevice("iPhone 14")
+        isLiked.toggle()
+        // Update Firebase
+        userViewModel.updateUser()
     }
 }

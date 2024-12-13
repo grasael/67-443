@@ -69,10 +69,18 @@ struct RentalCompleteView: View {
                         .foregroundColor(.white)
                         .fontWeight(.bold)
                 }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.green)
-                .cornerRadius(8)
+                .foregroundColor(.white)
+                .padding(.vertical, 10)
+                .padding(.horizontal, 40)
+                .font(.system(size: 16, weight: .semibold))
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color("MediumBlue"), Color("MediumGreen")]),
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .cornerRadius(20)
             }
 
             Spacer()

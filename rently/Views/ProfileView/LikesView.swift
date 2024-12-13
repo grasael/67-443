@@ -20,7 +20,7 @@ struct LikesView: View {
         NavigationView {
             ScrollView {
                 if userViewModel.user.likedItems.isEmpty {
-                    Text("You haven't liked any items yet.")
+                    Text("you haven't liked any items yet.")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                         .padding()

@@ -14,8 +14,11 @@ struct TrendingSearchesView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Trending Searches on Campus")
+            Text("trending searches on campus")
                 .font(.headline)
+                .padding(.bottom, 10)
+          
+            // image carousel
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     ForEach(viewModel.trendingItems) { item in
@@ -32,6 +35,10 @@ struct TrendingSearchesView: View {
                                     .frame(width: 80, height: 80)
                             }
                             Text(item.name)
+                                .font(.system(size: 13))
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                                .frame(width: 80)
                         }
                     }
                 }

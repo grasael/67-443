@@ -22,9 +22,10 @@ struct SuggestedItemsView: View {
                     .environmentObject(userViewModel)
                     .environmentObject(listingsViewModel)) {
                     Text("see all")
-                        .foregroundColor(.blue)
+                        .foregroundColor(Color("Red"))
                 }
             }
+            .padding(.bottom, 10)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
@@ -58,8 +59,14 @@ struct SuggestedItemsView: View {
                                     }
                                 }
                                 Text(listing.title)
+                                .foregroundColor(.black)
+                                .font(.system(size: 13))
                                 Text("$\(listing.price, specifier: "%.2f")/day")
+                                .foregroundColor(.black)
+                                .font(.system(size: 13))
                                 Text("size \(listing.size.rawValue)")
+                                .foregroundColor(.black)
+                                .font(.system(size: 13))
                             }
                         }
                     }

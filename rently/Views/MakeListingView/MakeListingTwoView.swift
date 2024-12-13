@@ -129,15 +129,16 @@ struct MakeListingTwoView: View {
                 .padding(.top)
             }
             .padding()
+            .tint(.black)
         }
         .disabled(isSaving)
         .alert(isPresented: .constant(saveError != nil)) {
-                    Alert(
-                        title: Text("Error"),
-                        message: Text(saveError ?? "Unknown error occurred"),
-                        dismissButton: .default(Text("OK"), action: { saveError = nil })
-                    )
-                }
+            Alert(
+                title: Text("Error"),
+                message: Text(saveError ?? "Unknown error occurred"),
+                dismissButton: .default(Text("OK"), action: { saveError = nil })
+            )
+        }
     }
 
   private func saveListingAndRedirect() {
@@ -159,13 +160,13 @@ struct MakeListingTwoView: View {
             isSaving = false
             switch result {
             case .success:
-              // Reset states
-                              draft = ListingDraft()
-                              selectedDates.removeAll()
-                              selectedLocations.removeAll()
-                              maxRentalDuration = .oneWeek
-                              selectedTab = 4 // Navigate to Profile tab
-                              dismiss()
+                // Reset draft states
+                draft = ListingDraft()
+                selectedDates.removeAll()
+                selectedLocations.removeAll()
+                maxRentalDuration = .oneWeek
+                selectedTab = 4 // Navigate to Profile tab
+                dismiss()
             case .failure(let error):
                 saveError = error.localizedDescription
             }

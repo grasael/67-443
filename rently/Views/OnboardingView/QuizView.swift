@@ -31,7 +31,7 @@ struct QuizView: View {
 
             Divider()
                 .frame(height: 2)
-                .overlay(LinearGradient(colors: [.blue, .green], startPoint: .leading, endPoint: .trailing))
+                .overlay(LinearGradient(colors: [Color("LightBlue"), Color("Yellow")], startPoint: .leading, endPoint: .trailing))
                 .padding(.horizontal)
 
             VStack(alignment: .leading, spacing: 16) {
@@ -57,11 +57,17 @@ struct QuizView: View {
                     presentationMode.wrappedValue.dismiss() // Go back to OnboardingView
                 }) {
                     Text("back")
-                        .foregroundColor(.white)
+                        .foregroundColor(.black)
                         .padding(.vertical, 10)
                         .padding(.horizontal, 40)
                 }
-                .background(Color.gray.opacity(0.7).cornerRadius(10))
+                .background(Color.white
+                  .cornerRadius(20)
+                )
+                .overlay(
+                  RoundedRectangle(cornerRadius: 20)
+                  .stroke(Color.black, lineWidth: 2)
+                )
                 
                 Button(action: finishOnboarding) {
                     Text("next")
@@ -70,8 +76,8 @@ struct QuizView: View {
                         .padding(.horizontal, 40)
                 }
                 .background(
-                    LinearGradient(colors: [.blue, .green], startPoint: .leading, endPoint: .trailing)
-                        .cornerRadius(10)
+                    LinearGradient(colors: [Color("MediumBlue"), Color("MediumGreen")], startPoint: .leading, endPoint: .trailing)
+                        .cornerRadius(20)
                 )
                 .disabled(selectedStyles.count < 2 || selectedEvents.count < 2)
                 .opacity((selectedStyles.count < 2 || selectedEvents.count < 2) ? 0.6 : 1.0)

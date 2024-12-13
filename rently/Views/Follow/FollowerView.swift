@@ -20,7 +20,7 @@ struct FollowerView: View {
     var body: some View {
         VStack {
             if followerIDs.isEmpty {
-                Text("You don't have any followers yet.")
+                Text("you don't have any followers yet.")
                     .font(.headline)
                     .foregroundColor(.gray)
                     .padding()
@@ -81,7 +81,7 @@ struct FollowerView: View {
                 .listStyle(PlainListStyle())
             }
         }
-        .navigationTitle("Followers")
+        .navigationTitle("followers")
     }
 
     private func follow(userID: String) {

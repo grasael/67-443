@@ -23,7 +23,10 @@ struct SignInView: View {
                 .fontWeight(.bold)
                 .padding(.top)
 
-            Divider()
+          Divider()
+              .frame(height: 2)
+              .overlay(LinearGradient(colors: [Color("MediumGreen"), Color("MediumBlue")], startPoint: .leading, endPoint: .trailing))
+              .padding(.horizontal)
 
             EmailField(email: $email)
             PasswordField(password: $password)
@@ -37,9 +40,9 @@ struct SignInView: View {
                     .frame(maxWidth: .infinity)
             }
             .background(
-                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]), startPoint: .leading, endPoint: .trailing)
+                LinearGradient(gradient: Gradient(colors: [Color("LightBlue"), Color("Yellow")]), startPoint: .leading, endPoint: .trailing)
             )
-            .cornerRadius(8)
+            .cornerRadius(20)
             .padding(.horizontal)
 
             Spacer()
@@ -66,7 +69,7 @@ struct SignInView: View {
             if let error = error as NSError? {
                 print("❌ Firebase Auth Error: \(error.localizedDescription), Code: \(error.code)")
                 DispatchQueue.main.async {
-                    alertMessage = "Invalid email or password. Please try again."
+                    alertMessage = "invalid email or password. please try again."
                     showAlert = true
                 }
                 return
@@ -85,7 +88,7 @@ struct SignInView: View {
                 } else {
                     print("❌ Email not found in database")
                     DispatchQueue.main.async {
-                        alertMessage = "We could not find an account associated with this email. Please check your credentials and try again."
+                        alertMessage = "we could not find an account associated with this email. please check your credentials and try again."
                         showAlert = true
                     }
                 }
@@ -128,7 +131,7 @@ private struct PasswordField: View {
                 .fontWeight(.semibold)
             HStack {
                 if isSecure {
-                    SecureField("Enter your password", text: $password)
+                    SecureField("enter your password", text: $password)
                         .autocapitalization(.none) // Disable autocapitalization
                         .padding(8)
                         .font(.system(size: 14))
@@ -138,7 +141,7 @@ private struct PasswordField: View {
                                 .stroke(Color.gray, lineWidth: 1)
                         )
                 } else {
-                    TextField("Enter your password", text: $password)
+                    TextField("enter your password", text: $password)
                         .autocapitalization(.none) // Disable autocapitalization
                         .padding(8)
                         .font(.system(size: 14))

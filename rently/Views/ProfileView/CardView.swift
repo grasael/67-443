@@ -33,33 +33,36 @@ struct CardView: View {
           // listing title
             Text(listing.title)
                 .font(.headline)
-                .minimumScaleFactor(0.7)
+                .lineLimit(1)
                 .foregroundColor(.black)
 
           // listing price
             Text("$\(listing.price, specifier: "%.2f")/day")
                 .font(.subheadline)
-                .minimumScaleFactor(0.7)
                 .foregroundColor(.gray)
           
-          // tags
-          HStack {
-            ForEach(listing.tags.prefix(3), id: \.self) { tag in
-                Text(tag.rawValue)
-                    .font(.caption)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(Color("MediumBlue"))
-                    .cornerRadius(5)
-                    .foregroundColor(.white)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
+          // Tags Section
+          if !listing.tags.isEmpty {
+              HStack(spacing: 8) {
+                  ForEach(listing.tags.prefix(2), id: \.self) { tag in
+                      Text(tag.rawValue)
+                          .font(.caption)
+                          .padding(.horizontal, 8)
+                          .padding(.vertical, 4)
+                          .background(Color("MediumBlue"))
+                          .cornerRadius(20)
+                          .foregroundColor(.white)
+                          .lineLimit(1)
+                  }
+              }
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .padding(.top, 4)
+          }
         }
         .padding()
         .background(Color.white)
         .cornerRadius(12)
+        .frame(width: 150) // Fix the width for consistent layout
+        .alignmentGuide(.top) { _ in 0 }
     }
 }

@@ -20,7 +20,7 @@ struct FollowingView: View {
                 ProgressView("Loading...")
                     .padding()
             } else if followingUsers.isEmpty {
-                Text("You are not following anyone yet.")
+                Text("you are not following anyone yet.")
                     .font(.headline)
                     .foregroundColor(.gray)
                     .padding()

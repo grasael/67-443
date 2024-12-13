@@ -2,7 +2,7 @@
 //  rently
 //
 //  Created by Tishyaa Chaudhry on 12/5/24.
-//
+//JMJJ
 
 import Foundation
 import SwiftUI
@@ -17,17 +17,16 @@ struct RentalCompleteView: View {
     @State private var isShowingMailView = false
     @State private var mailError: MailError?
 
-    // State to manage the bottom navigation bar
-    @Binding var selectedTab: Int
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         VStack(spacing: 24) {
-            // Cross button in top corner to go back to RentalsView
+            // Cross button in top corner to go back to ConfirmationView
             HStack {
                 Spacer()
                 Button(action: {
-                    // Navigate to RentalsView by updating the selectedTab state
-                    selectedTab = 3 // Assuming the RentalsView is at index 1 in TabView
+                    // Dismiss the current view
+                    presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(.gray)
@@ -138,24 +137,11 @@ enum MailError: Identifiable, LocalizedError {
 
 struct RentalCompleteView_Preview: PreviewProvider {
     static var previews: some View {
-        TabView {
-            RentalsView()
-                .tabItem {
-                    Label("Rentals", systemImage: "house.fill")
-                }
-                .tag(1)
-            RentalCompleteView(
-                itemName: "Jacket",
-                userEmail: "owner@example.com",
-                pickupLocation: "UC",
-                pickupDate: Date(),
-                selectedTab: .constant(1)
-            )
-            .tabItem {
-                Label("Complete", systemImage: "checkmark")
-            }
-            .tag(2)
-        }
+        RentalCompleteView(
+            itemName: "Jacket",
+            userEmail: "owner@example.com",
+            pickupLocation: "UC",
+            pickupDate: Date()
+        )
     }
 }
-

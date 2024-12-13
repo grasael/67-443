@@ -16,6 +16,7 @@ class SearchViewModel: ObservableObject {
     private var allListings = [Listing]()
     private var allUsers = [User]()
     
+    // Fetch Listings
     func fetchListings() {
         db.collection("Listings").getDocuments { snapshot, error in
             if let error = error {
@@ -51,6 +52,7 @@ class SearchViewModel: ObservableObject {
         }
     }
     
+    // Fetch Users
     func fetchUsers() {
         db.collection("Users").getDocuments { snapshot, error in
             if let error = error {
@@ -68,6 +70,7 @@ class SearchViewModel: ObservableObject {
         }
     }
     
+    // Filter Listings and Users
     func filterListingsAndUsers(query: String) {
         let lowercasedQuery = query.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         
